@@ -6,6 +6,11 @@
 
 ## INSTALLATION
 
+1. install [node-js](https://nodejs.org/) and [npm](https://docs.npmjs.com/getting-started/configuring-your-local-environment)
+2. clone the repository
+3. from a terminal/powershell/cmd navigate to the cloned folder ```$# cd ./DTFlux```
+4. then install dependencies ```$# npm install```
+
 ## USAGE
 
 ## AUTHORS

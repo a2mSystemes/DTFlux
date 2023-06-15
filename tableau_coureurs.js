@@ -7,12 +7,11 @@ axios.get(apiUrl)
     const data = response.data;
     console.log(typeof response);
     const participants = response.data.map(item => item.Nom);
-    console.log('Participants:', participants);
+    const joueurencours = response.data.map(item => item.M/F);
+    //console.log('Participants:', participants);
+    console.log('dossards:', joueurencours);
     //console.log(data);
   })
   .catch(error => {
     console.error('Erreur lors de la récupération des données de l\'API:', error);
   });
-
-
- 

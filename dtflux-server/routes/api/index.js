@@ -8,14 +8,16 @@
 // according to the terms contained in the LICENSE file.
 // ************************************************************ 
 
+
 const express = require('express');
-// const WebSocket = require('ws');
-const app = express();
+const router = express.Router();
+const eventsRouter = require("./events");
 
-const apiRouter = require('./routes/api');
-
-app.use("/dt-api/v1/", apiRouter);
-
- const server = app.listen(3000, () => {
-  console.log(`Express server listening on port ${server.address().port}`);
+router.get('/',(req, res) => {
+    res.status(200).json({"response" : "OK", "api-path" : req.url});
 });
+
+router.use('/events', eventsRouter); 
+
+
+module.exports = router;

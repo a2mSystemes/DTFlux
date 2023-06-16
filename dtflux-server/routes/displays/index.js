@@ -9,13 +9,16 @@
 // ************************************************************ 
 
 const express = require('express');
-// const WebSocket = require('ws');
-const app = express();
+const router = express.Router();
 
-const apiRouter = require('./routes/api');
-
-app.use("/dt-api/v1/", apiRouter);
-
- const server = app.listen(3000, () => {
-  console.log(`Express server listening on port ${server.address().port}`);
+router.get('/',(req, res) => {
+    res.status(200).json({"from": "events.js"});
 });
+
+
+router.post('/events',(req, res) => {
+
+    
+});
+
+module.exports = router;

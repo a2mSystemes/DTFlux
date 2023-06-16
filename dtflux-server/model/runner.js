@@ -6,16 +6,18 @@
 // No part of DT-Flux Project, including this file, 
 // may be copied, modified, propagated, or distributed except 
 // according to the terms contained in the LICENSE file.
-// ************************************************************ 
-
-const express = require('express');
-// const WebSocket = require('ws');
-const app = express();
-
-const apiRouter = require('./routes/api');
-
-app.use("/dt-api/v1/", apiRouter);
-
- const server = app.listen(3000, () => {
-  console.log(`Express server listening on port ${server.address().port}`);
-});
+// ************************************************************
+class Runner{
+    constructor(options){
+        this.id =  0;
+        this.bib = 0;
+        this.lastname = "";
+        this.firstname = "";
+        this.gender = "";
+        this.photo = "";
+        this.mail = "";
+        this.club = "";
+    }
+}
+const runner = new Runner();
+module.exports = runner;

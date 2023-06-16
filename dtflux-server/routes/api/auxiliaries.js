@@ -7,15 +7,3 @@
 // may be copied, modified, propagated, or distributed except 
 // according to the terms contained in the LICENSE file.
 // ************************************************************ 
-
-const express = require('express');
-// const WebSocket = require('ws');
-const app = express();
-
-const apiRouter = require('./routes/api');
-
-app.use("/dt-api/v1/", apiRouter);
-
- const server = app.listen(3000, () => {
-  console.log(`Express server listening on port ${server.address().port}`);
-});

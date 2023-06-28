@@ -8,11 +8,4 @@
 // according to the terms contained in the LICENSE file.
 // ************************************************************ 
 
-const express = require('express');
-const displayController = require('../../contollers/displayController');
-const router = express.Router();
-
-router.get('/:displayID',displayController.index);
-
-
-module.exports = router;
+module.exports = {}

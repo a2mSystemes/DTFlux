@@ -7,12 +7,11 @@
 // may be copied, modified, propagated, or distributed except 
 // according to the terms contained in the LICENSE file.
 // ************************************************************ 
+const wss = require('express-ws');
+const index = (req, res, next) =>{
+    res.status(200).send("OK");
+};
+const websocket = (req, res, next) =>{
+};
 
-const express = require('express');
-const displayController = require('../../contollers/displayController');
-const router = express.Router();
-
-router.get('/:displayID',displayController.index);
-
-
-module.exports = router;
+module.exports = {index, websocket}

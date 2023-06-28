@@ -22,7 +22,7 @@ The server provide an endpoint for the chrono API.
 
 the server provide a websocket api endpoint to access and reflect live datas.
 
-`/dt-api/v1/displays/`
+`/displays/:displayID`
 
 # auxilary output
 the server provide an output interface to launch various commands when events occures.

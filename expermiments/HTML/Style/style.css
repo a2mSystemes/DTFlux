@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "integralCF";
+    src: url("../Fonts/IntegralCF-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "integralCF";
+    font-weight: bold;
+    font-style: italic;
+    src: url("../Fonts/IntegralCF-DemiBoldOblique.woff2") format("woff2");
+}
+
+body{
+    margin: 0px;
+}
+
+.chrono {
+    position: absolute;
+    color: white;
+    font-family: "IntegralCF";
+    font-size: 25px;
+}
+
+.rank {
+    color: #E20714;
+    font-family: "IntegralCF";
+    font-weight: bold;
+    font-style: italic;
+    font-size: 30px;
+}
+
+sup {
+    font-size: 18px; 
+}
+
+.bib {
+    color: white;
+    font-family: "IntegralCF";
+    font-weight: bold;
+    font-style: italic;
+    font-size: 30px;
+}
+
+.username {
+    position: absolute;
+    font-family: "IntegralCF";
+    font-weight: bold;
+    font-style: italic;
+}
+

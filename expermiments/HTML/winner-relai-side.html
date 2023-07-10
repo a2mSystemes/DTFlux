@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf/" />
+        <meta charset="utf-8">
+        <meta name="viewport" contest="width=device-width, initial-scale=1">
+        <title>WinnerRelaiSide</title>
+        <link rel="stylesheet" href="Style/style.css" />
+        <link rel="stylesheet" href="Style/style-arrivee.css" />
+    </head>
+    <body ng-app="donnees" ng-controller="donneesCtrl">
+        <div class="box-arrivee image-winner-fond">
+            <img class="photo-arrivee-relai" src={{photo1}} alt="photo"/>
+            <div class="infos-winner-relai">
+                <div class="chrono chrono-winner-relai">{{finishtime1}}</div>
+                <div class="bib bib-winner-relai">{{bib1}}</div>
+                <div class="box-username-relai">
+                    <div class="username firstname-arrivee-relai1">{{firstname1}}</div>
+                    <div class="username lastname-arrivee-relai1">{{lastname1}}</div>
+                    <div class="username firstname-arrivee-relai2">{{firstnameR1}}</div>
+                    <div class="username lastname-arrivee-relai2">{{lastnameR1}}</div>    
+                </div>
+            </div>    
+            
+        </div>
+        
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+       <script type="text/javascript" src="test-angular.js"></script>
+    </body>
+</html>

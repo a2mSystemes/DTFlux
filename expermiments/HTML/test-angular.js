@@ -8,7 +8,7 @@ angular.module("donnees",[])
     $scope.rank1 = 29;
     $scope.actualtime1 = "21:04"
     $scope.finishtime1 = "13:29";
-    $scope.photo1 = "Photos coureurs/Lucky-Relais.png";
+    $scope.photo1 = "Photos coureurs/109.png";
 
     $scope.lastname2 = "Jonas";
     $scope.firstname2 = "Michelle";
@@ -23,7 +23,7 @@ angular.module("donnees",[])
     $scope.lastname3 = "Bachibouzouk";
     $scope.firstname3 = "Henri";
     $scope.lastnameR3 = "Farmer";
-    $scope.firstnameR3 = "Milène";
+    $scope.firstnameR3 = "Mylène";
     $scope.bib3 = 287; 
     $scope.rank3 = 101;
     $scope.actualtime3 = "32:49"

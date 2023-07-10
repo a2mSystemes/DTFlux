@@ -1,0 +1,235 @@
+.box-arrivee {
+    position: relative;
+    border: 1px solid black;
+    height: 384px;
+    width: 256px;
+    margin: 0px;
+}
+
+.image-arrivee-fond {
+    position: relative;
+    background-image: url(../Medias/Arche-Arrivée-Fond.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+}
+
+.image-winner-fond {
+    position: relative;
+    background-image: url(../Medias/Arche-Winner-Fond.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+}
+
+.infos-arrivee-solo {
+    position: absolute;
+    background-image: url(../Medias/Arche-Arrivée-Solo.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 384px;
+    width: 256px;
+    margin: 0px;
+}
+
+.infos-winner-solo {
+    position: absolute;
+    background-image: url(../Medias/Arche-Winner-Solo.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 384px;
+    width: 256px;
+    margin: 0px;
+}
+
+.infos-arrivee-relai {
+    position: absolute;
+    background-image: url(../Medias/Arche-Arrivée-Relais.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 384px;
+    width: 256px;
+    margin: 0px;
+}
+
+.infos-winner-relai {
+    position: absolute;
+    background-image: url(../Medias/Arche-Winner-Relais.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 384px;
+    width: 256px;
+    margin: 0px;
+}
+
+.photo-arrivee-coureur {
+    position: absolute;
+    border: 0px solid black;
+    width: 120%;
+    bottom: 0px;
+    left: -48px;
+}
+
+.photo-arrivee-relai {
+    position: absolute;
+    border: 0px solid black;
+    width: 100%;
+    bottom: 26px;
+    left: 0px;
+}
+
+.photo-winner-coureur {
+    position: absolute;
+    border: 0px solid black;
+    width: 140%;
+    bottom: -20px;
+    left: -70px;
+}
+
+
+.chrono-arrivee-solo {
+    margin-top: 5px;
+    margin-left: 16px;
+}
+
+.chrono-arrivee-relai {
+    position: relative;
+    margin-top: 7px;
+    margin-left: 0px;
+    text-align: center;
+}
+
+.chrono-winner-solo {
+    font-size: 48px;
+    margin-top: -5px;
+    margin-left: 14px;
+}
+
+.chrono-winner-relai {
+    font-size: 48px;
+    margin-top: 9px;
+    margin-left: 58px;
+}
+
+.rank-arrivee-solo {
+    position: absolute;
+    margin-top: 43px;
+    margin-left: 29px;
+}
+
+.rank-arrivee-relai {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 92px;
+}
+
+.bib-arrivee-solo {
+    position: absolute;
+    margin-top: 267px;
+    margin-left: 12px;
+}
+
+.bib-winner-solo {
+    position: absolute;
+    margin-top: 248px;
+    margin-left: 14px;
+    font-size: 48px;
+    color: black;
+}
+
+.bib-winner-relai {
+    position: absolute;
+    margin-top: 248px;
+    margin-left: 14px;
+    font-size: 48px;
+    color: black;
+}
+
+.bib-arrivee-relai {
+    position: relative;
+    margin-top: 230px;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.box-username-arrivee {
+    position: absolute;
+    width: 240px;
+    height: 70px;
+    margin-left: 6px;
+    margin-top: -10px;
+    font-size: 18px;
+}
+
+.box-username-relai {
+    position: absolute;
+    width: 240px;
+    height: 70px;
+    margin-left: 6px;
+    margin-top: 295px;
+    font-size: 18px;
+}
+
+.firstname-arrivee-solo {
+    position: absolute;
+    color: black;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 300px;
+}
+
+.lastname-arrivee-solo {
+    position: absolute;
+    color: #E20714;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 320px;
+}
+
+.firstname-arrivee-relai1 {
+    position: relative;
+    color: black;
+    margin-top: 4px;;
+    margin-left: 2px;
+    text-align: center;
+}
+
+.lastname-arrivee-relai1 {
+    position: relative;
+    color: #E20714;
+    margin-left: 2px;
+    margin-top: -5px;
+    text-align: center;
+}
+
+.firstname-arrivee-relai2 {
+    position: relative;
+    color: black;
+    margin-top: 1px;
+    text-align: center;
+}
+
+.lastname-arrivee-relai2 {
+    position: relative;
+    color: #E20714;
+    margin-top: -5px;
+    text-align: center;
+}
+
+.firstname-winner-solo {
+    position: absolute;
+    color: black;
+    font-size: 30px;
+    margin-left: 10px;
+    margin-top: 300px;
+}
+
+.lastname-winner-solo {
+    position: absolute;
+    color: #E20714;
+    font-size: 30px;
+    margin-left: 10px;
+    margin-top: 328px;
+}

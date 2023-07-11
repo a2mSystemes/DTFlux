@@ -19,6 +19,7 @@ export class ArchFinish1Component implements OnInit{
       "next": (data) => {
         console.log(data);
         this.data = data;
+        data.status = 'winner-solo';
       },
       "error": (err) => {console.log(err);},
     });

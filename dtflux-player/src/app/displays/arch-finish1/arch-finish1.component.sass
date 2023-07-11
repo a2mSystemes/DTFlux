@@ -4,25 +4,23 @@
 	height: 384px
 	width: 256px
 	margin: 0px
+	background-repeat: no-repeat
+	background-origin: border-box
+
 .image-arrivee-fond
-	position: relative
 	background-image: url(/assets/Medias/Arche-Arrivée-Fond.png)
-	background-origin: border-box
-	background-repeat: no-repeat
+
 .image-winner-fond
-	position: relative
 	background-image: url(/assets/Medias/Arche-Winner-Fond.png)
-	background-origin: border-box
-	background-repeat: no-repeat
+
 .infos-arrivee-solo
 	position: absolute
 	background-image: url(/assets/Medias/Arche-Arrivée-Solo.png)
-	background-origin: border-box
-	background-repeat: no-repeat
 	border: 1px solid black
 	height: 384px
 	width: 256px
 	margin: 0px
+
 .infos-winner-solo
 	position: absolute
 	background-image: url(/assets/Medias/Arche-Winner-Solo.png)
@@ -69,33 +67,40 @@
 	bottom: -20px
 	left: -70px
 .chrono-arrivee-solo
-	margin-top: 5px
+	position: absolute
+	margin-top: 7px
 	margin-left: 16px
+	font-size: 25px
 .chrono-arrivee-relai
 	position: relative
 	margin-top: 7px
 	margin-left: 0px
 	text-align: center
+	font-size: 25px
 .chrono-winner-solo
+	position: absolute
 	font-size: 48px
-	margin-top: -5px
+	margin-top: -4px
 	margin-left: 14px
 .chrono-winner-relai
+	position: absolute
 	font-size: 48px
 	margin-top: 9px
 	margin-left: 58px
 .rank-arrivee-solo
 	position: absolute
-	margin-top: 43px
+	margin-top: 44px
 	margin-left: 29px
 .rank-arrivee-relai
 	position: absolute
 	margin-top: 10px
 	margin-left: 92px
 .bib-arrivee-solo
+	color: white
 	position: absolute
 	margin-top: 267px
 	margin-left: 12px
+	font-size: 30px
 .bib-winner-solo
 	position: absolute
 	margin-top: 248px
@@ -113,51 +118,46 @@
 	margin-top: 230px
 	text-align: left
 	padding-left: 15px
+	color: white
+	font-size: 30px
 .box-username-arrivee
 	position: absolute
 	width: 240px
 	height: 70px
 	margin-left: 6px
-	margin-top: -10px
-	font-size: 18px
-.box-username-relai
-	position: absolute
-	width: 240px
-	height: 70px
-	margin-left: 6px
-	margin-top: 295px
+	top: 292px
 	font-size: 18px
 .firstname-arrivee-solo
 	position: absolute
 	color: black
 	font-size: 20px
 	margin-left: 10px
-	margin-top: 300px
+	margin-top: 10px
 .lastname-arrivee-solo
 	position: absolute
 	color: #E20714
 	font-size: 20px
 	margin-left: 10px
-	margin-top: 320px
+	margin-top: 30px
 .firstname-arrivee-relai1
-	position: relative
+	position: relative !important
 	color: black
 	margin-top: 4px
 	margin-left: 2px
 	text-align: center
 .lastname-arrivee-relai1
-	position: relative
+	position: relative !important
 	color: #E20714
 	margin-left: 2px
 	margin-top: -5px
 	text-align: center
 .firstname-arrivee-relai2
-	position: relative
+	position: relative !important
 	color: black
 	margin-top: 1px
 	text-align: center
 .lastname-arrivee-relai2
-	position: relative
+	position: relative !important
 	color: #E20714
 	margin-top: -5px
 	text-align: center
@@ -165,14 +165,14 @@
 	position: absolute
 	color: black
 	font-size: 30px
-	margin-left: 10px
-	margin-top: 300px
+	margin-left: 4px
+	margin-top: 0px
 .lastname-winner-solo
 	position: absolute
 	color: #E20714
 	font-size: 30px
-	margin-left: 10px
-	margin-top: 328px
+	margin-left: 4px
+	margin-top: 28px
 
 
 .box-attente
@@ -272,21 +272,12 @@
 	margin-right: 4px
 	text-align: end
 
-@font-face
-	font-family: "integralCF"
-	src: url("/assets/Fonts/IntegralCF-Regular.woff2") format("woff2")
-	font-family: "integralCF"
-	font-weight: bold
-	font-style: italic
-	src: url("/assets/Fonts/IntegralCF-DemiBoldOblique.woff2") format("woff2")
 body
 	margin: 0px
 	background-color: black
 .chrono
-	position: absolute
 	color: white
 	font-family: "IntegralCF"
-	font-size: 25px
 .rank
 	color: #E20714
 	font-family: "IntegralCF"
@@ -296,11 +287,9 @@ body
 sup
 	font-size: 18px
 .bib
-	color: white
 	font-family: "IntegralCF"
 	font-weight: bold
 	font-style: italic
-	font-size: 30px
 .username
 	position: absolute
 	font-family: "IntegralCF"

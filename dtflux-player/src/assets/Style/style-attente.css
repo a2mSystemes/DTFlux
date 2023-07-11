@@ -1,0 +1,127 @@
+.box-attente {
+    position: relative;
+    border: 1px solid black;
+    height: 256px;
+    width: 256px;
+    margin: 0px;
+}
+
+.image-attente-fond {
+    position: relative;
+    background-image: url(../Medias/Arche-Attente-Fond.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+}
+
+.infos-attente-solo {
+    position: absolute;
+    background-image: url(../Medias/Arche-Attente-Solo.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 256px;
+    width: 256px;
+    margin: 0px;
+}
+
+.infos-attente-relai {
+    position: absolute;
+    background-image: url(../Medias/Arche-Attente-Relais.png);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    height: 256px;
+    width: 256px;
+    margin: 0px;
+}
+
+.photo-attente-coureur {
+    position: absolute;
+    border: 0px solid black;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+}
+
+.chrono-attente-solo {
+    margin-top: 6.5px;
+    margin-left: 16px;
+}
+
+.chrono-attente-relai {
+    position: relative;
+    margin-top: -1px;
+    margin-left: 0px;
+    text-align: center;
+}
+
+.bib-attente-solo {
+    position: absolute;
+    margin-top: 167px;
+    margin-left: 12px;
+}
+
+.bib-attente-relai {
+    position: absolute;
+    margin-top: 137px;
+    margin-left: 12px;
+}
+
+.box-username-attente {
+    position: absolute;
+    border: 0px solid black;
+    width: 240px;
+    height: 45px;
+    margin-top: 170px;
+    padding-left: 8px;
+}
+
+.firstname-attente-solo {
+    position: absolute;
+    color: black;
+    font-size: 16px;
+    left: 15px;
+    top: 30px;
+    border: 0px solid black;
+}
+
+.lastname-attente-solo {
+    position: absolute;
+    color: #E20714;
+    font-size: 20px;
+    left: 15px;
+    top: 45px;
+    border: 0px solid black;
+}
+
+.firstname-attente-relai1 {
+    position: absolute;
+    color: black;
+    margin-top: 3px;;
+    margin-left: 2px;
+    text-align: start;
+}
+
+.lastname-attente-relai1 {
+    position: absolute;
+    color: #E20714;
+    margin-left: 2px;
+    margin-top: 17px;
+    text-align: start;
+}
+
+.firstname-attente-relai2 {
+    position: relative;
+    color: black;
+    margin-top: 3px;
+    margin-right: 4px;
+    text-align: end;
+}
+
+.lastname-attente-relai2 {
+    position: relative;
+    color: #E20714;
+    margin-top: -5px;
+    margin-right: 4px;
+    text-align: end;
+}

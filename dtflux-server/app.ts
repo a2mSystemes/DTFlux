@@ -41,10 +41,13 @@ class App{
         this.initializeControllers();
         this.data$ = this.model.sub.asObservable();
         this.data$.subscribe(data => {
-            console.log(this.io.clients.size)
-            for(let client of this.io.clients){
-            client.send(data);
+            if(this.io.clients.size > 0){
+                console.log("sending to clients")
+                for(let client of this.io.clients){
+                    client.send(data);
+                    }
             }
+
             this.controllers.push(data)
         });
     }

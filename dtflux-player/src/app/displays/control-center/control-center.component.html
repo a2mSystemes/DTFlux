@@ -1,5 +1,76 @@
-<h1>CONTROL CENTER</h1>
+<div class="body-control">
+    <h1>CONTROL CENTER</h1>
 
-<button type="button" (click)="toggle()">Switch</button>
+    <h2>Choix de la course en cours</h2>
+    <button type="button" (click)="XP()">Yotta XP</button>
+    <button type="button" (click)="XPSH()">Yotta XPS Hommes</button>
+    <button type="button" (click)="XPSF()">Yotta XPS Femmes</button>
+    <button type="button" (click)="XPSR()">Yotta XPS Relai</button>
 
+    <h2>Affichage tableau des athlètes</h2>
+    <button type="button" (click)="FXP()">Yotta XP</button>
+    <button type="button" (click)="FXPSH()">Yotta XPS Hommes</button>
+    <button type="button" (click)="FXPSF()">Yotta XPS Femmes</button>
+    <button type="button" (click)="FXPSR()">Yotta XPS Relai</button>
 
+    <h2>Affichage étape en cours</h2>
+    <button type="button" (click)="kilo()">Kilo</button>
+    <button type="button" (click)="mega()">Mega</button>
+    <button type="button" (click)="giga()">Giga</button>
+    <button type="button" (click)="tera()">Tera</button>
+    <button type="button" (click)="peta()">Peta</button>
+
+    <h2>Heure de départ des étapes</h2>
+    <div class="col">
+        <h3>Course normale ou Yotta XP Hommes</h3>
+        <form action="a definir merci :D" method="post">
+            <div>
+                <label for="timekilo">Kilo :</label>
+                <input type="time" id="timekilo" name="?">
+            </div>
+            <div>
+                <label for="timemega">Mega :</label>
+                <input type="time" id="timemega" name="?">
+            </div>
+            <div>
+                <label for="timegiga">Giga :</label>
+                <input type="time" id="timegiga" name="?">
+            </div>
+            <div>
+                <label for="timetera">Tera :</label>
+                <input type="time" id="timetera" name="?">
+            </div>
+            <div>
+                <label for="timepeta">Peta :</label>
+                <input type="time" id="timepeta" name="?">
+            </div>
+        </form>
+
+        <h3>Yotta XP Femmes</h3>
+        <form action="a definir merci :D" method="post">
+            <div>
+                <label for="timekilo2">Kilo :</label>
+                <input type="time" id="timekilo2" name="?">
+            </div>
+            <div>
+                <label for="timemega2">Mega :</label>
+                <input type="time" id="timemega2" name="?">
+            </div>
+            <div>
+                <label for="timegiga2">Giga :</label>
+                <input type="time" id="timegiga2" name="?">
+            </div>
+            <div>
+                <label for="timetera2">Tera :</label>
+                <input type="time" id="timetera2" name="?">
+            </div>
+            <div>
+                <label for="timepeta2">Peta :</label>
+                <input type="time" id="timepeta2" name="?">
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2>Enlever le waiting 1</h2>
+<button type="button" (click)="XP()">Enlever waiting</button>

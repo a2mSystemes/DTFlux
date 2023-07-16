@@ -1,0 +1,270 @@
+Peux tu créer un server avec comme url de base /dtflux-api/v1 capable de gérer différentes routes :
+-  une route CRUD pour modifier une base de données dans un controller avec comme url de base /crud. 
+voici le model de la base de données : 
+export interface IParticipant {
+  id: number;
+  lastName: string;
+  firstName: string;
+  gender: string;
+  bib?: number;
+  category: string;
+  currentStatusId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export interface IRunnerStatus {
+  id: number;
+  raceId: number;
+  participantId: number;
+  createdAt: Date;
+}
+export interface ITeam {
+  id: number;
+  participant: IParticipant;
+  teamBib: number;
+  name: string;
+}
+export interface IStage {
+  id: number;
+  raceId: number;
+  name: string;
+  startTime: Date;
+  duration: string;
+}
+export interface ISplit {
+  id: number;
+  name: string;
+  key: string; // key of the name in RaceResult API
+}
+export interface IRunnerSplitResult {
+  id: number;
+  raceId: number;
+  participantId: number;
+  time: string;
+  splitId: number;
+}
+export interface IRunnerTotalTime {
+  id: number;
+  raceId: number;
+  participantId: number;
+  time: string;
+}
+export interface IRunnerGap {
+  id: number;
+  raceId: number;
+  participantId: number;
+  gap: string;
+}
+export interface IRace {
+  id: number;
+  name: string;
+  resourceKeyStartList: string;
+  resourceKeyLiveStageResult: string;
+  resourceKeyGenClassification: string;
+  startTime?: Date;
+  endDate?: Date;
+}
+export interface IEvent {
+  id: number;
+  name: string;
+  description?: string;
+  startDate?: Date;
+  endDate?: Date;
+}
+export interface IEventRace {
+  id: number;
+  eventId: number;
+  raceId: number;
+  startDate?: Date;
+  endDate?: Date;
+}
+
+export interface IDTFluxDbSchema {
+  event: IEvent[];
+  race: IRace[];
+  participant: IParticipant[];
+  runnerStatus: IRunnerStatus[];
+  team: ITeam[];
+  stage: IStage[];
+  split: ISplit[];
+  runnerSplitResult: IRunnerSplitResult[];
+  runnerTotalTime: IRunnerTotalTime[];
+  runnerGap: IRunnerGap[];
+}
+export class DTFluxDbSchema implements DTFluxDbSchema {
+  event: IEvent[] = new Array<IEvent>();
+  race: IRace[] = new Array<IRace>();
+  participant: IParticipant[] = new Array<IParticipant>();
+  runnerStatus: IRunnerStatus[] = new Array<IRunnerStatus>();
+  team: ITeam[] = new Array<ITeam>();
+  stage: IStage[] = new Array<IStage>();
+  split: ISplit[] = new Array<ISplit>;
+  runnerSplitResult: IRunnerSplitResult[] = new Array<IRunnerSplitResult>();
+  runnerTotalTime: IRunnerTotalTime[] = new Array<IRunnerTotalTime>();
+  runnerGap: IRunnerGap[] = Array<IRunnerGap>();
+}
+
+Cette base de données est instancié via un service :
+export class DTFluxDbService extends DTFluxDBAdapter {
+  private changeSubject: Subject<any>;
+  constructor(dbName: string) {
+    super(dbName);
+    this.changeSubject = new Subject<any>();
+    this.setupChangeTracking();
+
+  }
+  public getChanges(): Observable<any> {
+    return this.changeSubject.asObservable();
+  }
+
+  private setupChangeTracking(): void {
+    const collections = Object.keys(this.db.collections);
+    collections.forEach((collectionName) => {
+      const collection = this.db.getCollection(collectionName);
+      collection.on("insert", (changes) => this.emitChanges(changes));
+      collection.on("update", (changes) => this.emitChanges(changes));
+      collection.on("delete", (changes) => this.emitChanges(changes));
+    });
+  }
+
+
+  private emitChanges(changes: any): void {
+    this.changeSubject.next(changes);
+  }
+}
+
+Ce service est une sous-classe d'un adaptateur pour lokijs dont voici l'implementation :
+export class DTFluxDBAdapter {
+  protected db: Loki;
+  private dbFilePath: string;
+  constructor(dbName: string) {
+    this.dbFilePath = "./DTFluxDB/" + dbName;
+    this.db = new Loki(this.dbFilePath);
+    // Check if the file exists
+    fs.access(this.dbFilePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        const collections = new DTFluxDbSchema();
+        Object.keys(collections).forEach((collectionName) => {
+          const collection = this.db.addCollection(collectionName);
+        //   console.log(collection);
+          collection.ensureUniqueIndex("id");
+        });
+      } else {
+        // Load the database
+        this.db.loadDatabase({}, (loadErr) => {
+          if (loadErr) {
+            console.error("Error loading database:", loadErr);
+          }
+          console.log("Database loaded successfully");
+        });
+      }
+    });
+
+    // const event: IEvent = {
+    //   id: 0,
+    //   name: "YOTTA Vichy",
+    // };
+    // this.insert("event", event);
+  }
+  private getNextId(collectionName: string): number {
+    const collection = this.db.getCollection(collectionName);
+    if (collection === null) {
+      throw new Error(`Collection '${collectionName}' does not exist.`);
+    }
+    const maxId = collection.maxId;
+    return maxId !== null ? maxId + 1 : 1;
+  }
+  public insert(collectionName: string, document: any): void {
+    const collection = this.db.getCollection(collectionName);
+    if (collection === null) {
+      throw new Error(`Collection '${collectionName}' does not exist.`);
+    }
+    const newId = this.getNextId(collectionName);
+    const documentWithId = { ...document, id: newId };
+    collection.insert(documentWithId);
+  }
+
+  delete(collectionName: string, id: number) {
+    const col = this.db.getCollection(collectionName);
+    col.remove({ id: id });
+  }
+  update(collectionName: string, id: number, updatedDocument: any) {
+    const col = this.db.getCollection(collectionName);
+    col.update({ id: id, updatedDocument: updatedDocument });
+  }
+  getAll(collectionName: string) {
+    const col = this.db.getCollection(collectionName);
+    return col.find();
+  }
+
+  getRunnerTimings(runner: Partial<IParticipant>): any {
+    const participant = this.db.getCollection("participant");
+    const result = this.db.getCollection("runnerSplitResult");
+    if (participant && result) {
+      const pId = participant.findOne({
+        bib: runner.bib,
+        lastName: runner.lastName,
+      }).id;
+      const query = {participantId: pId};
+      return result.chain().find(query).data();
+    }else{
+        return null;
+    }
+  }
+}
+
+- une route de pilotage de divers logiciel via divers protocol comme OSC et Telnet. la route de base pour ce controller est /command. le controller se nomera command.controller.ts et dispatchera selon les logiciel et le protocol. Par exemple, pour milumin en OSC : /milimin/osc. Chaque logiciel aura une classe controller automatiquement instancié au chargement de la route de base /command si le controller est présent dans le sous-dossier ./command/{logiciel} et la route correspondra au nom du fichier : par example pour milumin en osc le fichier se nommera milumin.osc.controller.ts et donc l'url final sera /command/millumin/osc/:command et les parametres de la commande seront dans le corsp en json.
+
+-  une route indépendante pour traiter des websockets avec comme chemin {baseUrl}/ws. Je ne souhaite pas utiliser express-ws ou express-ws-route pour cette fonction. L'implementation de ces websocket est faite dans un service implementé comme ceci : 
+
+import WebSocket, { Server, Server as WebSocketServer } from "ws";
+export class DTFluxWebSocketService extends WebSocketServer {
+  routes: Array<string> = [];
+  constructor(options?: WebSocket.ServerOptions) {
+    super(options);
+    this.on("connection", (ws) => {
+      ws.on("message", (data: Buffer) => {
+        let req = data.toString();
+        try {
+          this.handleMessage(JSON.parse(req), ws);
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+          return;
+        }
+      });
+    });
+    console.log(this);
+  }
+
+  handleMessage(data: any, ws: WebSocket) {
+    let r = data.route;
+    try {
+      delete data["route"];
+      data.poweredBy = "DTFluxWebSocket";
+      data.ws = ws;
+    //   console.log(r);
+    } catch (error) {
+      console.log("Invalid REQUEST:", error);
+    }
+    for (let route of this.routes) {
+      if (route === r) {
+        console.log("emiting route");
+        ws.emit(route, data);
+        this.emit(route, data);
+      }
+    }
+  }
+
+  addRoute(route: string): this {
+    console.log(`adding ${route}`);
+    this.routes.push(route);
+    return this;
+  }
+}
+
+Je souhaite que se server soit organisé en classes distinct :  
+server.ts, app.ts, ./DTFluxcontroller/crud.controller.ts, ./DTFluxcontroller/command.controller.ts avec un sous dossier ./DTFluxcontroller/command/ pour les controller command auto monter si existant au démarrage du server comme vu precedemment, ./DTFluxcontroller/websocket.controller.ts en utilisant un maximum la fonctionnalité router de express sauf pour le controller websocket.
+
+De plus, tous les controller doivent avoir accés au service de la base de donnée en écoutant le Subject du service.
+
+la base de donné est aussi alimenter via un poller http qui interroge un api toutes les X secondes et une classe socket ecoutant sur le port 5001 ou un exporter envoi des donnés à des moments précis.

@@ -46,6 +46,7 @@ const arch_spotter4_component_1 = require("./displays/arch-spotter4/arch-spotter
 const arch_spotter3_component_1 = require("./displays/arch-spotter3/arch-spotter3.component");
 const arch_spotter2_component_1 = require("./displays/arch-spotter2/arch-spotter2.component");
 const arch_spotter1_component_1 = require("./displays/arch-spotter1/arch-spotter1.component");
+const stream = require("./displays/stream/stream.component");
 const routes = [
     { path: 'control', component: control_center_component_1.ControlCenterComponent },
     { path: 'arch-finish-1', component: arch_finish1_component_1.ArchFinish1Component },
@@ -56,6 +57,7 @@ const routes = [
     { path: 'arch-spotter-2', component: arch_spotter2_component_1.ArchSpotter2Component },
     { path: 'arch-spotter-3', component: arch_spotter3_component_1.ArchSpotter3Component },
     { path: 'arch-spotter-4', component: arch_spotter4_component_1.ArchSpotter4Component },
+    { path: 'stream', component: tream_component_1.StreamComponent },
 ];
 let AppRoutingModule = exports.AppRoutingModule = (() => {
     let _classDecorators = [(0, core_1.NgModule)({

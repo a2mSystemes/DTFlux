@@ -16,6 +16,7 @@ import { ArchSpotter4Component } from './displays/arch-spotter4/arch-spotter4.co
 import { ArchSpotter3Component } from './displays/arch-spotter3/arch-spotter3.component';
 import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.component';
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
+import { StreamComponent } from './displays/stream/stream.component';
 const routes: Routes = [
   { path: 'control', component: ControlCenterComponent},
   { path: 'arch-finish-1', component: ArchFinish1Component},
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'arch-spotter-4', component: ArchSpotter4Component},
   { path: 'start', component: StartComponent},
   { path: 'column', component: ColumnComponent},
-  { path: 'info-etape', component: InfoEtapeComponent}
+  { path: 'info-etape', component: InfoEtapeComponent},
+  { path: 'stream', component: StreamComponent}
 ];
 
 @NgModule({

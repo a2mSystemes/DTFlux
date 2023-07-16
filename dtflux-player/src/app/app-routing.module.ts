@@ -27,6 +27,8 @@ const routes: Routes = [
   { path: 'arch-spotter-3', component: ArchSpotter3Component},
   { path: 'arch-spotter-4', component: ArchSpotter4Component},
   { path: 'start', component: StartComponent},
+  { path: 'column', component: ColumnComponent},
+  { path: 'info-etape', component: InfoEtapeComponent}
 ];
 
 @NgModule({

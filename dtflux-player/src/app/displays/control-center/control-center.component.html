@@ -73,4 +73,14 @@
 </div>
 
 <h2>Enlever le waiting 1</h2>
-<button type="button" (click)="XP()">Enlever waiting</button>
+<button type="button" (click)="waiting()">Enlever waiting</button>
+
+<h2>afficher le coureur à l'image</h2>
+<div>
+    <input type="checkbox" id="auto" name="auto">
+    <label for="auto">Détection automatique</label>
+</div>
+
+<label for="bib">Numéro de maillot :</label>
+<input type="text" id="bib" name="bib" size="10">
+<button type="button" (click)="ValiderMaillot()">Go</button>

@@ -1,1 +1,43 @@
-<p>info-etape works!</p>
+<div class="image-fond"
+    [ngClass]="{'image-winner' : data.status === 'winner-solo'|| data.status === 'winner-relai',
+                'image-1chrono' : (data.contest === 1 || data.contest === 3) && data.status !== 'winner-solo' && data.status !== 'winner-relai',
+                'image-2chronos' : data.contest === 2}">
+
+    <div [ngClass]="{'box-nom' : data.status !== 'winner-solo' && data.status !== 'winner-relai',
+                    'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
+        <img [src]="getDynamicImageLink()" alt="Image">
+    </div>
+    
+    <div class="chrono"
+    [ngClass]="{'chronoseul' : data.contest === 1 || data.contest === 3,
+                'chronoH' : data.contest === 2,
+                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
+    {{data.decompteH}}</div>
+
+    <div class="chrono"
+    [ngClass]="{'chronoF' : data.contest === 2 && data.status !== 'winner-solo' && data.status !== 'winner-relai',
+                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai' || data.contest === 1 || data.contest === 3}">
+    {{data.decompteF}}</div>
+    
+    <div 
+        [ngClass]="data.status === 'winner-solo' ? 'nom-gagnant' : 'hidden'">
+        {{data.lastName1}} <em>{{data.firstName1}}</em>
+    </div>
+
+    <div
+        [ngClass]="data.status === 'winner-relai' ? 'nom-gagnantR1' : 'hidden'">
+        {{data.lastName1}} <em>{{data.firstName1}}</em>
+    </div>
+    
+    <div
+        [ngClass]="data.status === 'winner-relai' ? 'nom-gagnantR2' : 'hidden'">
+        {{data.lastName2}} <em>{{data.firstName2}}</em>
+    </div>
+
+    <div 
+    [ngClass]="data.status === 'winner-solo' || data.status === 'winner-relai' ? 'chronofinish' : 'hidden'">
+    {{data.FinishTime}}
+    </div>
+
+</div>
+

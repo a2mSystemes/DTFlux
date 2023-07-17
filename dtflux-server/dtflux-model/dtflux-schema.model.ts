@@ -1,5 +1,14 @@
 import { TIMING_TYPE } from "./core.model/Enums";
 
+
+export interface ICurrentServerState{
+  id?: number;
+  stageId: number;
+  contestId: number;
+  active: boolean;
+  createdAt: Date;
+}
+
 export interface IParticipant {
   id?: number;
   lastName: string;
@@ -91,6 +100,7 @@ export interface IDTFluxDbSchema {
   runnerGap: IRunnerGap[];
 }
 export class DTFluxDbSchema implements DTFluxDbSchema {
+  currentServerState: Array<ICurrentServerState> = new Array<ICurrentServerState>();
   event: IEvent[] = new Array<IEvent>();
   race: IRace[] = new Array<IRace>();
   participant: IParticipant[] = new Array<IParticipant>();

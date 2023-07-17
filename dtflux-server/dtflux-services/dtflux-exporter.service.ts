@@ -7,8 +7,6 @@ import { EndingLapRunners } from "../dtflux-model/core.model/EndingLapRunners";
 import { IEndingLapRunner } from "../dtflux-model/core.model/IEndingLapRunner";
 import { DTFluxDbService } from "./dtflux-database.service";
 import { Collection } from "lokijs";
-import { IParticipant, ITeam } from "../dtflux-model/dtflux-schema.model";
-import { ILiveResult } from "../dtflux-model/race-result.model/ILiveResult";
 
 export class DTFluxExporterService {
   private _dbService: DTFluxDbService;
@@ -91,59 +89,4 @@ export class DTFluxExporterService {
       );
     });
   }
-}
-
-export class Participant implements IParticipant {
-  id?: number;
-  lastName: string = "";
-  firstName: string = "";
-  gender: string = "";
-  bib: number = -1;
-  category: string = "";
-  currentStatusId: number = -1;
-  createdAt: Date = new Date();
-  updatedAt: Date = new Date();
-  constructor(
-    fromData?: IExporterResult | ILiveResult,
-    participantNumber: number = 1,
-  ) {
-    if (fromData) {
-      if (participantNumber == 1) {
-        this.lastName = fromData.Lastname;
-        this.firstName = fromData.Firstname;
-        this.bib = fromData.Bib;
-        this.gender = fromData.Gender;
-      }
-      if (participantNumber == 2) {
-        this.lastName = fromData.Lastname2;
-        this.firstName = fromData.Firstname2;
-        this.bib = fromData.Bib;
-        this.gender = fromData.Gender2;
-      }
-    }
-  }
-}
-export class Team{
-  static participantsInDb // Handle incoming data
-    (team: Team) {
-      throw new Error("Method not implemented.");
-  }
-
-  teamates: Array<Participant> = [];
-  team?:ITeam;
-  private _isTeam: boolean =false;
-  constructor(fromData: IExporterResult | ILiveResult){
-    if(Team.isTeam(fromData)){
-      this.teamates[0] = new Participant(fromData)
-      this.teamates[1] = new Participant(fromData, 2)
-      this.team = {id : undefined, name : fromData.TeamName, participants: this.teamates, teamBib : fromData.Bib }
-      this._isTeam = true;
-    }else{
-      this.teamates[0] = new Participant(fromData)
-    }
-  }
-  static isTeam(data: IExporterResult | ILiveResult): boolean{
-    return (data.Lastname2 && data.Firstname2 && data.TeamName) !== "";
-  }
-
 }

@@ -3,24 +3,26 @@ import { DTFluxDbService } from "../dtflux-services/dtflux-database.service";
 import { DTFLuxHTTPRequesterService } from "../dtflux-services/dtflux-http-requester.service";
 import * as conf from "../dtflux-conf/conf.json";
 import { error } from "console";
-import { IParticipant } from "../dtflux-model/dtflux-schema.model";
+import { ICurrentServerState, IParticipant } from "../dtflux-model/dtflux-schema.model";
 import { Collection } from "lokijs";
 import axios from "axios";
-import { Participant, Team } from "../dtflux-services/dtflux-exporter.service";
+import { Participant } from "../dtflux-model/core.model/Participant";
+import { Team } from "../dtflux-model/core.model/Team";
+import { DTFluxURLBuilderService } from "./../dtflux-services/dtflux-url-builder.service";
 
 export class StartListController {
   private _dbService: DTFluxDbService;
   private _router: any;
   private _requester: DTFLuxHTTPRequesterService =
     new DTFLuxHTTPRequesterService();
-
+  private _urlBuilder: DTFluxURLBuilderService = new DTFluxURLBuilderService();
   constructor(dbService: DTFluxDbService) {
     this._dbService = dbService;
     this._router = express.Router();
     this.setupRoutes();
   }
   setupRoutes() {
-    this._router.get("/load", this.load);
+    this._router.get("/load", this.go);
   }
 
   private handleError(res: Response, error: any): void {
@@ -30,70 +32,53 @@ export class StartListController {
       error,
     });
   }
-
-  private load = async (req: Request, res: Response): Promise<void> => {
-    const APIConf = conf.raceResultAPI;
-    const useLocal = APIConf.useLocal;
-    let url = useLocal ? APIConf.baseLocalUrl + "/_" : APIConf.baseDistantUrl;
-    url += APIConf.idEvent;
-    url += useLocal ? "api/" : "";
-    url += APIConf.resources.startListKey;
-    try {
-      const data: any = await this._requester.request(url);
-      const startListResponse:Array<any> = data.data;
-      const participants: Collection<any> | null =
-        this._dbService.getCollection("participant");
-      const teams: Collection<any> | null =
-        this._dbService.getCollection("team");
-        // console.log(participants);
-      for (const startListItem of startListResponse) {
-        if(Team.isTeam(startListItem) ){
-          // we are in a relay
-          const team = new Team(startListItem);
-          Team.participantsInDb(team)
-        }
-        if (participants && teams ) {
-          try {
-            // const team = teams.findOne()
-            const participant = participants.findOne({
-              bib: startListItem.Bib,
-              lastName: startListItem.Lastname,
-              firstName: startListItem.Firstname,
-            });
-            let newParticipant = null;
-            if (!participant){ // participant does not exist
-              //handle if the participant is only in a team
-
-              const doc:IParticipant = {
-                id: undefined,
-                lastName: startListItem.Lastname,
-                firstName: startListItem.Firstname,
-                gender: startListItem.Gender,
-                bib: startListItem.Bib,
-                category: startListItem.Category,
-                currentStatusId: 0,
-                createdAt: new Date(),
-                updatedAt: new Date()
-              }
-              console.log("doc", doc);
-              newParticipant = participants.insertOne(doc);
-            }else{
-
-              console.log(`participants: ${participant} already exists`);
-            }
-          } catch (error) {
-            
-          }
-        }
-      }
-      this._dbService.save();
-      // console.log(response);
-      res.status(200).json({ loaded: true, url: url });
-    } catch (error) {
-      console.log(error);
-      this.handleError(res, error);
-    }
+  private go = async (
+    req: Request,
+    res: Response,
+    error: any,
+  ): Promise<void> => {
+    await this.load().then(() => {
+      console.log("done...");
+      res.status(200).json({ message: "OK" });
+    });
+    return;
   };
+
+  async load(): Promise<any> {
+    const sState = this._dbService.getCollection("currentServerState");
+    const currentState = sState?.findOne({ active: true }); // server is stopped
+    console.log("no-states");
+    console.log(currentState);
+
+    if (!currentState) {
+      const url = this._urlBuilder.buildURL("LiveResult");
+      const liveResponse:any = await this._requester.request(url);
+      console.log(typeof liveResponse);
+      const contests = new Array<string>;
+      let prevLength = 0;
+      for(const item of liveResponse.data){
+        // console.log(item);
+        contests[item.ContestID] = item.ContestName;
+        console.log("prevLength", prevLength);
+        console.log("contests.length", contests.length);
+        console.log(item.ContestID);
+        console.log(contests[item.ContestID]);
+        if(prevLength < contests.length){
+          // il peut être inserer
+          const obj:ICurrentServerState = {
+            id: undefined,
+            stageId: item.ContestName,
+            contestId: item.ContestId,
+            active: false,
+            createdAt: new Date(),
+          }
+          console.log(obj);
+          sState?.insert({obj});
+        }
+        prevLength = contests.length;
+      }
+    }
+  }
 
   get router(): Router {
     return this._router;

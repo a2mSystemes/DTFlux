@@ -1,1 +1,30 @@
-<p>arch-spotter1 works!</p>
+<div class="box-attente image-attente-fond">
+    <img class="photo-attente-coureur" src={{data.photo1}} alt="photo"/>
+    <div class="infos-attente"
+    [ngClass]="{'iasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                'iarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+        <div class="chrono"
+        [ngClass]="{'casolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                    'carelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+                {{data.actualtime1}}</div>
+        <div class="bib">{{data.bib1}}</div>
+        <div class="box-username-attente">
+            <div class="username"
+            [ngClass]="{'fnasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                        'fnarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+                    {{data.firstname1}}</div>
+            <div class="username"
+            [ngClass]="{'lnasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                        'lnarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+                    {{data.lastname1}}</div>
+            <div class="username"
+            [ngClass]="{'hidden' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                        'fnarelai2' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+                    {{data.firstnameR1}}</div>
+            <div class="username"
+            [ngClass]="{'hidden' : data.status === 'finish-solo'|| data.status === 'winner-solo',
+                        'lnarelai2' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
+                    {{data.lastnameR1}}</div>
+        </div>
+    </div>    
+</div>

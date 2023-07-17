@@ -26,19 +26,19 @@ export class ControlCenterComponent implements OnInit {
   }
 
   XP(): void {
-   console.log("Course XP")
+   console.log("Contest = 2")
   }
 
   XPSH(): void {
-    console.log("Course XPS Hommes")
+    console.log("Contest = 3 & Gender = H")
    }
  
    XPSF(): void {
-    console.log("Course XPS Femmes")
+    console.log("Contest = 3 & Gender = F")
    }
  
    XPSR(): void {
-    console.log("Course XPS Relais")
+    console.log("Contest = 1")
    }
  
    FXP(): void {
@@ -59,22 +59,27 @@ export class ControlCenterComponent implements OnInit {
 
     kilo(): void {
       console.log("Etape kilo")
+      //envoyer un reset Millumin
      }
 
     mega(): void {
       console.log("Etape mega")
+      //envoyer un reset Millumin
      }
 
     giga(): void {
       console.log("Etape giga")
+      //envoyer un reset Millumin
      }
 
     tera(): void {
       console.log("Etape tera")
+      //envoyer un reset Millumin
      }
 
     peta(): void {
       console.log("Etape peta")
+      //envoyer un reset Millumin
      }
 
      kilo2(): void {
@@ -95,6 +100,15 @@ export class ControlCenterComponent implements OnInit {
 
     peta2(): void {
       console.log("Etape peta 2")
+     }
+    
+     waiting(): void {
+      console.log("Enleve le wainting 1")
+     }
+    
+
+     ValiderMaillot(): void {
+      console.log("Maillot :")
      }
 
 }

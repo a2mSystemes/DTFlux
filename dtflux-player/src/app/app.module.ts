@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { ArchSpotter4Component } from './displays/arch-spotter4/arch-spotter4.co
 import { ArchSpotter3Component } from './displays/arch-spotter3/arch-spotter3.component';
 import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.component';
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
+import { StreamComponent } from './displays/stream/stream.component';
 import { MockingService } from './services/mocking.service';
 
 @NgModule({
@@ -36,10 +38,12 @@ import { MockingService } from './services/mocking.service';
     ArchSpotter3Component,
     ArchSpotter2Component,
     ArchSpotter1Component,
+    StreamComponent
 
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
   ],
   providers: [MockingService, ],

@@ -1,1 +1,32 @@
-<p>stream works!</p>
+<div [ngClass]="{'box-course' : data.status !== 'winner-solo' && data.status !== 'winner-relai',
+                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
+    <img [src]="getDynamicImageLink()" alt="Image">
+</div>
+
+
+<div class="module-maillot">
+    <div class="bib-bloc">
+        <div class="bib-item">{{data.bib}}</div>
+    </div>
+
+    <div class="box-nom">
+        <div class="nom">{{data.LastName}} <em>{{data.FirstName}}</em></div>
+        <div class="fleche-petite"></div>
+        <div class="rank-item">{{data.actualrank}}</div>
+        <div class="fleche-petite"></div>
+    </div>
+
+    <div class="tableau-coureur" ng-app="coureur-actuel" ng-controller="controleur-coureur">
+        <table>
+            <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-class-' + i">
+                <td *ngFor="let value of getRowValues(row); let j = index" 
+                    [ngClass]="{'cellule-decalee': (i === tableData.length - 1 && j === getRowValues(row).length - 1) || (i === 0 && j === getRowValues(row).length - 1)}">
+                    <img *ngIf="isImage(value)" [src]="'/assets/Medias/Pictogrammes/' + value + '.png'" alt="split img">
+                    <span *ngIf="!isImage(value)">{{ value }}</span>
+                </td>
+            </tr>
+        </table>
+        <div class="fleche-grosse"></div>
+    </div>
+</div>
+

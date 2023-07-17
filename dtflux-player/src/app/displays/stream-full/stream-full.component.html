@@ -1,0 +1,11 @@
+<div [ngClass]="data.display === 'podium' ? 'podium-display' : 'hidden'"
+    class="img-fond-podium">
+    <div class="1er">
+        <div class="photo-coureur"><img src="{{data.photo1}}" alt="Photo 1er"></div>
+        <div class="bib">{{data.bib1}}</div>
+        <div class="lastname">{{data.lastname1}}</div>
+        <div class="firstname">{{data.firstname1}}</div>
+        <div [ngClass]="data.ContestId === 1 ? 'lastnameR' : 'hidden'">{{data.lastnameR1}}</div>
+        <div [ngClass]="data.ContestId === 1 ? 'firstnameR' : 'hidden'">{{data.firstnameR1}}</div>
+    </div>
+</div>

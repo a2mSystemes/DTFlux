@@ -20,6 +20,7 @@ import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.co
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
 import { StreamComponent } from './displays/stream/stream.component';
 import { MockingService } from './services/mocking.service';
+import { StreamFullComponent } from './displays/stream-full/stream-full.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MockingService } from './services/mocking.service';
     ArchSpotter3Component,
     ArchSpotter2Component,
     ArchSpotter1Component,
-    StreamComponent
+    StreamComponent,
+    StreamFullComponent
 
   ],
   imports: [

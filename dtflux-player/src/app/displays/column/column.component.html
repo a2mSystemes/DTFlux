@@ -1,28 +1,27 @@
 <div class="image-fond"></div>
 
 <div class="grid-winner-container">
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Rank}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Bib}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].LastName}} {{data.tableaucoureurs[0].FirstName}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Swim}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Transition}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Run}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].FinishTime}}</div> 
-        <div class="grid-winner-item">{{data.tableaucoureurs[0].Gap}}</div> 
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Rank}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Bib}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].LastName}} {{data.tableaucoureurs[0].FirstName}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Swim}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Transition}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Run}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].FinishTime}}</div>
+        <div class="grid-winner-item">{{data.tableaucoureurs[0].Gap}}</div>
 </div>
 
 
 <div  class="grid-colonne-container">
-<ng-container *ngFor="let runner of data.tableaucoureurs let index = index; let isFirst = first;">  
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Rank}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Bib}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.LastName}} {{runner.FirstName}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Swim}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Transition}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Run}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.FinishTime}}</div> 
-        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Gap}}</div> 
+<ng-container *ngFor="let runner of data.tableaucoureurs let index = index; let isFirst = first;">
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Rank}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Bib}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.LastName}} {{runner.FirstName}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Swim}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Transition}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Run}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.FinishTime}}</div>
+        <div *ngIf="!isFirst" class="grid-colonne-item">{{runner.Gap}}</div>
 </ng-container>
 
 </div>
-  

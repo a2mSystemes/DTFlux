@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { truncateSync } from 'fs';
+import { run } from 'node:test';
+import { stringify } from 'querystring';
 import { Observable, Subscription } from 'rxjs';
+import { ILiveResult } from 'src/app/dtflux-ui-model/ILiveResult';
+import { RunnerResult } from 'src/app/dtflux-ui-model/IRunner';
 import { MockingService } from 'src/app/services/mocking.service';
+import { SelectedRunnerService } from 'src/app/services/selected-runner.service';
 
 
 
@@ -11,57 +17,63 @@ import { MockingService } from 'src/app/services/mocking.service';
   animations: []
 
 })
+
+let chronos: any[] = [];
+const afficheencours = 2;
+
 export class StreamComponent implements OnInit{
-  data?:any;
-  sub: Subscription;
+  data$:Array<ILiveResult> = new Array<ILiveResult>();
+  subLiveResult!: Subscription;
+  subSelectedRunner!: Subscription;
   tableData: any[] = [];
   props: string[] = ['img', 'time', 'gap'];
-  constructor(private mockingService:MockingService){
-    this.data = null;
+  selectedRunner$: number = -1;
 
-    this.sub = this.mockingService.data$.subscribe({
-      "next": (data) => {
-        console.log(data);
-        this.data = data;
-        data.status = 'finish-solo';
-        data.contest = 1;
-        data.selectorResult = 1;
-        data.LastName = "Maurin";
-        data.FirstName = "Ange-Marie";
-        data.bib = "109";
-        data.actualrank = "8";
-        data.chronos = [
-          {Split1img: "img1", Split1time: "08:09", Split1gap: "+00:07"},
-          {Split2img: "img2", Split2time: "12:04", Split2gap: "+00:14"},
-          {Split3img: "img3", Split3time: "16:32", Split3gap: "+00:54"},
-          {Split4img: "img4", Split4time: "18:24", Split4gap: "+01:20"},
-          {Split5img: "img5", Split5time: "28:17", Split5gap: "+01:24"},
-          {Finishimg: "img6", Finishtime: "44:08", Finishgap: "+02:08"},
-        ];
+  constructor(private _mockingService:MockingService, private _selectedRunnerService: SelectedRunnerService){
+    this.subLiveResult = this._mockingService.subscribeLiveResultDatas().subscribe({next : (data: Array<ILiveResult>) => {
+      this.data$ = data;
+    }});
+    this.subSelectedRunner = this._selectedRunnerService.subscribeSelectedRunner().subscribe({next : (selectedRunner: number) => {
+      this.selectedRunner$ = selectedRunner;
+  }});
+    // this.data = null;
 
-        const emptyTimeKeys = data.chronos.reduce((emptyKeys: any, current: any, index: number) => {
-          const keyPrefix = index < data.chronos.length - 1 ? 'Split' + (index + 1) : 'Finish';
-          if (current[keyPrefix + 'time'] === '') {
-            emptyKeys.push(keyPrefix);
-          }
-          return emptyKeys;
-        }, []);
-        
-        this.tableData = ['img', 'time', 'gap'].map(prop => {
-          return data.chronos.reduce((acc: any, current: any, index: any) => {
-            const keyPrefix = index < data.chronos.length - 1 ? 'Split' + (index + 1) : 'Finish';
-            if (!emptyTimeKeys.includes(keyPrefix)) {
-              const key = keyPrefix + prop;
-              acc[keyPrefix] = current[key];
-            }
-            return acc;
-          }, {});
-        });
+    // this.sub = this.mockingService.data$.subscribe({
+    //   "next": (data: Array<RunnerResult>) => {
 
-        
-      },
-      "error": (err) => {console.log(err);},
-    });
+    //     //data.status = 'finish-solo';
+    //     chronos = [
+    //       {Split1img: "img1", Split1time: data[afficheencours].split1Time, Split1gap: data[afficheencours].split1Gap},
+    //       {Split2img: "img2", Split2time: data[afficheencours].split2Time, Split2gap: data[afficheencours].split2Gap},
+    //       {Split3img: "img3", Split3time: data[afficheencours].split3Time, Split3gap: data[afficheencours].split3Gap},
+    //       {Split4img: "img4", Split4time: data[afficheencours].split4Time, Split4gap: data[afficheencours].split4Gap},
+    //       {Split5img: "img5", Split5time: data[afficheencours].split5Time, Split5gap: data[afficheencours].split5Gap},
+    //       {Finishimg: "img6", Finishtime: data[afficheencours].finishTime, Finishgap: data[afficheencours].finishGap},
+    //     ];
+
+    //     const emptyTimeKeys = chronos.reduce((emptyKeys: any, current: any, index: number) => {
+    //       const keyPrefix = index < chronos.length - 1 ? 'Split' + (index + 1) : 'Finish';
+    //       if (current[keyPrefix + 'time'] === '') {
+    //         emptyKeys.push(keyPrefix);
+    //       }
+    //       return emptyKeys;
+    //     }, []);
+
+    //     this.tableData = ['img', 'time', 'gap'].map(prop => {
+    //       return chronos.reduce((acc: any, current: any, index: any) => {
+    //         const keyPrefix = index < chronos.length - 1 ? 'Split' + (index + 1) : 'Finish';
+    //         if (!emptyTimeKeys.includes(keyPrefix)) {
+    //           const key = keyPrefix + prop;
+    //           acc[keyPrefix] = current[key];
+    //         }
+    //         return acc;
+    //       }, {});
+    //     });
+
+
+    //   },
+    //   "error": (err) => {console.log(err);},
+    // });
 
   }
 
@@ -74,11 +86,12 @@ export class StreamComponent implements OnInit{
   }
 
   isEmptyTime(index: number): boolean {
-    if (index === this.data.chronos.length - 1) {
-      return this.data.chronos[index]['Finishtime'] === '';
-    } else {
-      return this.data.chronos[index]['Split' + (index + 1) + 'time'] === '';
-    }
+    // if (index === this.chronos.length - 1) {
+    //   return this.chronos[index]['Finishtime'] === '';
+    // } else {
+    //   return this.chronos[index]['Split' + (index + 1) + 'time'] === '';
+    // }
+    return false;
   }
 
   isImage(value: string): boolean {
@@ -86,7 +99,7 @@ export class StreamComponent implements OnInit{
   }
 
   getDynamicImageLink(): string {
-    return `/assets/Medias/Course-stream/Nomcourse-${this.data.contest}-${this.data.selectorResult}.png`;
+    return `/assets/Medias/Course-stream/Nomcourse-${this.data$[0].ContestID}-${this.data$[0].stageId}.png`;
   }
 
 }

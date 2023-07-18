@@ -1,3 +1,4 @@
+import { run } from "node:test";
 import { IExporterResult } from "./IExporterResult";
 import { ILiveResult } from "./ILiveResult";
 
@@ -9,6 +10,7 @@ export interface IRunner {
   bib: number;
   firstName: string;
   lastName: string;
+  gender: string;
   firstName2: string;
   lastName2: string;
   status: '' | 'DNS' | 'DNF' | 'DSQ';
@@ -16,6 +18,7 @@ export interface IRunner {
 }
 
 export interface ITimingRunner {
+  startTime: string;
   split1Rank: number;
   split1Time: string; //time
   split1Gap: string; // "-" if first or "+$min:$sec"
@@ -47,6 +50,7 @@ export class Runner implements IRunner {
   contestId: number = -1;
   stageId: number = -1;
   bib: number = -1;
+  gender: string = "M";
   firstName: string = '';
   lastName: string = '';
   firstName2: string = '';
@@ -58,6 +62,7 @@ export class Runner implements IRunner {
     if(raceResult){
     this.contestId = raceResult.ContestID;
     this.stageId = raceResult.StageID;
+    this.gender = raceResult.Gender;
     this.bib = raceResult.Bib;
     this.firstName = raceResult.Firstname;
     this.lastName = raceResult.Lastname;
@@ -76,6 +81,7 @@ export class RunnerResults extends Array<RunnerResult>{
 const runners = new RunnerResults();
 
 export class RunnerResult extends Runner implements ITimingRunner {
+  startTime: string = "";
   split1Rank: number = 0;
   split1Time: string = ""; //time
   split1Gap: string = ""; // "-" if first or "+$min:$sec"
@@ -183,14 +189,13 @@ spotters.getSpotter('test');
 //Course en cours telle que définie via la page control du serveur
 
 export interface ICourse {
-  contestId: number; //1 XPS relais, 2 XP, 3 XPS hommes, 4 XPS Femmes
+  contestId: number; //1 XPS relais, 2 XP, 3 XPS
   stageId: number; //1 Kilo, 2 Mega, 3 Giga, 4 Tera, 5 Peta
-  startTime: Date;
+  startTime?: Date;
 }
 
 export class Course implements ICourse {
-  id?: number;
   contestId: number = -1;
   stageId: number = -1;
-  startTime: Date = new Date("12:55:00");
+  startTime?: Date = new Date("12:55:00");
 }

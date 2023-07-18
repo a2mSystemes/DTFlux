@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { Runner, RunnerResult } from '../dtflux-ui-model/IRunner';
+import { IRunner, Runner, RunnerResult } from '../dtflux-ui-model/IRunner';
 import { IExporterResult, ExporterResult } from '../dtflux-ui-model/IExporterResult';
 import { ILiveResult, LiveResult } from '../dtflux-ui-model/ILiveResult';
 
@@ -17,67 +17,62 @@ class MockingData<T>{
 
 export class MockingService {
   public static test:number = 0;
-  private _exporter: Array<IExporterResult> = new Array<ExporterResult>() ;
-  private _liveResult: Array<ILiveResult> = new Array<LiveResult>() ;
-  private _exporterSubject: Subject<Array<IExporterResult>> = new Subject<Array<IExporterResult>>()
-  private _liveResultSubject: Subject<Array<ILiveResult>> = new Subject<Array<ILiveResult>>()
+  private _runnerResults: Array<RunnerResult> = new Array<RunnerResult>() ;
+  private _runnerResultsSubject: Subject<Array<RunnerResult>> = new Subject<Array<RunnerResult>>()
 
 
   constructor() {
           let i=0;
         for(i ; i++; i < 10){
-          const exporter = new ExporterResult()
-          const result = new LiveResult();
+          const runner = new RunnerResult()
 
-          exporter.ContestID = result.ContestID =  1;
-          exporter.ContestName = result.ContestName = "XPS Relais";
-          exporter.StageID = result.StageID = 1;
-          exporter.StageName = result.StageName = "Kilo";
-          exporter.Bib = result.Bib = 100 + i;
-          exporter.Lastname = result.Lastname = "Last" + i;
-          exporter.Firstname = result.Firstname = "First" + i;
-          if(i%2 == 0) exporter.Gender = result.Gender = "M";
-          else exporter.Gender = result.Gender = "F";
-          exporter.Club = result.Club = "";
-          exporter.Lastname2 = result.Lastname2 = "LastR" + i;
-          exporter.Firstname2 = result.Firstname2 = "FirstR" + i;
-          if(i%2 == 0) exporter.Gender2 = result.Gender2 = "F";
-          else exporter.Gender2 = result.Gender2 = "M";
-          exporter.Club2 = result.Club2 = "";
-          exporter.TeamName = result.TeamName = "";
-          exporter.Category = result.Category = "Master";
-          exporter.StartTime = "08:30:00";
-          exporter.CurrentSplitName = "Kilo XPS Relais";
-          exporter.CurrentSplitRank = 1 + i;
-          exporter.CurrentSplitTime = "21:1" + i;
-          exporter.CurrentSplitGap = "+01:2" + i;
-          this._exporter.push(exporter);
+          runner.contestId =   1;
+          runner.stageId  = 1;
+          runner.bib = 100 + i;
+          runner.lastName = "Last" + i;
+          runner.firstName = "First" + i;
+          if(i%2 == 0) runner.gender = "M";
+          else runner.gender = "F";
+          runner.lastName2 = "LastR" + i;
+          runner.firstName2 = "FirstR" + i;
 
-          result.FinishGap = "+01:0" + i;
-          result.CurrentSplitRank = i;
-          result.FinishTime = "40:0" + i;
-          result.Split1Gap = "+00:1" + i;
-          result.Split1Time = "05:0" +i;
-          result.Split2Gap = "+00:2" + i;
-          result.Split2Time = "10:0" +i;
-          result.Split3Gap = "+00:3" + i;
-          result.Split3Time = "15:0" +i;
-          result.Split4Gap = "+00:4" + i;
-          result.Split4Time = "20:0" +i;
-          result.Split5Gap = "+00:5" + i;
-          result.Split5Time = "25:0" +i;
-          this._liveResult.push(result);
+          runner.startTime = "08:30:00";
+          runner.currentSplitName = "Kilo XPS Relais";
+          runner.currentSplitRank = 1 + i;
+          runner.currentSplitTime = "21:1" + i;
+          runner.currentSplitGap = "+01:2" + i;
+
+
+          runner.split1Gap = "+00:1" + i;
+          runner.split1Time = "05:0" +i;
+          runner.split1Rank = 1 + i;
+          runner.split2Gap = "+00:2" + i;
+          runner.split2Time = "10:0" +i;
+          runner.split2Rank = 1 + i;
+          runner.split3Gap = "+00:3" + i;
+          runner.split3Time = "15:0" +i;
+          runner.split3Rank = 1 + i;
+          runner.split4Gap = "+00:4" + i;
+          runner.split4Time = "20:0" +i;
+          runner.split4Rank = 1 + i;
+          runner.split5Gap = "+00:5" + i;
+          runner.split5Time = "25:0" +i;
+          runner.split5Rank = 1 + i;
+          runner.finishGap = "+01:0" + i;
+          runner.finishTime = "40:0" + i;
+          runner.finishRank = 1 + i;
+          runner.swim = "20:0" + i;
+          runner.transition = "01:0" + i;
+          runner.run = "40:0" + i;
+          this._runnerResults.push(runner);
         }
-        this._exporterSubject.next(this._exporter);
-        this._liveResultSubject.next(this._liveResult);
+        this._runnerResultsSubject.next(this._runnerResults);
 
   }
 
-  subscribeExporterDatas(): Observable<Array<IExporterResult>>{
-      return this._exporterSubject.asObservable();
-  }
-  subscribeLiveResultDatas(): Observable<Array<ILiveResult>>{
-      return this._liveResultSubject.asObservable();
+
+  subscribeRunnersResults(): Observable<Array<RunnerResult>>{
+      return this._runnerResultsSubject.asObservable();
   }
 
 

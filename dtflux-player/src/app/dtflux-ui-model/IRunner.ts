@@ -1,4 +1,3 @@
-import { run } from "node:test";
 import { IExporterResult } from "./IExporterResult";
 import { ILiveResult } from "./ILiveResult";
 

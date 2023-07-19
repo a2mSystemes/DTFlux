@@ -9,11 +9,11 @@ import { MockingService } from 'src/app/services/mocking.service';
 })
 export class ColumnComponent implements OnInit{
   data?:any;
-  sub: Subscription;
+  //sub: Subscription;
   constructor(private mockingService:MockingService){
     this.data = null;
 
-    this.sub = this.mockingService.data$.subscribe({
+/*     this.sub = this.mockingService.data$.subscribe({
       "next": (data) => {
         console.log(data);
         this.data = data;
@@ -35,7 +35,7 @@ export class ColumnComponent implements OnInit{
         ]
       },
       "error": (err) => {console.log(err);},
-    });
+    }); */
 
   }
 

@@ -64,9 +64,7 @@ export class StreamComponent implements OnInit{
   }
 
   getDynamicImageLink(): string {
-    //console.log( `/assets/Medias/Course-stream/Nomcourse-${this._runnersResult$[0].contestId}-${this._runnersResult$[0].stageId}.png`);
-    //return `/assets/Medias/Course-stream/Nomcourse-${this._runnersResult$[0].contestId}-${this._runnersResult$[0].stageId}.png`;
-    return "/assets/Medias/Course-stream/Nomcourse-"+1+"-"+4+".png";
+    return `/assets/Medias/Course-stream/Nomcourse-${this.runnerActuel.contestId}-${this.runnerActuel.stageId}.png`;
   }
 
   AfficheCoureur(runner: any): Array<any> {

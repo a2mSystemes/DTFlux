@@ -4,18 +4,17 @@ import { Runner, RunnerResult, RunnerResults } from 'src/app/dtflux-ui-model/IRu
 import { MockingService } from 'src/app/services/mocking.service';
 
 @Component({
-  selector: 'app-column',
-  templateUrl: './column.component.html',
-  styleUrls: ['./column.component.sass']
+  selector: 'app-column-f',
+  templateUrl: './column-f.component.html',
+  styleUrls: ['./column-f.component.sass']
 })
-
-export class ColumnComponent implements OnInit{
+export class ColumnFComponent implements OnInit{
   _runnersResult$:RunnerResults = new RunnerResults();
   subRunnerResult!: Subscription;
   tableData: any[] = [];
   runner?: RunnerResult;
   indexColonne: number = -1;
-  firstM: RunnerResult = new RunnerResult();
+  firstF: RunnerResult = new RunnerResult();
 
 
   constructor(private _mockingService:MockingService){
@@ -24,8 +23,8 @@ export class ColumnComponent implements OnInit{
       this.tableData = runners;
       let i=0;
       for (let runner of runners){
-          if(runners[i].currentSplitRank && (runner.gender === "M" || runner.contestId === 1)){
-            if(runner.currentSplitRank === 1) this.firstM = runner;
+          if(runners[i].currentSplitRank && runner.gender === "F"){
+            if(runner.currentSplitRank === 1) this.firstF = runner;
           }
       }
     }});

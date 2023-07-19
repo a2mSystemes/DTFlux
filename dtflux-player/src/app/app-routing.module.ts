@@ -18,6 +18,9 @@ import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.co
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
 import { StreamComponent } from './displays/stream/stream.component';
 import { StreamFullComponent } from './displays/stream-full/stream-full.component';
+import { ColumnWinnerComponent } from './displays/column-winner/column-winner.component';
+import { ColumnFComponent } from './displays/column-f/column-f.component';
+import { PodiumComponent } from './displays/podium/podium.component';
 
 const routes: Routes = [
   { path: 'control', component: ControlCenterComponent},
@@ -33,8 +36,11 @@ const routes: Routes = [
   { path: 'column', component: ColumnComponent},
   { path: 'info-etape', component: InfoEtapeComponent},
   { path: 'stream', component: StreamComponent},
-  { path: 'stream-full', component: StreamFullComponent}
-  
+  { path: 'stream-full', component: StreamFullComponent},
+  { path: 'column-winner', component:ColumnWinnerComponent},
+  { path: 'column-f', component:ColumnFComponent},
+  { path: 'podium', component:PodiumComponent}
+
 ];
 
 @NgModule({

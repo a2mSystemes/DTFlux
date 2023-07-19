@@ -1,4 +1,3 @@
-import { run } from "node:test";
 import { IExporterResult } from "./IExporterResult";
 import { ILiveResult } from "./ILiveResult";
 
@@ -45,6 +44,7 @@ export interface ITimingRunner {
   transition: string;
   run: string;
   totalTime: string;
+  rank: number;
 }
 export class Runner implements IRunner {
   contestId: number = -1;
@@ -95,7 +95,25 @@ export class RunnerResults{
       index++;
     }
     return -1;
-}
+  }
+
+  getRunnerResultCurrentRank(rank:number): RunnerResult | undefined{
+    for(let runner of this.runners){
+      if(runner.currentSplitRank === rank){
+        return runner;
+      }
+    }
+    return undefined;
+  }
+
+  getRunnerResultRank(rank:number): RunnerResult{
+    for(let runner of this.runners){
+      if(runner.rank === rank){
+        return runner;
+      }
+    }
+    return new RunnerResult();
+  }
 }
 
 
@@ -128,6 +146,7 @@ export class RunnerResult extends Runner implements ITimingRunner {
   transition: string = "";
   run: string = "";
   totalTime: string = "";
+  rank: number = 0;
 
   constructor(raceResult?: ILiveResult | ILiveResult){
   super(raceResult);
@@ -172,6 +191,10 @@ export class RunnerResult extends Runner implements ITimingRunner {
   }
   setTotalTime(totalTime: string): void {
     this.totalTime = totalTime;
+  }
+
+  setRank(rank: number): void {
+    this.rank = rank;
   }
 
 

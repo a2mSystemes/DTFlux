@@ -21,6 +21,9 @@ import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.co
 import { StreamComponent } from './displays/stream/stream.component';
 import { MockingService } from './services/mocking.service';
 import { StreamFullComponent } from './displays/stream-full/stream-full.component';
+import { ColumnFComponent } from './displays/column-f/column-f.component';
+import { ColumnWinnerComponent } from './displays/column-winner/column-winner.component';
+import { PodiumComponent } from './displays/podium/podium.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { StreamFullComponent } from './displays/stream-full/stream-full.componen
     ArchSpotter2Component,
     ArchSpotter1Component,
     StreamComponent,
-    StreamFullComponent
+    StreamFullComponent,
+    ColumnFComponent,
+    ColumnWinnerComponent,
+    PodiumComponent
 
   ],
   imports: [

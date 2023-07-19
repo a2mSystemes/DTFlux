@@ -27,7 +27,7 @@ export class MockingService {
         for(let i = 0 ; i < 10; i++){
           const runner = new RunnerResult()
           runner.contestId = 2;
-          runner.stageId  = 1;
+          runner.stageId  = 2;
           runner.bib = 100 + i;
           runner.lastName = "Last" + i;
           runner.firstName = "First" + i;
@@ -62,6 +62,7 @@ export class MockingService {
           runner.swim = "20:0" + i;
           runner.transition = "01:0" + i;
           runner.run = "40:0" + i;
+          runner.photo = "/assets/photos-coureurs/109.png";
           this._runnerResults.push(runner);
         }
     setTimeout(() => {

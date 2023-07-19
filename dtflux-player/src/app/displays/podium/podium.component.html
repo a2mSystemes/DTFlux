@@ -1,0 +1,12 @@
+<div *ngIf="firstRunner" class="img-winner-fond">
+  <div class="photo-winner"><img src="{{firstRunner.photo}}" alt="image"></div>
+  <div [ngClass]="firstRunner.contestId === 1 ? 'img-winner-relai' : 'img-winner-solo'"></div>
+  <div class="finish-time">{{firstRunner.totalTime}}</div>
+  <div [ngClass]="firstRunner.contestId === 1 ? 'bib-relai' : 'bib-solo'">{{firstRunner.bib}}</div>
+  <div [ngClass]="firstRunner.contestId === 1 ? 'box-noms-relai' : 'box-noms-solo'">
+    <div [ngClass]="firstRunner.contestId === 1 ? 'hidden' : 'name-solo'">{{firstRunner.lastName}}</div>
+    <div [ngClass]="firstRunner.contestId === 1 ? 'hidden' : 'name-solo'"><em>{{firstRunner.firstName}}</em></div>
+    <div [ngClass]="firstRunner.contestId === 1 ? 'name-relai' : 'hidden'">{{firstRunner.lastName}} <em>{{firstRunner.firstName}}</em></div>
+    <div [ngClass]="firstRunner.contestId === 1 ? 'name-relai' : 'hidden'">{{firstRunner.lastName2}} <em>{{firstRunner.firstName2}}</em></div>
+  </div>
+</div>

@@ -30,7 +30,6 @@ export class StreamComponent implements OnInit{
     // console.log('construct');
     this.subSelectedRunner = this._selectedRunnerService .subscribeSelectedRunner().subscribe({next : (selected:number) => {
       this.selectedRunner$ = selected;
-      console.log(selected);
       const RunnerActuel = this._runnersResult$.getRunnerResultBib(this.selectedRunner$);
       if(RunnerActuel) this.runnerActuel = RunnerActuel;
       this.AfficheCoureur(this.runnerActuel);
@@ -39,6 +38,9 @@ export class StreamComponent implements OnInit{
     this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: Array<RunnerResult>) => {
       console.log(runners);
       this._runnersResult$.runners = runners;
+      const RunnerActuel = this._runnersResult$.getRunnerResultBib(this.selectedRunner$);
+      if(RunnerActuel) this.runnerActuel = RunnerActuel;
+      this.AfficheCoureur(this.runnerActuel);
     }});
 
   }

@@ -1,17 +1,20 @@
-<div [ngClass]="{'box-course' : _runnersResult$[selectedRunner$].contestId !== 'winner-solo' && data.status !== 'winner-relai',
+<!-- <div [ngClass]="{'box-course' : _runnersResult$[selectedRunner$].contestId !== 'winner-solo' && data.status !== 'winner-relai',
                 'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
     <img [src]="getDynamicImageLink()" alt="Image">
+</div> -->
+<div *ngIf="runnerActuel" class="box-course">
+  <img [src]="getDynamicImageLink()" alt="Image">
 </div>
 
 <div class="module-maillot">
     <div class="bib-bloc">
-        <div class="bib-item">{{_runnersResult$[selectedRunner$].bib}}</div>
+        <div  class="bib-item">{{runnerActuel.bib}}</div>
     </div>
 
     <div class="box-nom">
-        <div class="nom">{{_runnersResult$[selectedRunner$].lastName}} <em>{{_runnersResult$[selectedRunner$].firstName}}</em></div>
+        <div class="nom">{{runnerActuel.lastName}} <em>{{runnerActuel.firstName}}</em></div>
         <div class="fleche-petite"></div>
-        <div class="rank-item">{{_runnersResult$[selectedRunner$].currentSplitRank}}</div>
+        <div class="rank-item">{{runnerActuel.currentSplitRank}}</div>
         <div class="fleche-petite"></div>
     </div>
 

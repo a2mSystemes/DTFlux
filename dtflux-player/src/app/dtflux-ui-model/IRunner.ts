@@ -74,11 +74,31 @@ export class Runner implements IRunner {
   }
 }
 }
-export class RunnerResults extends Array<RunnerResult>{
+export class RunnerResults{
+  runners: Array<RunnerResult> = new Array<RunnerResult>();
 
+  getRunnerResultBib(bib:number): RunnerResult | undefined{
+    for(let runner of this.runners){
+      if(runner.bib === bib){
+        return runner;
+      }
+    }
+    return undefined;
+  }
+  getRunnerResultBibIndex(bib:number): number{
+    let index = 0
+    for(let str in this.runners){
+      if(this.runners[index].bib === bib){
+        console.log(str);
+        return index;
+      }
+      index++;
+    }
+    return -1;
+}
 }
 
-const runners = new RunnerResults();
+
 
 export class RunnerResult extends Runner implements ITimingRunner {
   startTime: string = "";
@@ -153,6 +173,8 @@ export class RunnerResult extends Runner implements ITimingRunner {
   setTotalTime(totalTime: string): void {
     this.totalTime = totalTime;
   }
+
+
 }
 
 

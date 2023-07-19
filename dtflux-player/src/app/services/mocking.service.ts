@@ -18,15 +18,15 @@ class MockingData<T>{
 export class MockingService {
   public static test:number = 0;
   private _runnerResults: Array<RunnerResult> = new Array<RunnerResult>() ;
-  private _runnerResultsSubject: Subject<Array<RunnerResult>> = new Subject<Array<RunnerResult>>()
+  private _runnerResultsSubject: Subject<Array<RunnerResult>> = new Subject<Array<RunnerResult>>();
+
 
 
   constructor() {
-          let i=0;
-        for(i ; i++; i < 10){
-          const runner = new RunnerResult()
 
-          runner.contestId =   1;
+        for(let i = 0 ; i < 10; i++){
+          const runner = new RunnerResult()
+          runner.contestId = 2;
           runner.stageId  = 1;
           runner.bib = 100 + i;
           runner.lastName = "Last" + i;
@@ -41,8 +41,6 @@ export class MockingService {
           runner.currentSplitRank = 1 + i;
           runner.currentSplitTime = "21:1" + i;
           runner.currentSplitGap = "+01:2" + i;
-
-
           runner.split1Gap = "+00:1" + i;
           runner.split1Time = "05:0" +i;
           runner.split1Rank = 1 + i;
@@ -66,13 +64,15 @@ export class MockingService {
           runner.run = "40:0" + i;
           this._runnerResults.push(runner);
         }
-        this._runnerResultsSubject.next(this._runnerResults);
-
+    setTimeout(() => {
+      this._runnerResultsSubject.next(this._runnerResults);
+    }, 100)
+        // console.log(this._runnerResults);
   }
 
 
-  subscribeRunnersResults(): Observable<Array<RunnerResult>>{
-      return this._runnerResultsSubject.asObservable();
+  subscribeRunnersResults(): Subject<any> {
+      return this._runnerResultsSubject;
   }
 
 

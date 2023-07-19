@@ -14,12 +14,12 @@ export class StreamFullComponent implements OnInit{
   constructor(private mockingService:MockingService){
     this.data = null;
 
-    this.sub = this.mockingService.data$.subscribe({
+    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
       "next": (data) => {
         console.log(data);
         this.data = data;
         //data.photo1 et photo2 et photo3 à alimenter aussi
-        data.ContestId = 1;
+        /* data.ContestId = 1;
         data.display = "podium"; // valeur = "podium" pour afficher l'écran du podium OU
         //data.display = "recap" //valeur = "recap" pour afficher le tableau des athlètes
         data.bib1 = "109";
@@ -39,7 +39,7 @@ export class StreamFullComponent implements OnInit{
         data.firstname3 = "Ange-Marie";
         data.lastnameR3 = "Chassaing";
         data.firstnameR3 = "Jonathan";
-        data.totaltime3 = "1:28:35";
+        data.totaltime3 = "1:28:35"; */
       },
       "error": (err) => {console.log(err);},
     });

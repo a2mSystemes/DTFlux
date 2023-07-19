@@ -16,7 +16,7 @@ export class ControlCenterComponent implements OnInit {
 
   constructor(private mockingService: MockingService){
     this.isFirst = true;
-    this.sub = this.mockingService.data$.subscribe({
+    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
       "next": (data) => console.log(data),
       "error" : (err) => console.log(err)
     });
@@ -32,27 +32,27 @@ export class ControlCenterComponent implements OnInit {
   XPSH(): void {
     console.log("Contest = 3 & Gender = H")
    }
- 
+
    XPSF(): void {
     console.log("Contest = 3 & Gender = F")
    }
- 
+
    XPSR(): void {
     console.log("Contest = 1")
    }
- 
+
    FXP(): void {
     console.log("Tableau XP")
    }
- 
+
    FXPSH(): void {
      console.log("Tableau XPS Hommes")
     }
-  
+
     FXPSF(): void {
      console.log("Tableau XPS Femmes")
     }
-  
+
     FXPSR(): void {
      console.log("Tableau XPS Relais")
     }
@@ -101,11 +101,11 @@ export class ControlCenterComponent implements OnInit {
     peta2(): void {
       console.log("Etape peta 2")
      }
-    
+
      waiting(): void {
       console.log("Enleve le wainting 1")
      }
-    
+
 
      ValiderMaillot(): void {
       console.log("Maillot :")

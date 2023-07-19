@@ -13,12 +13,10 @@ export class ArchSpotter1Component implements OnInit{
   constructor(private mockingService:MockingService){
     this.data = null;
 
-    this.sub = this.mockingService.data$.subscribe({
+    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
       "next": (data) => {
-        console.log(data);
         this.data = data;
-        data.status = 'finish-relai';
-      },
+        },
       "error": (err) => {console.log(err);},
     });
 

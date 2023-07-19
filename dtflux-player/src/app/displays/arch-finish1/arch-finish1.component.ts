@@ -15,8 +15,8 @@ export class ArchFinish1Component implements OnInit{
   constructor(private mockingService:MockingService){
     this.data = null;
 
-    this.sub = this.mockingService.data$.subscribe({
-      "next": (data) => {
+    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
+      next: (data:any) => {
         console.log(data);
         this.data = data;
         data.status = 'winner-solo';

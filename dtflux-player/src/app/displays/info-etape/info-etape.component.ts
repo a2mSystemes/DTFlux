@@ -13,11 +13,11 @@ export class InfoEtapeComponent implements OnInit{
   constructor(private mockingService:MockingService){
     this.data = null;
 
-    this.sub = this.mockingService.data$.subscribe({
+    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
       "next": (data) => {
         console.log(data);
         this.data = data;
-        data.status = 'finish-solo';
+/*         data.status = 'finish-solo';
         data.contest = 3;
         data.selectorResult = 2;
         data.decompteH = "23:17";
@@ -26,7 +26,7 @@ export class InfoEtapeComponent implements OnInit{
         data.lastName1 = "Chassaing";
         data.firstName1 = "Jonathan";
         data.lastName2 = "Maurin";
-        data.firstName2 = "Ange-Marie";
+        data.firstName2 = "Ange-Marie"; */
       },
       "error": (err) => {console.log(err);},
     });

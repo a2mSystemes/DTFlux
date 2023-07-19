@@ -24,6 +24,7 @@ import { StreamFullComponent } from './displays/stream-full/stream-full.componen
 import { ColumnFComponent } from './displays/column-f/column-f.component';
 import { ColumnWinnerComponent } from './displays/column-winner/column-winner.component';
 import { PodiumComponent } from './displays/podium/podium.component';
+import { PrivateComponent } from './components/private/private.component';
 
 @NgModule({
   declarations: [
@@ -43,10 +44,7 @@ import { PodiumComponent } from './displays/podium/podium.component';
     ArchSpotter2Component,
     ArchSpotter1Component,
     StreamComponent,
-    StreamFullComponent,
-    ColumnFComponent,
-    ColumnWinnerComponent,
-    PodiumComponent
+    StreamFullComponent
 
   ],
   imports: [

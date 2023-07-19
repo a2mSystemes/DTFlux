@@ -9,18 +9,21 @@ import path from "path";
 import * as conf from "./dtflux-conf/conf.json";
 import { Subscription } from "rxjs";
 import {DTFluxExporterService} from './dtflux-services/dtflux-exporter.service'
+import { DTFluxLiveResultService } from "./dtflux-services/dtflux-live-result.service";
 
 
 export class App {
   private _expressApp: Application;
   private _dtfluxDbService: DTFluxDbService;
   private _dtfluxExporterService: DTFluxExporterService;
+  private _dtfluxLiveResulService: DTFluxLiveResultService;
 
 
   constructor() {
     this._expressApp = express();
     this._dtfluxDbService = new DTFluxDbService(); // Replace with your database name
     this._dtfluxExporterService = new DTFluxExporterService(this._dtfluxDbService)
+    this._dtfluxLiveResulService = new DTFluxLiveResultService();
     // Middleware to parse JSON data
     this._expressApp.use(express.json());
 
@@ -38,8 +41,9 @@ export class App {
 
     // Websocket Controller
     const websocketController = new WebsocketController(
-      this._dtfluxDbService,
+      this._dtfluxDbService,this._dtfluxExporterService, this._dtfluxLiveResulService
     );
+
     // this._expressApp.use("/dtflux-api/v1/ws", websocketController.router);
 
     // Serve static files for command controllers (if any)

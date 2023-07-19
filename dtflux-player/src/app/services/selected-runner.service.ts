@@ -10,7 +10,7 @@ export class SelectedRunnerService {
   private _data2: number = 106;
   private mySwitch: boolean = false;
   private _selectedSubject: Subject<number>;
-  int: NodeJS.Timer;
+  int: any;
   constructor() {
     this._selectedSubject = new Subject<number>();
     setTimeout(() =>

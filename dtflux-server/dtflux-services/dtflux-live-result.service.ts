@@ -15,11 +15,13 @@ export class ContestID {
   "XPS": number;
 }
 
-export class HttpPollerService {
+export class DTFluxLiveResultService {
+
   timer: Observable<number>;
   timerSub?: Subscription;
   data$: Subject<any> = new Subject<any>();
   contest: string = "XP";
+  private _changesSubject = new Subject<any>();
 
   constructor(conf?: IHttpPollerConfig) {
     this.timer = timer(0, config.raceResultAPI.refreshApiTimer);
@@ -69,4 +71,9 @@ export class HttpPollerService {
     }
     this.data$.next(data);
   }
+  
+  getChanges(): Observable<any> {
+    return this._changesSubject.asObservable();
+  }
+  
 }

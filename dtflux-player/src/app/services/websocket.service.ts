@@ -49,49 +49,58 @@ export class WebsocketService implements OnInit {
   private _commandsChannel: WebSocketSubject<any>;
   private _dbChannel: WebSocketSubject<any>;
 
+
   constructor() {
     this._commandsChannel = webSocket<any>(SERVER_URL + "?channel=command" );
     this._exporterChannel = webSocket(SERVER_URL + "?channel=exporter" );
     this._liveResultChannel = webSocket<any>(SERVER_URL + "?channel=live-result" );
     this._timersChannel = webSocket<any>(SERVER_URL + "?channel=timers" );
     this._dbChannel = webSocket<any>(SERVER_URL + "?channel=db" );
+    this.sendToExporter({msg: "hello"});
+    this._exporterChannel.subscribe((data) => {
+      console.log(data);
+    })
   }
   ngOnInit(): void {
-
+    // this._commandsChannel.next({channel: "command", command: "hello from commandsChannel"});
+    // this._exporterChannel.next({channel: "exporter", command: "hello from exporterChannel"});
+    // this._liveResultChannel.next({channel: "live-result",command: "hello from liveResultChannel"});
+    // this._timersChannel.next({channel: "timers",command: "hello from timersChannel"});
+    // this._dbChannel.next({channel: "db",command: "hello from dbChannel"});
   }
 
   subscribeWsExporter(){
-    return this._exporterChannel.asObservable()
+    return this._exporterChannel.asObservable();
   }
   subscribeWsLiveResult(){
-    return this._liveResultChannel.asObservable()
+    return this._liveResultChannel.asObservable();
   }
   subscribeWsTimers(){
-    return this._timersChannel.asObservable()
+    return this._timersChannel.asObservable();
   }
   subscribeWsCommands(){
-    return this._commandsChannel.asObservable()
+    return this._commandsChannel.asObservable();
   }
 
-  sendToExporter(){
-    const data = {response: "OK from exporterClient"}
-    console.log(data);
-    this._exporterChannel.next(data);
-  }
-  sendToLiveResult(){
-    const data = {response: "OK from liveResultClient"}
+  sendToExporter(data?: any){
+    const mesg = {channel: "exporter", ...data  }
     console.log(data);
     this._liveResultChannel.next(data);
   }
-  sendToWsTimers(){
-    const data = {response: "OK from TimerClient"}
+  sendToLiveResult(data?: any){
+    const mesg = {channel: "live-result", ...data  }
     console.log(data);
-    this._timersChannel.next(data)
+    this._liveResultChannel.next(data);
   }
-  sendToWsCommand(){
-    const data = {response: "OK from commandClient"}
+  sendToWsTimers(data?: any){
+    const mesg = {channel: "timers", ...data  }
     console.log(data);
-    this._commandsChannel.next(data)
+    this._liveResultChannel.next(data);
+  }
+  sendToWsCommand(data?: any){
+    const mesg = {channel: "command", ...data }
+    console.log(data);
+    this._liveResultChannel.next(data);
   }
 
 }

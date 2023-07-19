@@ -2,7 +2,7 @@ import * as conf from "./../dtflux-conf/conf.json";
 
 export class DTFluxURLBuilderService {
   buildURL(
-    what?: "StratList" | "LiveResult" | "GenClasification",
+    what: "StratList" | "LiveResult" | "GenClasification" = "LiveResult",
     contestId?: number,
     filters?: any,
   ): string {
@@ -11,14 +11,25 @@ export class DTFluxURLBuilderService {
     let url = c.useLocal ? c.baseLocalUrl + "/_" : c.baseDistantUrl;
     url += c.idEvent;
     url += c.useLocal ? "/api/" : "";
-    url += c.resources.liveStageResultKey;
-    url += contestId? "?Contest=" + contestId : "";
+    switch (what) {
+      case "GenClasification":
+        url += c.resources.generalClassificationKey;
+        break;
+      case "StratList":
+        url += c.resources.startListKey;
+        break;
+      default:
+        url += c.resources.liveStageResultKey;
+        break;
+
+    }
+    url += contestId ? "?Contest=" + contestId : "";
     if (filters) {
       // console.log("filters: " + filters);
     } else {
       // console.log("filters is null");
     }
-    console.log("url: " + url);
+    // console.log("url: " + url);
     return url;
   }
 }

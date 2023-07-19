@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { IRunner, Runner, RunnerResult } from '../dtflux-ui-model/IRunner';
-import { IExporterResult, ExporterResult } from '../dtflux-ui-model/IExporterResult';
-import { ILiveResult, LiveResult } from '../dtflux-ui-model/ILiveResult';
+import { RunnerResult } from '../dtflux-ui-model/core.model/RunnerResult';
+
 
 class MockingData<T>{
   private data:T

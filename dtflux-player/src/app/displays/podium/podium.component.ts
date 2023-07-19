@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Runner, RunnerResult, RunnerResults } from 'src/app/dtflux-ui-model/IRunner';
+import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
+import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { MockingService } from 'src/app/services/mocking.service';
 
 @Component({
@@ -18,8 +19,8 @@ export class PodiumComponent implements OnInit{
   thirdRunner?: RunnerResult;
 
   constructor(private _mockingService:MockingService){
-    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: Array<RunnerResult>) => {
-      this._runnersResult$.runners = runners;
+    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: RunnerResults) => {
+      this._runnersResult$ = runners;
       this.firstRunner = this._runnersResult$.getRunnerResultRank(1);
       this.secondRunner = this._runnersResult$.getRunnerResultRank(2);
       this.thirdRunner = this._runnersResult$.getRunnerResultRank(3);

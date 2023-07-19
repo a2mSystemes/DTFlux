@@ -44,8 +44,11 @@ import { PrivateComponent } from './components/private/private.component';
     ArchSpotter2Component,
     ArchSpotter1Component,
     StreamComponent,
-    StreamFullComponent
-
+    StreamFullComponent,
+    ColumnFComponent,
+    ColumnWinnerComponent,
+    PodiumComponent,
+    PrivateComponent
   ],
   imports: [
     BrowserModule,

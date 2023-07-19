@@ -40,8 +40,7 @@ const routes: Routes = [
   { path: 'stream-full', component: StreamFullComponent},
   { path: 'column-winner', component:ColumnWinnerComponent},
   { path: 'column-f', component:ColumnFComponent},
-  { path: 'podium', component:PodiumComponent}
-
+  { path: 'podium', component:PodiumComponent},
   { path: 'stream-full', component: StreamFullComponent},
   { path: 'private', component: PrivateComponent}
 

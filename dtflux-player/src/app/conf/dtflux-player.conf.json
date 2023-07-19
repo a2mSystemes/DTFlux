@@ -1,4 +1,5 @@
 {
-  "displayTimers" : {"winnerTime" : 6000,"finnishTime" : 6000}
+  "displayFinisherTime" : 6000,
+  "displayWinnerTime" : 6000
 
 }

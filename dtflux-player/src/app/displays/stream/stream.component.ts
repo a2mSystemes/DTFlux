@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ILiveResult } from 'src/app/dtflux-ui-model/ILiveResult';
-import { Runner, RunnerResult, RunnerResults } from 'src/app/dtflux-ui-model/IRunner';
+import { ILiveResult } from 'src/app/dtflux-ui-model/race-result.model/ILiveResult';
+import { Runner } from 'src/app/dtflux-ui-model/core.model/Runner';
+import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
+import {RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { MockingService } from 'src/app/services/mocking.service';
 import { SelectedRunnerService } from 'src/app/services/selected-runner.service';
 
@@ -32,10 +34,10 @@ export class StreamComponent implements OnInit{
       this.AfficheCoureur(this.runnerActuel);
     }})
     console.log(this.selectedRunner$);
-    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: Array<RunnerResult>) => {
+    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: RunnerResults) => {
       console.log(runners);
-      this._runnersResult$.runners = runners;
-      const RunnerActuel = this._runnersResult$.getRunnerResultBib(this.selectedRunner$);
+      this._runnersResults = runners;
+      const RunnerActuel = this._runnersResults.getRunnerResultBib(this.selectedRunner$);
       if(RunnerActuel) this.runnerActuel = RunnerActuel;
       this.AfficheCoureur(this.runnerActuel);
     }});
@@ -63,6 +65,7 @@ export class StreamComponent implements OnInit{
   }
 
   getDynamicImageLink(): string {
+    console.log(`${this.runnerActuel.stageId}.png`);
     return `/assets/Medias/Course-stream/Nomcourse-${this.runnerActuel.contestId}-${this.runnerActuel.stageId}.png`;
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Runner, RunnerResult, RunnerResults } from 'src/app/dtflux-ui-model/IRunner';
+import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
+import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { MockingService } from 'src/app/services/mocking.service';
 
 @Component({
@@ -20,8 +21,8 @@ export class ColumnWinnerComponent implements OnInit{
   winnerHok: boolean = false;
 
   constructor(private _mockingService:MockingService){
-    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: Array<RunnerResult>) => {
-      this._runnersResult$.runners = runners;
+    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: RunnerResults) => {
+      this._runnersResult$ = runners;
       let i=0;
       for (let runner of runners){
           if(runner.finishRank === 1 && runner.gender === "M" && this.winnerHok === false){

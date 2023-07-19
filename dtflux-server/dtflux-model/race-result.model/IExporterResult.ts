@@ -1,6 +1,5 @@
-import { IRaceResult } from "../core.model/IRaceResult";
 
-export interface IExporterResult extends IRaceResult{
+export interface IExporterResult{
   ContestID: number;
   ContestName: string;
   StageID: number;
@@ -21,4 +20,5 @@ export interface IExporterResult extends IRaceResult{
   CurrentSplitRank: number;
   CurrentSplitTime: string;
   CurrentSplitGap: string;
+  $type: string;
 }

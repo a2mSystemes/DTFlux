@@ -13,7 +13,7 @@ import { SelectedRunnerService } from 'src/app/services/selected-runner.service'
 })
 
 export class StreamComponent implements OnInit{
-  _runnersResult$:RunnerResults = new RunnerResults();
+  _runnersResults:RunnerResults = new RunnerResults();
   subRunnerResult!: Subscription;
   subSelectedRunner!: Subscription;
   tableData: any[] = [];
@@ -28,14 +28,14 @@ export class StreamComponent implements OnInit{
     this.subSelectedRunner = this._selectedRunnerService .subscribeSelectedRunner().subscribe({next : (selected:number) => {
       this.selectedRunner$ = selected;
       console.log(selected);
-      const RunnerActuel = this._runnersResult$.getRunnerResultBib(this.selectedRunner$);
+      const RunnerActuel = this._runnersResults.getRunnerResultBib(this.selectedRunner$);
       if(RunnerActuel) this.runnerActuel = RunnerActuel;
       this.AfficheCoureur(this.runnerActuel);
     }})
     console.log(this.selectedRunner$);
     this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: Array<RunnerResult>) => {
       console.log(runners);
-      this._runnersResult$.runners = runners;
+      this._runnersResults.runners = runners;
     }});
 
   }

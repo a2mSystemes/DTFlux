@@ -18,6 +18,7 @@ import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.co
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
 import { StreamComponent } from './displays/stream/stream.component';
 import { StreamFullComponent } from './displays/stream-full/stream-full.component';
+import { PrivateComponent } from './components/private/private.component';
 
 const routes: Routes = [
   { path: 'control', component: ControlCenterComponent},
@@ -33,8 +34,9 @@ const routes: Routes = [
   { path: 'column', component: ColumnComponent},
   { path: 'info-etape', component: InfoEtapeComponent},
   { path: 'stream', component: StreamComponent},
-  { path: 'stream-full', component: StreamFullComponent}
-  
+  { path: 'stream-full', component: StreamFullComponent},
+  { path: 'private', component: PrivateComponent}
+
 ];
 
 @NgModule({

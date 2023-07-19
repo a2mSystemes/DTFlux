@@ -21,14 +21,14 @@ export class WebsocketController {
   }
 
   private setupOutgoingRoutes(): void {
-    this._dtfluxWebSocketService.addRoute("exporter");
-    this._dtfluxWebSocketService.addRoute("live-result");
-    this._dtfluxWebSocketService.addRoute("db");
-    this._dtfluxWebSocketService.addRoute("command");
+    // this._dtfluxWebSocketService.addRoute("exporter", this.);
+    // this._dtfluxWebSocketService.addRoute("live-result");
+    // this._dtfluxWebSocketService.addRoute("db");
+    // this._dtfluxWebSocketService.addRoute("command");
     // Ajoutez d'autres routes WebSocket ici
   }
 
   private setupIncomingRoutes(): void {
-    this._dtfluxWebSocketService.addRoute("start", true);
+    // this._dtfluxWebSocketService.addRoute("start", true);
   }
 }

@@ -1,4 +1,5 @@
 {
+    "displayFinisherTime" : 6000,
     "dbAutosave": true,
     "dbAutosaveInterval": 6000,
     "dbPath": "./dtflux-db",
@@ -12,7 +13,7 @@
     "httpHost": "0.0.0.0",
     "raceResultAPI": {
         "useLocal": false,
-        "refreshApiTimer": 2000,
+        "refreshApiTimer": 5000,
         "baseDistantUrl": "https://api.raceresult.com/",
         "baseLocalUrl": "",
         "idEvent": "246158/",

@@ -3,7 +3,7 @@ import * as conf from "./../dtflux-conf/conf.json";
 export class DTFluxURLBuilderService {
   buildURL(
     what?: "StratList" | "LiveResult" | "GenClasification",
-    contestId?: "XPSRelais" | "XP" | "XPS",
+    contestId?: number,
     filters?: any,
   ): string {
     what = what ? what : "LiveResult";
@@ -12,7 +12,7 @@ export class DTFluxURLBuilderService {
     url += c.idEvent;
     url += c.useLocal ? "/api/" : "";
     url += c.resources.liveStageResultKey;
-    url += contestId? "?Contest=" + c.contests[contestId] : "";
+    url += contestId? "?Contest=" + contestId : "";
     if (filters) {
       // console.log("filters: " + filters);
     } else {

@@ -44,17 +44,17 @@ export class StartTimerMessage{
 })
 export class WebsocketService implements OnInit {
   private _exporterChannel: WebSocketSubject<any>;
-  private _liveResultSubject: WebSocketSubject<any>;
-  private _timersSubject: WebSocketSubject<any>;
-  private _commandsSubject: WebSocketSubject<any>;
-  private _dbSubject: WebSocketSubject<any>;
+  private _liveResultChannel: WebSocketSubject<any>;
+  private _timersChannel: WebSocketSubject<any>;
+  private _commandsChannel: WebSocketSubject<any>;
+  private _dbChannel: WebSocketSubject<any>;
 
   constructor() {
+    this._commandsChannel = webSocket<any>(SERVER_URL + "?channel=command" );
     this._exporterChannel = webSocket(SERVER_URL + "?channel=exporter" );
-    this._liveResultSubject = webSocket<any>(SERVER_URL + "?channel=live-result" );
-    this._timersSubject = webSocket<any>(SERVER_URL + "?channel=timers" );
-    this._commandsSubject = webSocket<any>(SERVER_URL + "?channel=command" );
-    this._dbSubject = webSocket<any>(SERVER_URL + "?channel=db" );
+    this._liveResultChannel = webSocket<any>(SERVER_URL + "?channel=live-result" );
+    this._timersChannel = webSocket<any>(SERVER_URL + "?channel=timers" );
+    this._dbChannel = webSocket<any>(SERVER_URL + "?channel=db" );
   }
   ngOnInit(): void {
 
@@ -64,26 +64,34 @@ export class WebsocketService implements OnInit {
     return this._exporterChannel.asObservable()
   }
   subscribeWsLiveResult(){
-    return this._exporterChannel.asObservable()
+    return this._liveResultChannel.asObservable()
   }
   subscribeWsTimers(){
-    return this._exporterChannel.asObservable()
+    return this._timersChannel.asObservable()
   }
   subscribeWsCommands(){
-    return this._exporterChannel.asObservable()
+    return this._commandsChannel.asObservable()
   }
 
-  sendToExporter(data: any){
+  sendToExporter(){
+    const data = {response: "OK from exporterClient"}
+    console.log(data);
     this._exporterChannel.next(data);
   }
-  sendToLiveResult(data: any){
-    this._liveResultSubject.next(data);
+  sendToLiveResult(){
+    const data = {response: "OK from liveResultClient"}
+    console.log(data);
+    this._liveResultChannel.next(data);
   }
-  sendToWsTimers(data: any){
-    this._timersSubject.next(data)
+  sendToWsTimers(){
+    const data = {response: "OK from TimerClient"}
+    console.log(data);
+    this._timersChannel.next(data)
   }
-  sendToWsCommand(data: any){
-    this._commandsSubject.next(data)
+  sendToWsCommand(){
+    const data = {response: "OK from commandClient"}
+    console.log(data);
+    this._commandsChannel.next(data)
   }
 
 }

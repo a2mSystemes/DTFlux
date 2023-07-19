@@ -1,1 +1,17 @@
-<p>private works!</p>
+<div *ngIf="dataExporter">
+  <p>{{ dataExporter.text}}</p>
+</div>
+<div *ngIf="dataLiveResult">
+  <p>{{ dataLiveResult.text}}</p>
+</div>
+<div *ngIf="dataTimers">
+  <p>{{ dataTimers.text}}</p>
+</div>
+<div *ngIf="dataCommands">
+  <p>{{ dataCommands.text}}</p>
+</div>
+
+<button (click)="sendCommand()">Send to Command</button>
+<button (click)="sendToTimer()">Send to Timer</button>
+<button (click)="sendToLiveResult()">Send to LiveResult</button>
+<button (click)="sendToExporter()">Send to Exporters</button>

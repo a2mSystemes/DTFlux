@@ -1,9 +1,8 @@
 import { Observable, Subject, Subscription, timer } from "rxjs";
 import * as config from "../dtflux-conf/conf.json";
 import axios from "axios";
-import { IParticipant } from "../dtflux-model/dtflux-schema.model";
-import { ILiveResult } from "../dtflux-model/race-result.model/ILiveResult";
-import { LiveResultResultset } from "../dtflux-model/race-result.model/LiveResultResultset";
+import { DTFluxURLBuilderService } from "./dtflux-url-builder.service";
+import { RunnerResults } from "../dtflux-model/core.model/RunnerResults";
 
 export interface IHttpPollerConfig {
   startTime?: Date | number;
@@ -19,40 +18,20 @@ export class DTFluxLiveResultService {
 
   timer: Observable<number>;
   timerSub?: Subscription;
-  data$: Subject<any> = new Subject<any>();
-  contest: string = "XP";
   private _changesSubject = new Subject<any>();
+  private _urlBuilder: DTFluxURLBuilderService = new DTFluxURLBuilderService();
 
   constructor(conf?: IHttpPollerConfig) {
     this.timer = timer(0, config.raceResultAPI.refreshApiTimer);
   }
 
-  private buildURL(
-    what?: "StratList" | "LiveResult" | "GenClasification",
-    filters?: any,
-  ): string {
-    what = what ? what : "LiveResult";
-    let conf = config.raceResultAPI as any; // no typing here
-    let url = conf.useLocal ? conf.baseLocalUrl + "/_" : conf.baseDistantUrl;
-    url += conf.idEvent;
-    url += conf.useLocal ? "/api/" : "";
-    url += conf.resources.liveStageResultKey + "?Contest=";
-    url += conf.contests[this.contest];
-    if (filters) {
-      // console.log("filters: " + filters);
-    } else {
-      // console.log("filters is null");
-    }
-    // console.log("url: " + url);
-    return url;
-  }
-
+  
   start() {
     this.timerSub = this.timer.subscribe(() => {
       axios
-        .get(this.buildURL())
+        .get(this._urlBuilder.buildURL())
         .then((response) => {
-          this.updateData(response.data as LiveResultResultset);
+          this.updateData(response.data);
         })
         .catch((error) => {
           console.log("axios error");
@@ -65,11 +44,11 @@ export class DTFluxLiveResultService {
     this.timerSub?.unsubscribe();
   }
 
-  updateData(data: LiveResultResultset) {
-    const participants = new Array<IParticipant>();
-    for (const r of data) {
-    }
-    this.data$.next(data);
+  updateData(data: any) {
+    const runners = new RunnerResults(data);
+    console.log("in LiveResult Service");
+    // console.log(runners[0]);
+    this._changesSubject.next(data);
   }
   
   getChanges(): Observable<any> {

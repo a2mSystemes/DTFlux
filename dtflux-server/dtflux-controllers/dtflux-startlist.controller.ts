@@ -6,8 +6,6 @@ import { error } from "console";
 import { ICurrentServerState, IParticipant } from "../dtflux-model/dtflux-schema.model";
 import { Collection } from "lokijs";
 import axios from "axios";
-import { Participant } from "../dtflux-model/core.model/Participant";
-import { Team } from "../dtflux-model/core.model/Team";
 import { DTFluxURLBuilderService } from "./../dtflux-services/dtflux-url-builder.service";
 
 export class StartListController {

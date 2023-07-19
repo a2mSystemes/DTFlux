@@ -1,3 +1,4 @@
+
 export interface ILiveResult {
   Report: string;
   ContestID: number;
@@ -11,7 +12,7 @@ export interface ILiveResult {
   Club: string;
   Firstname2: string;
   Lastname2: string;
-  Gender2: "M" | "F";
+  Gender2: "M" | "F" | "";
   Club2: string;
   TeamName: string;
   Category: string;
@@ -48,4 +49,6 @@ export interface ILiveResult {
   Swim: string;
   Transition: string;
   Run: string;
+  $type: string;
 }
+

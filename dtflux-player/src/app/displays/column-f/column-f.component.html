@@ -1,0 +1,25 @@
+<div class="image-fond"></div>
+
+<div class="grid-winner-container">
+        <div class="grid-winner-item" *ngIf="firstF.currentSplitRank>=1">{{firstF.currentSplitRank}}</div>
+        <div class="grid-winner-item" *ngIf="firstF.bib>=1">{{firstF.bib}}</div>
+        <div class="grid-winner-item">{{firstF.lastName}} {{firstF.firstName}}</div>
+        <div class="grid-winner-item">{{firstF.swim}}</div>
+        <div class="grid-winner-item">{{firstF.transition}}</div>
+        <div class="grid-winner-item">{{firstF.run}}</div>
+        <div class="grid-winner-item">{{firstF.finishTime}}</div>
+</div>
+
+
+<div  class="grid-colonne-container">
+  <ng-container *ngFor="let runner of tableData let index = index;">
+          <div class="grid-colonne-item" *ngIf="tableData[index].currentSplitRank>=1">{{tableData[index].currentSplitRank}}</div>
+          <div class="grid-colonne-item" *ngIf="tableData[index].bib>=1">{{tableData[index].bib}}</div>
+          <div class="grid-colonne-item">{{tableData[index].lastName}} {{tableData[index].firstName}}</div>
+          <div class="grid-colonne-item">{{tableData[index].swim}}</div>
+          <div class="grid-colonne-item">{{tableData[index].transition}}</div>
+          <div class="grid-colonne-item">{{tableData[index].run}}</div>
+          <div class="grid-colonne-item">{{tableData[index].finishTime}}</div>
+          <div class="grid-colonne-item">{{tableData[index].currentSplitGap}}</div>
+  </ng-container>
+</div>

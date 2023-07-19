@@ -1,7 +1,3 @@
-<!-- <div [ngClass]="{'box-course' : _runnersResult$[selectedRunner$].contestId !== 'winner-solo' && data.status !== 'winner-relai',
-                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
-    <img [src]="getDynamicImageLink()" alt="Image">
-</div> -->
 <div *ngIf="runnerActuel" class="box-course">
   <img [src]="getDynamicImageLink()" alt="Image">
 </div>

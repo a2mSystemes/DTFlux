@@ -5,9 +5,9 @@ export class StageFinishers {
   static spotterKeyword: string = "Dernière ligne droite";
   static finishKeyword: string = "Arrivée";
   spotters: RunnerResults = new RunnerResults();
-  maxSpotters: number = 4; // default to 4 max spotters
+  // maxSpotters: number = 4; // default to 4 max spotters
   finishers: RunnerResults = new RunnerResults();
-  maxFinisher: number = 4; // default to 4 max
+  // maxFinisher: number = 4; // default to 4 max
   winner: RunnerResult = new RunnerResult();
   addExporterData(jsonData: any) {
     const runner = new RunnerResult(jsonData);

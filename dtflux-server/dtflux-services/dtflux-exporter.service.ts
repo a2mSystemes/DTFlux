@@ -7,6 +7,7 @@ import { Collection } from "lokijs";
 import { RunnerResult, RunnerResults } from "../dtflux-model/core.model/RunnerResults";
 import { ExporterResult } from "../dtflux-model/race-result.model/ExporterResult";
 import { StageFinishers } from "../dtflux-model/core.model/StageFinishers";
+import { DTFluxWebSocketService } from "./dtflux-websocket.service";
 
 export interface IExporterMessage{
   spotters?: RunnerResults;
@@ -23,10 +24,12 @@ export class DTFluxExporterService {
   addr: string;
   private _changeSubject = new Subject<any>();
   private _stageFinisher: StageFinishers = new StageFinishers();
+  private _websocketService: DTFluxWebSocketService;
 
 
 
-  constructor(dbService: DTFluxDbService) {
+  constructor(dbService: DTFluxDbService, private _websocketService: DTFluxWebSocketService) {
+    this._websocketService = _websocketService;
     this._dbService = dbService;
     this.port = conf.exporterPort ? conf.exporterPort : 3000;
     this.addr = conf.exporterHost ? conf.exporterHost : "localhost";
@@ -66,6 +69,7 @@ export class DTFluxExporterService {
     this._stageFinisher.addExporterData(jsonData);
     console.log(this._stageFinisher);
     this._changeSubject.next(this._stageFinisher);
+    this._websocketService.
   }
 
   getChanges(): Observable<any> {

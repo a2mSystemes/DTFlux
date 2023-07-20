@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WebsocketService } from './websocket.service';
+import { WebsocketService } from './network/websocket.service';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { RunnerResults } from '../dtflux-ui-model/core.model/RunnerResults';
+import { RunnerResultsUI } from '../dtflux-ui-model/core.model/RunnerResults';
 import { StageFinishers } from '../dtflux-ui-model/core.model/StageFinishers';
 
 
@@ -12,8 +12,8 @@ import { StageFinishers } from '../dtflux-ui-model/core.model/StageFinishers';
 export class SpotterService {
 
   private _exporterSubscription: Subscription;
-  private _exporterData?: RunnerResults;
-  private _spotterSubject: Subject<RunnerResults> = new Subject<RunnerResults>;
+  private _exporterData?: RunnerResultsUI;
+  private _spotterSubject: Subject<RunnerResultsUI> = new Subject<RunnerResultsUI>;
 
 
   constructor(private _websocketService: WebsocketService) {
@@ -30,7 +30,7 @@ export class SpotterService {
     const message = {channel: "exporter", command: command, data: data};
     this._websocketService.sendToExporter();
   }
-  subscribeSpotters(): Observable<RunnerResults>{
+  subscribeSpotters(): Observable<RunnerResultsUI>{
     return this._spotterSubject.asObservable();
   }
 }

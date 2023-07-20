@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ILiveResult } from 'src/app/dtflux-ui-model/race-result.model/ILiveResult';
 import { Runner } from 'src/app/dtflux-ui-model/core.model/Runner';
 import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
-import {RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { RunnerResultsUI } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { ILiveResult } from 'src/app/dtflux-ui-model/race-result.model/ILiveResult';
 import { MockingService } from 'src/app/services/mocking.service';
 import { SelectedRunnerService } from 'src/app/services/selected-runner.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
 
 
 @Component({
@@ -14,34 +15,50 @@ import { SelectedRunnerService } from 'src/app/services/selected-runner.service'
   styleUrls: ['./stream.component.sass']
 })
 
-export class StreamComponent implements OnInit{
-  _runnersResults:RunnerResults = new RunnerResults();
+export class StreamComponent implements OnInit {
+  _runnerResults: RunnerResultsUI = new RunnerResultsUI();
   subRunnerResult!: Subscription;
   subSelectedRunner!: Subscription;
   tableData: any[] = [];
   props: string[] = ['img', 'time', 'gap'];
-  selectedRunner$: number = -1;
+  selectedRunner: number = 1;
   runner?: RunnerResult
   timings: any[] = [];
-  runnerActuel: RunnerResult = new RunnerResult();
+  runnerActuel?: RunnerResult;
 
-  constructor(private _mockingService:MockingService, private _selectedRunnerService: SelectedRunnerService){
-    // console.log('construct');
-    this.subSelectedRunner = this._selectedRunnerService .subscribeSelectedRunner().subscribe({next : (selected:number) => {
-      this.selectedRunner$ = selected;
-      const RunnerActuel = this._runnersResults.getRunnerResultBib(this.selectedRunner$);
-      if(RunnerActuel) this.runnerActuel = RunnerActuel;
-      this.AfficheCoureur(this.runnerActuel);
-    }})
-    console.log(this.selectedRunner$);
-    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: RunnerResults) => {
-      console.log(runners);
-      this._runnersResults = runners;
-      const RunnerActuel = this._runnersResults.getRunnerResultBib(this.selectedRunner$);
-      if(RunnerActuel) this.runnerActuel = RunnerActuel;
-      this.AfficheCoureur(this.runnerActuel);
-    }});
+  constructor(private _liveResultService: WebsocketService, private _selectedRunnerService: SelectedRunnerService) {
+    this.subSelectedRunner = this._selectedRunnerService.subscribeSelectedRunner().subscribe({
+      next: (selected: number) => {
+        this.selectedRunner = selected;
+        const runnerActuel = this._runnerResults.getRunnerResultBib(this.selectedRunner);
+        if (runnerActuel) this.runnerActuel = runnerActuel;
+        this.AfficheCoureur();
+      }
+    });
 
+
+    this.subRunnerResult = this._liveResultService.subscribeWsLiveResult().subscribe({
+      next: (runners: any) => {
+        console.log(runners[0].lastName)
+        console.log(runners[0].bib)
+        this._runnerResults = new RunnerResultsUI(runners);
+        if (this.selectedRunner) {
+          this.runnerActuel = this.getActualRunner(this.selectedRunner);
+          this.AfficheCoureur();
+        }
+      }
+    });
+
+  }
+
+  getActualRunner(bib: number): RunnerResult | undefined {
+    for (let index = 0; index < this._runnerResults.length; index++) {
+      if (this._runnerResults[index].bib === bib)
+      // console.log(this._runnerResults[index].bib);
+      // console.log(bib);
+      return this._runnerResults[index];
+    }
+    return undefined;
   }
 
   ngOnInit(): void {
@@ -53,58 +70,58 @@ export class StreamComponent implements OnInit{
   }
 
   isEmptyTime(index: number): boolean {
-     if (index === this.timings.length - 1) {
-       return this.timings[index]['Finishtime'] === '';
-     } else {
-       return this.timings[index]['Split' + (index + 1) + 'time'] === '';
-     }
+    if (index === this.timings.length - 1) {
+      return this.timings[index]['Finishtime'] === '';
+    } else {
+      return this.timings[index]['Split' + (index + 1) + 'time'] === '';
+    }
   }
 
   isImage(value: string): boolean {
-    return value.startsWith('img');
+    if (value)
+      return value.startsWith('img');
+    return false;
   }
 
   getDynamicImageLink(): string {
-    console.log(`${this.runnerActuel.stageId}.png`);
-    return `/assets/Medias/Course-stream/Nomcourse-${this.runnerActuel.contestId}-${this.runnerActuel.stageId}.png`;
+    if (this.runnerActuel)
+      return `/assets/Medias/Course-stream/Nomcourse-${this.runnerActuel.contestId}-${this.runnerActuel.stageId}.png`;
+    return "";
   }
 
-  AfficheCoureur(runner: any): Array<any> {
-    this.timings = [
-      {Split1img: "img1", Split1time: runner.split1Time, Split1gap: runner.split1Gap},
-      {Split2img: "img2", Split2time: runner.split2Time, Split2gap: runner.split2Gap},
-      {Split3img: "img3", Split3time: runner.split3Time, Split3gap: runner.split3Gap},
-      {Split4img: "img4", Split4time: runner.split4Time, Split4gap: runner.split4Gap},
-      {Split5img: "img5", Split5time: runner.split5Time, Split5gap: runner.split5Gap},
-      {Finishimg: "img6", Finishtime: runner.finishTime, Finishgap: runner.finishGap},
-    ];
-const emptyTimeKeys = this.timings.reduce((emptyKeys: any, current: any, index: number) => {
-const keyPrefix = index < this.timings.length - 1 ? 'Split' + (index + 1) : 'Finish';
-if (current[keyPrefix + 'time'] === '') {
-emptyKeys.push(keyPrefix);
-}
-return emptyKeys;
-}, []);
-this.tableData = ['img', 'time', 'gap'].map(prop => {
-return this.timings.reduce((acc: any, current: any, index: any) => {
- const keyPrefix = index < this.timings.length - 1 ? 'Split' + (index + 1) : 'Finish';
- if (!emptyTimeKeys.includes(keyPrefix)) {
-   const key = keyPrefix + prop;
-   acc[keyPrefix] = current[key];
- }
- return acc;
-}, {});
-});
-  console.log(this.timings);
-  return this.timings;
+  AfficheCoureur(): Array<any> {
+    if (this.runnerActuel) {
+      this.timings = [
+        { Split1img: "img1", Split1time: this.runnerActuel.split1Time, Split1gap: this.runnerActuel.split1Gap },
+        { Split2img: "img2", Split2time: this.runnerActuel.split2Time, Split2gap: this.runnerActuel.split2Gap },
+        { Split3img: "img3", Split3time: this.runnerActuel.split3Time, Split3gap: this.runnerActuel.split3Gap },
+        { Split4img: "img4", Split4time: this.runnerActuel.split4Time, Split4gap: this.runnerActuel.split4Gap },
+        { Split5img: "img5", Split5time: this.runnerActuel.split5Time, Split5gap: this.runnerActuel.split5Gap },
+        { Finishimg: "img6", Finishtime: this.runnerActuel.finishTime, Finishgap: this.runnerActuel.finishGap },
+      ];
+      const emptyTimeKeys = this.timings.reduce((emptyKeys: any, current: any, index: number) => {
+        const keyPrefix = index < this.timings.length - 1 ? 'Split' + (index + 1) : 'Finish';
+        if (current[keyPrefix + 'time'] === '') {
+          emptyKeys.push(keyPrefix);
+        }
+        return emptyKeys;
+      }, []);
+      this.tableData = ['img', 'time', 'gap'].map(prop => {
+        return this.timings.reduce((acc: any, current: any, index: any) => {
+          const keyPrefix = index < this.timings.length - 1 ? 'Split' + (index + 1) : 'Finish';
+          if (!emptyTimeKeys.includes(keyPrefix)) {
+            const key = keyPrefix + prop;
+            acc[keyPrefix] = current[key];
+          }
+          return acc;
+        }, {});
+      });
+      // console.log(this.timings);
+      return this.timings;
+    }
+    return new Array<any>();
   }
 
 }
-function getRunnerBibIndex(selectedRunner$: number): Runner {
-  throw new Error('Function not implemented.');
-}
 
-function getRunnerBib(selectedRunner$: number): Runner {
-  throw new Error('Function not implemented.');
-}
 

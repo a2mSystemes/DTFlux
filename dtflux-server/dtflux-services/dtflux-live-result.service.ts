@@ -8,23 +8,19 @@ export interface IHttpPollerConfig {
   startTime?: Date | number;
 }
 
-export class ContestID {
-  "XPSRelais": number;
-  "XP": number;
-  "XPS": number;
-}
 
 export class DTFluxLiveResultService {
 
   timer: Observable<number>;
   timerSub?: Subscription;
   private _changesSubject = new Subject<any>();
-  private _urlBuilder: DTFluxURLBuilderService = new DTFluxURLBuilderService();
+  private _urlBuilder: DTFluxURLBuilderService;
 
-  constructor(conf?: IHttpPollerConfig) {
+  constructor(urlBuilder: DTFluxURLBuilderService) {
+    this._urlBuilder = urlBuilder;
     this.timer = timer(0, config.raceResultAPI.refreshApiTimer);
+    this.start();
   }
-
   
   start() {
     this.timerSub = this.timer.subscribe(() => {
@@ -36,7 +32,7 @@ export class DTFluxLiveResultService {
           this.updateData(response.data);
         })
         .catch((error) => {
-          console.log("axios error");
+          console.log("axios error" + error);
         });
     });
   }
@@ -47,10 +43,8 @@ export class DTFluxLiveResultService {
   }
 
   updateData(data: any) {
-    const runners = new RunnerResults(data);
-    // console.log("in LiveResult Service");
-    // console.log(runners[0]);
-    this._changesSubject.next(data);
+
+    this._changesSubject.next(new RunnerResults(data));
   }
   
   getChanges(): Observable<any> {

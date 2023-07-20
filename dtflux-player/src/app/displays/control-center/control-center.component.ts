@@ -1,6 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { ConfigService } from 'src/app/services/config.service';
 import { MockingService } from 'src/app/services/mocking.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
+import { SelectedRunnerService } from 'src/app/services/selected-runner.service';
 
 @Component({
   selector: 'app-control-center',
@@ -10,76 +14,76 @@ import { MockingService } from 'src/app/services/mocking.service';
 
 
 export class ControlCenterComponent implements OnInit {
- val: Array<string> = ["/assets/Photos coureurs/109.png", "/assets/Photos coureurs/110.png"];
-  isFirst: boolean;
-  sub: Subscription;
+ protected bibValue: any;
 
-  constructor(private mockingService: MockingService){
-    this.isFirst = true;
-    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
-      "next": (data) => console.log(data),
-      "error" : (err) => console.log(err)
-    });
+  constructor(private _httpClient: HttpClient, private _configService: ConfigService, private _selectedRunner: SelectedRunnerService) {
+
   }
   ngOnInit(): void {
 
   }
 
   XP(): void {
-   console.log("Contest = 2")
+   this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/contest/change/2').subscribe(data => {
+   });
   }
 
-  XPSH(): void {
-    console.log("Contest = 3 & Gender = H")
+  XPSHomme(): void {
+    this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/contest/change/3').subscribe(data => {
+    });
    }
 
-   XPSF(): void {
-    console.log("Contest = 3 & Gender = F")
+   XPSFemme(): void {
+    this.XPSHomme();
    }
 
-   XPSR(): void {
-    console.log("Contest = 1")
+   XPSRelai(): void {
+    this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/contest/change/3').subscribe(data => {
+    });
    }
 
-   FXP(): void {
-    console.log("Tableau XP")
+   XPDisplay(): void{
+
    }
 
-   FXPSH(): void {
-     console.log("Tableau XPS Hommes")
-    }
+//
+   XPSHommeDisplay(): void{}
 
-    FXPSF(): void {
-     console.log("Tableau XPS Femmes")
-    }
+   XPSFemmeDisplay():void{}
 
-    FXPSR(): void {
-     console.log("Tableau XPS Relais")
-    }
+   XPSRelaiDisplay():void{}
 
     kilo(): void {
       console.log("Etape kilo")
-      //envoyer un reset Millumin
+      this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/stage/change/1').subscribe(data => {});
      }
 
     mega(): void {
       console.log("Etape mega")
       //envoyer un reset Millumin
+      this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/stage/change/2').subscribe(data => {});
      }
 
     giga(): void {
       console.log("Etape giga")
       //envoyer un reset Millumin
+      this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/stage/change/3').subscribe(data => {});
+
+
      }
 
     tera(): void {
       console.log("Etape tera")
       //envoyer un reset Millumin
+      this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/stage/change/4').subscribe(data => {});
+
      }
 
     peta(): void {
       console.log("Etape peta")
       //envoyer un reset Millumin
+      this._httpClient.get(this._configService.getConf("dtfluxApiBaseUrl") + 'commands/stage/change/5').subscribe(data => {});
+
      }
 
      kilo2(): void {
@@ -107,8 +111,9 @@ export class ControlCenterComponent implements OnInit {
      }
 
 
-     ValiderMaillot(): void {
-      console.log("Maillot :")
+     validerMaillot(): void {
+      console.log("valider maillot " + this.bibValue);
+      this._selectedRunner.setSelected(this.bibValue);
      }
 
 }

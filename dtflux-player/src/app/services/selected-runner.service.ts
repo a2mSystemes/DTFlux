@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { WebsocketService } from './network/websocket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectedRunnerService {
+  _selectedSubject: Subject<number> = new Subject<number>();
+  _wsSubscription: Subscription;
 
-  private _data: number = 104;
-  private _data2: number = 106;
-  private mySwitch: boolean = false;
-  private _selectedSubject: Subject<number>;
-  int: any;
-  constructor() {
-    this._selectedSubject = new Subject<number>();
-    setTimeout(() =>
-    this._selectedSubject.next(this._data), 10);
-this.int = setInterval(() => {
-  if (this.mySwitch){
-    this._selectedSubject.next(this._data);
-    this.mySwitch = !this.mySwitch;
-  }else{
-    this._selectedSubject.next(this._data2);
-    this.mySwitch = !this.mySwitch;
-  }
-}, 2000)
 
+
+  constructor(private _websocketService: WebsocketService) {
+    this._wsSubscription = this._websocketService.subscribeWsCommands().subscribe( (data) => {
+    console.log(data);
+
+      if(data && data.command === 'select.runner' && data.value !== undefined) {
+        console.log(`pushes value ${data.value}`)
+        this._selectedSubject.next(data.value);
+      }
+    });
+   }
+   getSubject(){
+    console.log("getSubject");
+    return this._selectedSubject;
+   }
+   setSelected(selected: number){
+    const message = {
+      channel: "commands",
+      target: "selected-runner",
+      value: selected,
+      command: "select.runner"
+    }
+    return this._websocketService.sendToWsCommands(message);
    }
 
   subscribeSelectedRunner() {

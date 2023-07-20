@@ -1,55 +1,43 @@
 import express, { Router, Request, Response } from "express";
 import path from "path";
 import { DTFluxDbService } from "../dtflux-services/dtflux-database.service";
+import { DTFluxSelectionService } from "../dtflux-services/dtflux-selection.service";
 
 export class CommandController {
   private _router: Router;
 
-  constructor(private _dtfluxDbService: DTFluxDbService) {
+  constructor(private _selectionService: DTFluxSelectionService) {
     this._router = express.Router();
     this.setupRoutes();
-    this.mountCommandControllers();
   }
 
   private setupRoutes(): void {
-    // Define your command routes here
-    this._router.get("/:logiciel/:protocol", this.handleCommand);
+    // Define your CRUD routes here
+    this._router.get("/contest/change/:contestId", this.modifyContestId);
+    this._router.get("/stage/change/:stageId", this.modifyStageId);
+
   }
 
-  private handleCommand = (req: Request, res: Response): void => {
-    // Handle the command based on the logiciel and protocol
-    const logiciel = req.params.logiciel;
-    const protocol = req.params.protocol;
-    const commandControllerPath = path.join(
-      __dirname,
-      `./command/${logiciel}.${protocol}.controller.ts`
-    );
+  private modifyContestId = (req: Request, res: Response): void => {
+    console.log("Modifying contest id: ");
+    const contestId = !Number.isNaN(req.params.contestId)? Number(req.params.contestId) : -1;
+    this._selectionService.setContest(contestId);
+    res.status(200).json({response: "OK", currentContestId: contestId});
 
-    try {
-      const CommandControllerClass = require(commandControllerPath)
-        .CommandController;
-      const commandController = new CommandControllerClass(
-        this._dtfluxDbService
-      );
-      const command = req.body;
-      // Handle the command here
-      res.json({ logiciel, protocol, command });
-    } catch (error) {
-      res.status(404).json({ error: "Controller not found" });
-    }
+  };
+  private modifyStageId = (req: Request, res: Response): void => {
+    const stageId = !Number.isNaN(req.params.stageId)? Number(req.params.stageId) : -1;
+    this._selectionService.setStage(stageId);
+    res.status(200).json({response: "OK", currentStageId: stageId});
   };
 
-  private mountCommandControllers(): void {
-    // Automatically mount command controllers if they exist in the 'command' folder
-    // You may need to modify this part based on your specific folder structure
-    const commandControllerPath = path.join(__dirname, "./command");
-    const fs = require("fs");
-    fs.readdirSync(commandControllerPath).forEach((file: string) => {
-      if (file.endsWith(".controller.ts")) {
-        const logiciel = file.split(".")[0];
-        const protocol = file.split(".")[1];
-        this._router.use(`/${logiciel}/${protocol}`, this.handleCommand);
-      }
+
+  private handleError(res: Response, error: string, crudOp: string): void {
+    res.status(500).json({
+      status: "NOK",
+      error,
+      crudOp,
+      data: null
     });
   }
 

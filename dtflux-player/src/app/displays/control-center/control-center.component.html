@@ -3,15 +3,15 @@
 
     <h2>Choix de la course en cours</h2>
     <button type="button" (click)="XP()">Yotta XP</button>
-    <button type="button" (click)="XPSH()">Yotta XPS Hommes</button>
-    <button type="button" (click)="XPSF()">Yotta XPS Femmes</button>
-    <button type="button" (click)="XPSR()">Yotta XPS Relai</button>
+    <button type="button" (click)="XPSHomme()">Yotta XPS Hommes</button>
+    <button type="button" (click)="XPSFemme()">Yotta XPS Femmes</button>
+    <button type="button" (click)="XPSRelai()">Yotta XPS Relai</button>
 
     <h2>Affichage tableau des athlètes</h2>
-    <button type="button" (click)="FXP()">Yotta XP</button>
-    <button type="button" (click)="FXPSH()">Yotta XPS Hommes</button>
-    <button type="button" (click)="FXPSF()">Yotta XPS Femmes</button>
-    <button type="button" (click)="FXPSR()">Yotta XPS Relai</button>
+    <button type="button" (click)="XPDisplay()">Yotta XP</button>
+    <button type="button" (click)="XPSHommeDisplay()">Yotta XPS Hommes</button>
+    <button type="button" (click)="XPSFemmeDisplay()">Yotta XPS Femmes</button>
+    <button type="button" (click)="XPSRelaiDisplay()">Yotta XPS Relai</button>
 
     <h2>Affichage étape en cours</h2>
     <button type="button" (click)="kilo()">Kilo</button>
@@ -47,32 +47,31 @@
         </form>
 
         <h3>Yotta XP Femmes</h3>
-        <form action="a definir merci :D" method="post">
+
             <div>
-                <label for="timekilo2">Kilo :</label>
+                <label for="timekiloF">Kilo :</label>
                 <input type="time" id="timekilo2" name="?">
             </div>
             <div>
-                <label for="timemega2">Mega :</label>
+                <label for="timemegaF">Mega :</label>
                 <input type="time" id="timemega2" name="?">
             </div>
             <div>
-                <label for="timegiga2">Giga :</label>
+                <label for="timegigaF">Giga Femme:</label>
                 <input type="time" id="timegiga2" name="?">
             </div>
             <div>
-                <label for="timetera2">Tera :</label>
+                <label for="timeteraF">Tera femme:</label>
                 <input type="time" id="timetera2" name="?">
             </div>
             <div>
-                <label for="timepeta2">Peta :</label>
+                <label for="timepetaF">Peta Femme:</label>
                 <input type="time" id="timepeta2" name="?">
             </div>
-        </form>
     </div>
 </div>
 
-<h2>Enlever le waiting 1</h2>
+<h2>Enlever le spotter 1</h2>
 <button type="button" (click)="waiting()">Enlever waiting</button>
 
 <h2>afficher le coureur à l'image</h2>
@@ -81,6 +80,6 @@
     <label for="auto">Détection automatique</label>
 </div>
 
-<label for="bib">Numéro de maillot :</label>
-<input type="text" id="bib" name="bib" size="10">
-<button type="button" (click)="ValiderMaillot()">Go</button>
+<label for="bib">Numero de maillot :</label>
+<input type="number" id="bib" name="bib" size="10" [(ngModel)]="bibValue"/>
+<button type="button" (click)="validerMaillot()">Go</button>

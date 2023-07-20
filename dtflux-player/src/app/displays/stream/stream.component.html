@@ -2,19 +2,19 @@
   <img [src]="getDynamicImageLink()" alt="Image">
 </div>
 
-<div class="module-maillot">
+<div *ngIf="runnerActuel" class="module-maillot">
     <div class="bib-bloc">
         <div  class="bib-item">{{runnerActuel.bib}}</div>
     </div>
 
-    <div class="box-nom">
+    <div *ngIf="runnerActuel" class="box-nom">
         <div class="nom">{{runnerActuel.lastName}} <em>{{runnerActuel.firstName}}</em></div>
         <div class="fleche-petite"></div>
         <div class="rank-item">{{runnerActuel.currentSplitRank}}</div>
         <div class="fleche-petite"></div>
     </div>
 
-    <div class="tableau-coureur" ng-app="coureur-actuel" ng-controller="controleur-coureur">
+    <div *ngIf="runnerActuel" class="tableau-coureur" ng-app="coureur-actuel" ng-controller="controleur-coureur">
         <table>
             <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-class-' + i">
                 <td *ngFor="let value of getRowValues(row); let j = index"

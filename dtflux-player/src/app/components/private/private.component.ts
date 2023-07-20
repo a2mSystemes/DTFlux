@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigService } from 'src/app/services/config.service';
-import { WebsocketService } from 'src/app/services/websocket.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
 
 @Component({
   selector: 'app-private',
@@ -43,7 +43,7 @@ export class PrivateComponent {
 
   sendCommand() {
     console.log("command");
-    this._websocketService.sendToWsCommand();
+    this._websocketService.sendToWsCommands();
   }
 
   sendToTimer() {

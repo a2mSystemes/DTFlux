@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ColumnComponent } from './displays/column/column.component';
@@ -25,6 +25,7 @@ import { ColumnFComponent } from './displays/column-f/column-f.component';
 import { ColumnWinnerComponent } from './displays/column-winner/column-winner.component';
 import { PodiumComponent } from './displays/podium/podium.component';
 import { PrivateComponent } from './components/private/private.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,8 +53,10 @@ import { PrivateComponent } from './components/private/private.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule
   ],
   providers: [MockingService, ],
   bootstrap: [AppComponent]

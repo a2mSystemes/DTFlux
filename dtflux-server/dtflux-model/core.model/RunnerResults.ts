@@ -6,11 +6,11 @@ import { ITimingRunner } from "./ITimingRunner";
 
 export class RunnerResults extends FilteredArray<RunnerResult> {
 
-  constructor(raceResults?: any) {
+  constructor(liveResults?: any) {
     super();
-    if (raceResults) {
-      for (let raceResult of raceResults) {
-        this.push(new RunnerResult(raceResult));
+    if (liveResults) {
+      for (let liveResult of liveResults) {
+        this.push(new RunnerResult(liveResult));
       }
     }
   }

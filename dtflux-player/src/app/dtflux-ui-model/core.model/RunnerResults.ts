@@ -2,46 +2,42 @@ import { FilteredArray } from "./FilteredArray";
 import { RunnerResult } from "./RunnerResult";
 
 
-export class RunnerResults extends FilteredArray<RunnerResult> {
+export class RunnerResultsUI extends FilteredArray<RunnerResult> {
 
-  constructor(raceResults?: any) {
-    super();
-    if (raceResults) {
-      for (let raceResult of raceResults) {
-        this.push(new RunnerResult(raceResult));
+  constructor(liveResultDatas?: Array<any>) {
+    super()
+    if (liveResultDatas) {
+      for (let index = 0; index < liveResultDatas.length; index++) {
+        this.push(new RunnerResult(liveResultDatas[index]));
       }
     }
   }
   getRunnerResultBib(bib: number): RunnerResult | undefined {
-    for (let runner of this) {
-      if (runner.bib === bib) {
-        return runner;
+    for (let index = 0; index < this.length; index++) {
+      if (this[index].bib === bib) {
+        return this[index];
       }
     }
     return undefined;
   }
   getRunnerResultBibIndex(bib: number): number {
-    let index = 0;
-    for (let str in this) {
+    for (let index = 0; index < this.length; index++) {
       if (this[index].bib === bib) {
-        console.log(str);
         return index;
       }
-      index++;
     }
     return -1;
   }
 
   getRunnerResultRank(rank:number): RunnerResult{
-    for(let runner of this){
-      if(runner.rank === rank){
-        return runner;
+    for (let index = 0; index < this.length; index++) {
+      if(this[index].rank === rank) {
+        return this[index];
       }
     }
     return new RunnerResult();
   }
 }
-
 
 
 

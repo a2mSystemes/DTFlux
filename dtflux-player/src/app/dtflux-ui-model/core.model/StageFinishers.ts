@@ -1,14 +1,13 @@
-import { RunnerResults } from "./RunnerResults";
+import { RunnerResultsUI } from "./RunnerResults";
 import { RunnerResult } from "./RunnerResult";
 import { ConfigService } from "src/app/services/config.service";
 
 export class StageFinishers {
-  static spotterKeyword: string = "Dernière ligne droite";
-  static finishKeyword: string = "Arrivée";
+
   private _confService: ConfigService = new ConfigService();
-  spotters: RunnerResults = new RunnerResults();
+  spotters: RunnerResultsUI = new RunnerResultsUI();
   maxSpotters: number = 4; // default to 4 max spotters
-  finishers: RunnerResults = new RunnerResults();
+  finishers: RunnerResultsUI = new RunnerResultsUI();
   maxFinisher: number = 4; // default to 4 max
   winner: RunnerResult = new RunnerResult();
 
@@ -27,7 +26,7 @@ export class StageFinishers {
     }
   }
   removeFinisher(finishBib: number) {
-    const copyArray = new RunnerResults();
+    const copyArray = new RunnerResultsUI();
     for (let runner of this.finishers) {
       if (runner.bib !== finishBib) {
         copyArray.push(runner);
@@ -36,7 +35,7 @@ export class StageFinishers {
     this.spotters = copyArray;
   }
   removeSpotter(spotterBib: number) {
-    const copyArray = new RunnerResults();
+    const copyArray = new RunnerResultsUI();
     for (let runner of this.spotters) {
       if (runner.bib !== spotterBib) {
         copyArray.push(runner);

@@ -1,5 +1,8 @@
 {
   "displayFinisherTime" : 6000,
-  "displayWinnerTime" : 6000
+  "displayWinnerTime" : 6000,
+  "dtfluxApiBaseUrl": "http://localhost:8080/dtflux-api/v1/",
+  "websocketBaseUrl": "ws://192.168.30.95:5001/dtflux-api/v1/ws",
+  "columnSwitchTimer" : 30000
 
 }

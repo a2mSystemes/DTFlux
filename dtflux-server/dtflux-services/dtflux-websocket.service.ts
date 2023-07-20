@@ -10,13 +10,10 @@ import { subscribe } from "diagnostics_channel";
 
 
 export class DTFluxWebSocketService extends WebSocketServer {
-  private static _wsIDs = 0;
-  private _routes: Array<string> = [];
   private _exporterService: DTFluxExporterService;
   private _liveResultService: DTFluxLiveResultService;
   // private _db:DTFluxDbService;
   private _routesWs: Map<string, Subject<any>> = new Map<string, Subject<any>>();
-  private _dataSenders: Map<string, Array<WebSocket>> = new Map<string, Array<WebSocket>>
   handleLiveResultRequest: any;
 
 
@@ -34,13 +31,13 @@ export class DTFluxWebSocketService extends WebSocketServer {
       const path = req.url ? 'ws://localhost' + req.url : "ws://localhost";
       const url = new URL('ws://localhost' + path);
       const params = url.searchParams;
-      console.log("params", params);
       const channels = params.getAll("channel");
       for (let channel of channels) {
         if (channel === "exporter") {
           this._exporterService.getChanges().subscribe({
             next: (changes: any) => {
               console.log("sending to ws");
+              console.log(JSON.stringify(changes));
               for(let client of this.clients){
                 client.send(JSON.stringify(changes));
               }
@@ -62,17 +59,17 @@ export class DTFluxWebSocketService extends WebSocketServer {
         }
       }
       // save it to the container
-      ws.on("message", (data: Buffer) => {
+      ws.on("message", (data) => {
+        console.log(data);
         try{
-
           let req = JSON.parse(data.toString());
           console.log(req);
           switch (req.channel) {
             case "timers":
               this.handleTimerRequest(req);
               break;
-            case "command":
-              this.handleCommandRequest(req);
+            case "commands":
+              this.handleCommandsRequest(req, ws);
               break;
             case "exporter":
               this.handleExporterRequest(req);
@@ -107,13 +104,17 @@ export class DTFluxWebSocketService extends WebSocketServer {
     console.log("Exporter Request Message : ");
     console.log(req);
   }
-  handleCommandRequest(req: any) {
-    console.log("Command Request Message : ");
+  handleCommandsRequest(req: any, ws: WebSocket) {
+    console.log("Commands Request Message : ");
     console.log(req);
+    for(let client of this.clients){
+      client.send(JSON.stringify(req));
+    }
+    
   }
   handleTimerRequest(req: any) {
     console.log("Timer Request Message : ");
-    console.log(req);
+    console.log(JSON.stringify(req));
   }
 
 

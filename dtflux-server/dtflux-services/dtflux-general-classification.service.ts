@@ -3,16 +3,10 @@ import * as config from "../dtflux-conf/conf.json";
 import axios from "axios";
 import { DTFluxURLBuilderService } from "./dtflux-url-builder.service";
 import { RunnerResults } from "../dtflux-model/core.model/RunnerResults";
-import { DTFluxContestSelectionService } from "./dtflux-contest-selection.service";
+import { DTFluxSelectionService } from "./dtflux-selection.service";
 
 export interface IHttpPollerConfig {
   startTime?: Date | number;
-}
-
-export class ContestID {
-  "XPSRelais": number;
-  "XP": number;
-  "XPS": number;
 }
 
 export class DTFluxGeneralClassificationService {
@@ -20,15 +14,15 @@ export class DTFluxGeneralClassificationService {
   timer: Observable<number>;
   timerSub?: Subscription;
   private _changesSubject = new Subject<any>();
-  private _urlBuilder: DTFluxURLBuilderService = new DTFluxURLBuilderService();
-  private _contestSelectionService: DTFluxContestSelectionService = new DTFluxContestSelectionService();
+  private _urlBuilder: DTFluxURLBuilderService;
+  private _contestSelectionService: DTFluxSelectionService = new DTFluxSelectionService();
   private _currentContest = 1;
 
-  constructor(conf?: IHttpPollerConfig) {
+  constructor(urlBuilder: DTFluxURLBuilderService) {
+    this._urlBuilder = urlBuilder;
     this.timer = timer(0, config.raceResultAPI.refreshApiTimer);
     this._contestSelectionService.getChanges().subscribe({ next: (contest: number) => this._currentContest = contest });
   }
-
 
   start() {
     this.timerSub = this.timer.subscribe(() => {

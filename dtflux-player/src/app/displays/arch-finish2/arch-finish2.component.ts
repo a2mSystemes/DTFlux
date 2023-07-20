@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable, Subscription, map, tap } from 'rxjs';
 import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
-import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { RunnerResultsUI } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { SpotterService } from 'src/app/services/spotter.service';
-import { WebsocketService } from 'src/app/services/websocket.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
 
 @Component({
   selector: 'app-arch-finish2',
@@ -21,7 +21,7 @@ export class ArchFinish2Component {
 
   constructor(private _spotterService: SpotterService) {
     this._runnerSubscription = this._spotterService.subscribeSpotters().subscribe({
-      next: (data: RunnerResults) => {
+      next: (data: RunnerResultsUI) => {
         console.log("data: " + data);
 
         const runner = (this._runnerNumber - 1) >= 0 ? this._runnerNumber - 1 : this._runnerNumber;

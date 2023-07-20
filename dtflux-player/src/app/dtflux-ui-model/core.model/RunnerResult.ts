@@ -1,6 +1,7 @@
 import { ILiveResult } from "../race-result.model/ILiveResult";
 import { Runner } from "./Runner";
 import { ITimingRunner } from "./ITimingRunner";
+import { ExporterResult } from "../race-result.model/ExporterResult";
 
 
 
@@ -35,36 +36,10 @@ export class RunnerResult extends Runner implements ITimingRunner {
   run: string = "";
   totalTime: string = "";
   rank: number = 0;
-
-
-  constructor(raceResult?: ILiveResult | ILiveResult) {
-    super(raceResult);
-    if (raceResult) {
-      this.split1Rank = raceResult.Split1Rank;
-      this.split1Time = raceResult.Split1Time; //time
-      this.split1Gap = raceResult.Split1Gap; // "-" if first or "+$min:$sec"
-      this.split2Rank = raceResult.Split2Rank;
-      this.split2Time = raceResult.Split2Time;
-      this.split2Gap = raceResult.Split2Gap;
-      this.split3Rank = raceResult.Split3Rank;
-      this.split3Time = raceResult.Split3Time;
-      this.split3Gap = raceResult.Split3Gap;
-      this.split4Rank = raceResult.Split4Rank;
-      this.split4Time = raceResult.Split4Time;
-      this.split4Gap = raceResult.Split4Gap;
-      this.split5Rank = raceResult.Split5Rank;
-      this.split5Time = raceResult.Split5Time;
-      this.split5Gap = raceResult.Split5Gap;
-      this.finishRank = raceResult.FinishRank;
-      this.finishTime = raceResult.FinishTime;
-      this.finishGap = raceResult.FinishGap;
-      this.currentSplitName = raceResult.CurrentSplitName;
-      this.currentSplitRank = raceResult.CurrentSplitRank;
-      this.currentSplitTime = raceResult.CurrentSplitTime;
-      this.currentSplitGap = raceResult.CurrentSplitGap;
-      this.swim = raceResult.Swim;
-      this.transition = raceResult.Transition;
-      this.run = raceResult.Run;
+  constructor(liveResult?: any) {
+    super(liveResult);
+    if (liveResult) {
+      Object.assign(this, liveResult);
     }
   }
   isStageWinner(stageId?: number): boolean {
@@ -81,6 +56,24 @@ export class RunnerResult extends Runner implements ITimingRunner {
   setTotalTime(totalTime: string): void {
     this.totalTime = totalTime;
   }
-
+static fromExporter(data: ExporterResult): RunnerResult | undefined {
+  if(!data)
+  return undefined;
+  const ret = new RunnerResult();
+  ret.bib = data.Bib;
+  ret.contestId = data.ContestID;
+  ret.firstName = data.Firstname;
+  ret.firstName2 = data.Firstname2;
+  ret.gender = data.Gender;
+  ret.lastName = data.Lastname;
+  ret.lastName2 = data.Lastname2;
+  ret.startTime = data.StartTime;
+  ret.startTime = data.StartTime;
+  ret.currentSplitGap = data.CurrentSplitGap;
+  ret.currentSplitRank = data.CurrentSplitRank;
+  ret.currentSplitTime = data.CurrentSplitTime;
+  ret.currentSplitName = data.CurrentSplitName;
+  return ret;
+}
 
 }

@@ -2,7 +2,7 @@ import { FilteredArray } from "./FilteredArray";
 import { RunnerResult } from "./RunnerResult";
 
 
-export class RunnerResultsUI extends FilteredArray<RunnerResult> {
+export class RunnerResults extends FilteredArray<RunnerResult> {
 
   constructor(liveResultDatas?: Array<any>) {
     super()

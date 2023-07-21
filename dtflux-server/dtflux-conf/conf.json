@@ -1,4 +1,6 @@
 {
+    "mulluminIp": "192.168.30.103",
+    "mulluminPort": 5000,
     "displayFinisherTime" : 6000,
     "dbAutosave": true,
     "dbAutosaveInterval": 6000,

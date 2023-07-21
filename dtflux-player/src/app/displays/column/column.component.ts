@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
-import { RunnerResultsUI } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { ConfigService } from 'src/app/services/config.service';
 import { MockingService } from 'src/app/services/mocking.service';
 import { WebsocketService } from 'src/app/services/network/websocket.service';
@@ -13,7 +13,7 @@ import { WebsocketService } from 'src/app/services/network/websocket.service';
 })
 
 export class ColumnComponent implements OnInit {
-  _runnersResults: RunnerResultsUI = new RunnerResultsUI();
+  _runnersResults: RunnerResults = new RunnerResults();
   subRunnerResult!: Subscription;
   tableData: any[] = [];
   runner?: RunnerResult;
@@ -23,8 +23,8 @@ export class ColumnComponent implements OnInit {
 
   constructor(private _websocketService: WebsocketService, private _configService: ConfigService) {
     this.subRunnerResult = this._websocketService.subscribeWsLiveResult().subscribe({
-      next: (runners: RunnerResultsUI) => {
-        this._runnersResults = new RunnerResultsUI(runners);
+      next: (runners: RunnerResults) => {
+        this._runnersResults = new RunnerResults(runners);
         this.tableData = runners;
         let i = 0;
         for (let runner of runners) {

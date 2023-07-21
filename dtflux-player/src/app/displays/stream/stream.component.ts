@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Runner } from 'src/app/dtflux-ui-model/core.model/Runner';
 import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
-import { RunnerResultsUI } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
 import { ILiveResult } from 'src/app/dtflux-ui-model/race-result.model/ILiveResult';
 import { MockingService } from 'src/app/services/mocking.service';
 import { SelectedRunnerService } from 'src/app/services/selected-runner.service';
@@ -16,7 +16,7 @@ import { WebsocketService } from 'src/app/services/network/websocket.service';
 })
 
 export class StreamComponent implements OnInit {
-  _runnerResults: RunnerResultsUI = new RunnerResultsUI();
+  _runnerResults: RunnerResults = new RunnerResults();
   subRunnerResult!: Subscription;
   subSelectedRunner!: Subscription;
   tableData: any[] = [];
@@ -41,7 +41,7 @@ export class StreamComponent implements OnInit {
       next: (runners: any) => {
         console.log(runners[0].lastName)
         console.log(runners[0].bib)
-        this._runnerResults = new RunnerResultsUI(runners);
+        this._runnerResults = new RunnerResults(runners);
         if (this.selectedRunner) {
           this.runnerActuel = this.getActualRunner(this.selectedRunner);
           this.AfficheCoureur();

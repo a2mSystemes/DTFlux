@@ -6,6 +6,8 @@ import { IncomingMessage } from "http";
 import { DTFluxExporterService } from "./dtflux-exporter.service";
 import { DTFluxLiveResultService } from "./dtflux-live-result.service";
 import { subscribe } from "diagnostics_channel";
+import { StageFinishers } from "../dtflux-model/core.model/StageFinishers";
+import { RunnerResult } from "../dtflux-model/core.model/RunnerResult";
 
 
 
@@ -15,6 +17,7 @@ export class DTFluxWebSocketService extends WebSocketServer {
   // private _db:DTFluxDbService;
   private _routesWs: Map<string, Subject<any>> = new Map<string, Subject<any>>();
   handleLiveResultRequest: any;
+  private _exporterSubscription: Subscription
 
 
   constructor(db: DTFluxDbService, exporter_s: DTFluxExporterService, liveResult_s: DTFluxLiveResultService) {
@@ -23,11 +26,18 @@ export class DTFluxWebSocketService extends WebSocketServer {
       path = conf.baseUrl + conf.wsPath;
     super({ port: conf.wsPort ? conf.wsPort : 5001, path: path });
     this._exporterService = exporter_s;
+    this._exporterSubscription = this._exporterService.getChanges()
+      .subscribe({
+        next: (stageFinisher: RunnerResult) => {
+          console.log("sending stageFinisher");
+          this.clients.forEach(client => client.send(JSON.stringify(stageFinisher)));
+        }
+      })
     this._liveResultService = liveResult_s;
     // this._liveResultService.getChanges().subscribe((data) => console.log("in WS Service" + data));
 
     this.on("connection", (ws: WebSocket, req: IncomingMessage) => {
-      ws.send(JSON.stringify({connected: true}));
+      ws.send(JSON.stringify({ connected: true }));
       const path = req.url ? 'ws://localhost' + req.url : "ws://localhost";
       const url = new URL('ws://localhost' + path);
       const params = url.searchParams;
@@ -36,11 +46,11 @@ export class DTFluxWebSocketService extends WebSocketServer {
         if (channel === "exporter") {
           this._exporterService.getChanges().subscribe({
             next: (changes: any) => {
-              console.log("sending to ws");
-              console.log(JSON.stringify(changes));
-              for(let client of this.clients){
-                client.send(JSON.stringify(changes));
-              }
+              // console.log("sending to ws");
+              // console.log(JSON.stringify(changes));
+              // for(let client of this.clients){
+              //   client.send(JSON.stringify(changes));
+              // }
             }
           });
         }
@@ -61,7 +71,7 @@ export class DTFluxWebSocketService extends WebSocketServer {
       // save it to the container
       ws.on("message", (data) => {
         console.log(data);
-        try{
+        try {
           let req = JSON.parse(data.toString());
           console.log(req);
           switch (req.channel) {
@@ -107,10 +117,10 @@ export class DTFluxWebSocketService extends WebSocketServer {
   handleCommandsRequest(req: any, ws: WebSocket) {
     console.log("Commands Request Message : ");
     console.log(req);
-    for(let client of this.clients){
+    for (let client of this.clients) {
       client.send(JSON.stringify(req));
     }
-    
+
   }
   handleTimerRequest(req: any) {
     console.log("Timer Request Message : ");

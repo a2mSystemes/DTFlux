@@ -11,10 +11,11 @@ export class ConfigService {
   private _conf = conf;
 
   conf(): any {
-    return this._conf
+    return this._conf;
   }
 
   getConf(key:string):any {
+    console.log(this._conf);
     const segments = key.split('.');
     let value = this._conf;
     for (const segment of segments) {

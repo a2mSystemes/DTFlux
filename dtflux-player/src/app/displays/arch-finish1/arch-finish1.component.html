@@ -1,53 +1,53 @@
-<div *ngIf="finisher1" class="box-arrivee"
+<div *ngIf="finisher" class="box-arrivee"
 [ngClass]="{'image-winner-fond' : finnisherStatus === 'winner-solo'|| finnisherStatus === 'winner-relai',
             'image-arrivee-fond' : finnisherStatus === 'finish-solo'|| finnisherStatus === 'finish-relai'}">
     <img
     [ngClass]="{'photo-winner-coureur' : finnisherStatus === 'winner-solo',
                 'photo-arrivee-coureur' : finnisherStatus === 'finish-solo',
                 'photo-arrivee-relai' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}"
-    src={{finisher1.photo}} alt="photo"/>
+    src={{finisher.photo}} alt="photo"/>
     <div
     [ngClass]="{'infos-arrivee-solo' : finnisherStatus === 'finish-solo',
                 'infos-arrivee-relai' : finnisherStatus === 'finish-relai',
                 'infos-winner-solo' : finnisherStatus === 'winner-solo',
                 'infos-winner-relai' : finnisherStatus === 'winner-relai'}">
-        <div class="chrono" *ngIf="finisher1.currentSplitTime"
+        <div class="chrono" *ngIf="finisher.currentSplitTime"
         [ngClass]="{'chrono-arrivee-solo' : finnisherStatus === 'finish-solo',
                     'chrono-arrivee-relai' : finnisherStatus === 'finish-relai',
                     'chrono-winner-solo' : finnisherStatus === 'winner-solo',
                     'chrono-winner-relai' : finnisherStatus === 'winner-relai'}">
-        {{finisher1.currentSplitTime}}</div>
-        <div class="rank" *ngIf="finisher1.currentSplitRank"
+        {{finisher.currentSplitTime}}</div>
+        <div class="rank" *ngIf="finisher.currentSplitRank"
         [ngClass]="{'rank-arrivee-solo' : finnisherStatus === 'finish-solo',
                     'rank-arrivee-relai' : finnisherStatus === 'finish-relai',
                     'hidden' : finnisherStatus === 'winner-solo'|| finnisherStatus === 'winner-relai'}">
-                    {{finisher1.currentSplitRank}}<sup> eme</sup></div>
+                    {{finisher.currentSplitRank}}<sup> eme</sup></div>
         <div class="bib"
         [ngClass]="{'bib-arrivee-solo' : finnisherStatus === 'finish-solo',
                     'bib-arrivee-relai' : finnisherStatus === 'finish-relai',
                     'bib-winner-solo' : finnisherStatus === 'winner-solo',
                     'bib-winner-relai' : finnisherStatus === 'winner-relai'}">
-        {{finisher1.bib}}</div>
+        {{finisher.bib}}</div>
 
         <div class="box-username-arrivee">
             <div class="username"
             [ngClass]="{'firstname-arrivee-solo' : finnisherStatus === 'finish-solo',
                         'firstname-winner-solo' : finnisherStatus === 'winner-solo',
                         'firstname-arrivee-relai1' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}">
-            {{finisher1.firstName}}</div>
+            {{finisher.firstName}}</div>
             <div class="username"
             [ngClass]="{'lastname-arrivee-solo' : finnisherStatus === 'finish-solo',
                         'lastname-winner-solo' : finnisherStatus === 'winner-solo',
                         'lastname-arrivee-relai1' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}">
-            {{finisher1.lastName}}</div>
-            <div class="username" *ngIf="finisher1.firstName2 !== ''"
+            {{finisher.lastName}}</div>
+            <div class="username" *ngIf="finisher.firstName2 !== ''"
              [ngClass]="{'hidden' : finnisherStatus === 'finish-solo' || finnisherStatus === 'winner-solo',
                         'firstname-arrivee-relai2' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}">
-            {{finisher1.firstName2}}</div>
-            <div class="username" *ngIf="finisher1.lastName2 !== ''"
+            {{finisher.firstName2}}</div>
+            <div class="username" *ngIf="finisher.lastName2 !== ''"
             [ngClass]="{'hidden' : finnisherStatus === 'finish-solo' || finnisherStatus === 'winner-solo',
                         'lastname-arrivee-relai2' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}">
-            {{finisher1.lastName2}}</div>
+            {{finisher.lastName2}}</div>
         </div>
     </div>
 </div>

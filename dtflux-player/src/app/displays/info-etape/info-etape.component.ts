@@ -1,44 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { MockingService } from 'src/app/services/mocking.service';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable, Subscription, timer } from 'rxjs';
+import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
+import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { SelectionService } from 'src/app/services/backend/selection.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
 @Component({
   selector: 'app-info-etape',
   templateUrl: './info-etape.component.html',
   styleUrls: ['./info-etape.component.sass']
 })
-export class InfoEtapeComponent implements OnInit{
-  data?:any;
-  sub: Subscription;
-  constructor(private mockingService:MockingService){
-    this.data = null;
+export class InfoEtapeComponent implements OnInit {
+  contestId: number = 1;
+  stageId: number = 1;
+  subContest: Subscription;
+  subStage: Subscription;
+  dataStatus: 'winner-solo' | 'winner-relai' | '' = '';
+  contestIdencours : number = 1;
+  stageIdencours : number = 1;
+  imageLink: string = "";
 
-    this.sub = this.mockingService.subscribeRunnersResults().subscribe({
-      "next": (data) => {
+  constructor(private selectionService: SelectionService) {
+
+
+    this.subContest = this.selectionService.subscribeContestChange().subscribe({
+      next: (data: number) => {
+        this.contestId = data;
+      this.imageLink = `/assets/Medias/Course/Nomcourse-${this.contestId}-${this.stageId}.png`
         console.log(data);
-        this.data = data;
-/*         data.status = 'finish-solo';
-        data.contest = 3;
-        data.selectorResult = 2;
-        data.decompteH = "23:17";
-        data.decompteF = "18:17";
-        data.FinishTime = "54:48"
-        data.lastName1 = "Chassaing";
-        data.firstName1 = "Jonathan";
-        data.lastName2 = "Maurin";
-        data.firstName2 = "Ange-Marie"; */
       },
-      "error": (err) => {console.log(err);},
+      "error": (err) => { console.log(err); },
+    });
+    this.subStage = this.selectionService.subscribeStageChange().subscribe({
+      next: (data: number) => {
+        console.log(data);
+        this.stageId = data;
+        this.imageLink = `/assets/Medias/Course/Nomcourse-${this.contestId}-${this.stageId}.png`
+      },
+      "error": (err) => { console.log(err); },
     });
 
-  }
+    }
 
   ngOnInit(): void {
 
   }
 
+  // convertToMilliseconds(timeString: string) {
+  //   const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  //   const milliseconds = (hours * 3600000) + (minutes * 60000) + (seconds * 1000);
+  //   return milliseconds;
+  // }
+
   getDynamicImageLink(): string {
-    return `/assets/Medias/Course/Nomcourse-${this.data.contest}-${this.data.selectorResult}.png`;
+    return `/assets/Medias/Course/Nomcourse-${this.contestId}-${this.stageId}.png`;
   }
 
 }

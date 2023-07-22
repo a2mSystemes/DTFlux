@@ -1,30 +1,30 @@
-<div class="box-attente image-attente-fond">
-    <img class="photo-attente-coureur" src={{data.photo1}} alt="photo"/>
+<div *ngIf="spotter && display" class="box-attente image-attente-fond">
+    <img class="photo-attente-coureur" [src]="spotter.photo" alt="photo"/>
     <div class="infos-attente"
-    [ngClass]="{'iasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                'iarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-        <div class="chrono"
-        [ngClass]="{'casolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                    'carelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-                {{data.actualtime1}}</div>
-        <div class="bib">{{data.bib1}}</div>
+    [ngClass]="{'iasolo' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                'iarelai' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+        <!--<div class="chrono"
+        [ngClass]="{'casolo' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                    'carelai' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+                {{spotter.actualtime1}}</div>-->
+        <div class="bib">{{spotter.bib}}</div>
         <div class="box-username-attente">
             <div class="username"
-            [ngClass]="{'fnasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                        'fnarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-                    {{data.firstname1}}</div>
+            [ngClass]="{'fnasolo' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                        'fnarelai' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+                    {{spotter.firstName}}</div>
             <div class="username"
-            [ngClass]="{'lnasolo' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                        'lnarelai' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-                    {{data.lastname1}}</div>
+            [ngClass]="{'lnasolo' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                        'lnarelai' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+                    {{spotter.lastName}}</div>
             <div class="username"
-            [ngClass]="{'hidden' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                        'fnarelai2' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-                    {{data.firstnameR1}}</div>
+            [ngClass]="{'hidden' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                        'fnarelai2' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+                    {{spotter.firstName2}}</div>
             <div class="username"
-            [ngClass]="{'hidden' : data.status === 'finish-solo'|| data.status === 'winner-solo',
-                        'lnarelai2' : data.status === 'finish-relai'|| data.status === 'winner-relai'}">
-                    {{data.lastnameR1}}</div>
+            [ngClass]="{'hidden' : spotterStatus === 'finish-solo'|| spotterStatus === 'winner-solo',
+                        'lnarelai2' : spotterStatus === 'finish-relai'|| spotterStatus === 'winner-relai'}">
+                    {{spotter.lastName2}}</div>
         </div>
     </div>
 </div>

@@ -1,11 +1,11 @@
-<div *ngIf="finisher" class="box-arrivee"
+<div *ngIf="finisher && display" class="box-arrivee"
 [ngClass]="{'image-winner-fond' : finnisherStatus === 'winner-solo'|| finnisherStatus === 'winner-relai',
             'image-arrivee-fond' : finnisherStatus === 'finish-solo'|| finnisherStatus === 'finish-relai'}">
     <img
     [ngClass]="{'photo-winner-coureur' : finnisherStatus === 'winner-solo',
                 'photo-arrivee-coureur' : finnisherStatus === 'finish-solo',
                 'photo-arrivee-relai' : finnisherStatus === 'finish-relai'|| finnisherStatus === 'winner-relai'}"
-    src={{finisher.photo}} alt="photo"/>
+    [src]="finisher.photo" alt="photo"/>
     <div
     [ngClass]="{'infos-arrivee-solo' : finnisherStatus === 'finish-solo',
                 'infos-arrivee-relai' : finnisherStatus === 'finish-relai',
@@ -21,7 +21,7 @@
         [ngClass]="{'rank-arrivee-solo' : finnisherStatus === 'finish-solo',
                     'rank-arrivee-relai' : finnisherStatus === 'finish-relai',
                     'hidden' : finnisherStatus === 'winner-solo'|| finnisherStatus === 'winner-relai'}">
-                    {{finisher.currentSplitRank}}<sup> eme</sup></div>
+                    {{finisher.currentSplitRank}}<sup>{{ rankAdjust }} </sup></div>
         <div class="bib"
         [ngClass]="{'bib-arrivee-solo' : finnisherStatus === 'finish-solo',
                     'bib-arrivee-relai' : finnisherStatus === 'finish-relai',

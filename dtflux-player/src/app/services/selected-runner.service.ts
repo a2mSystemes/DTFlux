@@ -14,17 +14,18 @@ export class SelectedRunnerService {
   constructor(private _websocketService: WebsocketService) {
     this._wsSubscription = this._websocketService.subscribeWsCommands().subscribe( (data) => {
     console.log(data);
-
       if(data && data.command === 'select.runner' && data.value !== undefined) {
         console.log(`pushes value ${data.value}`)
         this._selectedSubject.next(data.value);
       }
     });
    }
+
    getSubject(){
     console.log("getSubject");
     return this._selectedSubject;
    }
+
    setSelected(selected: number){
     const message = {
       channel: "commands",

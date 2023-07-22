@@ -44,6 +44,7 @@ export class WebsocketService implements OnInit {
     this._liveResultChannel = webSocket<any>(this._websocketBaseUrl + "?channel=live-result" );
     this._timersChannel = webSocket<any>(this._websocketBaseUrl + "?channel=timers" );
     this._dbChannel = webSocket<any>(this._websocketBaseUrl + "?channel=db" );
+    // this.subscribeWsLiveResult().subscribe({next : (data) => { console.log(data)}})
 
   }
   ngOnInit(): void {

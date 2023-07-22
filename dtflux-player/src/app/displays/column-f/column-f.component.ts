@@ -1,38 +1,77 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, interval, timer } from 'rxjs';
 import { RunnerResult } from 'src/app/dtflux-ui-model/core.model/RunnerResult';
 import { RunnerResults } from 'src/app/dtflux-ui-model/core.model/RunnerResults';
+import { ConfigService } from 'src/app/services/config.service';
 import { MockingService } from 'src/app/services/mocking.service';
+import { WebsocketService } from 'src/app/services/network/websocket.service';
 
 @Component({
-  selector: 'app-column-f',
+  selector: 'app-column',
   templateUrl: './column-f.component.html',
   styleUrls: ['./column-f.component.sass']
 })
-export class ColumnFComponent implements OnInit{
-  _runnersResult$:RunnerResults = new RunnerResults();
+
+export class ColumnFComponent implements OnInit {
+  _runnersResults: RunnerResults = new RunnerResults();
   subRunnerResult!: Subscription;
-  tableData: any[] = [];
+  tableData: Array<RunnerResult> = new Array<RunnerResult>();
+  tablefilter: Array<RunnerResult> = new Array<RunnerResult>();
   runner?: RunnerResult;
   indexColonne: number = -1;
-  firstF: RunnerResult = new RunnerResult();
+  firstM?: RunnerResult = new RunnerResult();
+  end: number = 13;
+  fini : boolean = false;
+  start = 1;
+  genderfilter : string = "F";
 
 
-  constructor(private _mockingService:MockingService){
-    this.subRunnerResult = this._mockingService.subscribeRunnersResults().subscribe({next : (runners: RunnerResults) => {
-      this._runnersResult$ = runners;
-      this.tableData = runners;
-      let i=0;
-      for (let runner of runners){
-          if(runners[i].currentSplitRank && runner.gender === "F"){
-            if(runner.currentSplitRank === 1) this.firstF = runner;
-          }
+
+
+
+  constructor(private _websocketService: WebsocketService, private _configService: ConfigService) {
+    this.subRunnerResult = this._websocketService.subscribeWsLiveResult().subscribe({
+      next: (runners: RunnerResults) => {
+        this._runnersResults = new RunnerResults(runners);
+        const filterByGender = (runner: RunnerResult) => {
+          return runner.gender === this.genderfilter;}
+        this.tablefilter = this._runnersResults.filter(filterByGender);
+        this.firstM = this.tablefilter.shift();
       }
-    }});
+    });
+    const t = this._configService.getConf("columnSwitchTimer")
+    interval(6000).subscribe({ next : () =>{
+      const filterByGender = (runner: RunnerResult) => {
+        return runner.gender === this.genderfilter;}
+      this.tablefilter = this._runnersResults.filter(filterByGender);
+      this.tableData  = this.tablefilter.slice(this.start, this.end);
+      if(this.fini === true) {
+        this.start = 1;
+        this.end = 13;
+        this.fini = false;
+      }
+      else {
+        if(this.start + 12 < this.tablefilter.length) this.start += 12;
+        if(this.end + 12 > this.tablefilter.length) {
+          this.end = this.tablefilter.length;
+          this.fini = true;
+        }
+        else this.end += 12;
+      }
+
+      console.log(this.tableData)
+      console.log(this.start)
+      console.log(this.tablefilter.length)
+    }
+
+    });
 
   }
+  updateResults() {
+    // on prend le nombre déja affiché
+    //
+  }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
 }

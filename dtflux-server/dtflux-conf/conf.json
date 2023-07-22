@@ -15,9 +15,9 @@
     "httpHost": "0.0.0.0",
     "raceResultAPI": {
         "useLocal": true,
-        "refreshApiTimer": 1000,
+        "refreshApiTimer": 500,
         "baseDistantUrl": "https://api.raceresult.com/",
-        "baseLocalUrl": "http://192.168.30.95",
+        "baseLocalUrl": "http://192.168.30.67",
         "idEvent": "246158/",
         "resources": {
             "startListKey" : "8O8JMI2739JS58R8KRJGJEZUSQXF807O",

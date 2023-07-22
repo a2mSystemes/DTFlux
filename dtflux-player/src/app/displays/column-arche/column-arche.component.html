@@ -1,0 +1,16 @@
+  <div class="image-fond"></div>
+
+  <div *ngIf="firstM" class="grid-winner-container">
+          <div class="grid-winner-item" >{{firstM.bib}}</div>
+          <div class="grid-winner-item" >{{firstM.lastName}} {{firstM.firstName}}</div>
+          <div class="grid-winner-item" >{{firstM.finishTime}}</div>
+  </div>
+
+
+  <div  class="grid-colonne-container">
+    <ng-container *ngFor="let runner of tableData ">
+            <div class="grid-colonne-item" >{{runner.bib}}</div>
+            <div class="grid-colonne-item" >{{runner.lastName}} {{runner.firstName}}</div>
+            <div class="grid-colonne-item" >{{runner.finishGap}}</div>
+    </ng-container>
+  </div>

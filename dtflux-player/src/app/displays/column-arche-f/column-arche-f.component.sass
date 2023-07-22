@@ -1,0 +1,74 @@
+
+.image-fond
+    position: absolute
+    background-image: url(/assets/Medias/Arche-Tableau-Femme.png)
+    background-origin: border-box
+    background-repeat: no-repeat
+    width: 256px
+    height: 384px
+
+.grid-winner-container
+    display: grid
+    position: absolute
+    top: 22px
+    left: 5px
+    grid-template-columns: 40px 140px 48px
+    grid-template-rows: 57px
+    gap: 10px
+    align-items: center
+
+.grid-winner-item
+    //background-color: rgba(0, 255, 0, 0.7)
+    font-family: integralCF
+    font-size: 20px
+    text-align: center
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+.grid-winner-item:nth-child(3n+1)
+    font-size: 18px
+
+.grid-winner-item:nth-child(3n+2)
+    font-size: 14px
+
+
+.grid-winner-item:nth-child(3n+3)
+    font-size: 13px
+    text-align: start
+    padding-left: 5px
+
+.grid-colonne-container
+    //background-color: gray
+    display: grid
+    position: absolute
+    top: 75px
+    left: 6px
+    grid-template-columns: 38px 152px 50px
+    grid-template-rows: repeat(8, 36px)
+    gap: 2px
+    align-items: center
+
+.grid-colonne-item
+    //background-color: rgba(0, 0, 255, 0.7)
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    font-family: 'Montserrat', sans-serif
+    color: white
+    text-transform: uppercase
+
+.grid-colonne-item:nth-child(3n+1)
+    font-size: 16px
+    text-align: center
+
+.grid-colonne-item:nth-child(3n+2)
+    font-size: 12px
+    text-align: center
+
+.grid-colonne-item:nth-child(3n+3)
+    font-size: 14px
+    text-align: start
+    padding-left: 2px
+
+

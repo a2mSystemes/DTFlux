@@ -6,12 +6,20 @@
     <button type="button" (click)="XPSHomme()">Yotta XPS Hommes</button>
     <button type="button" (click)="XPSFemme()">Yotta XPS Femmes</button>
     <button type="button" (click)="XPSRelai()">Yotta XPS Relai</button>
+    <!--
 
+    <h2>Affichage tableau des athlètes</h2>
+    <button type="button" >Yotta XP</button>
+    <button type="button" >Yotta XPS Hommes</button>
+    <button type="button" >Yotta XPS Femmes</button>
+    <button type="button" >Yotta XPS Relai</button>
+    ----
     <h2>Affichage tableau des athlètes</h2>
     <button type="button" (click)="XPDisplay()">Yotta XP</button>
     <button type="button" (click)="XPSHommeDisplay()">Yotta XPS Hommes</button>
     <button type="button" (click)="XPSFemmeDisplay()">Yotta XPS Femmes</button>
     <button type="button" (click)="XPSRelaiDisplay()">Yotta XPS Relai</button>
+    -->
 
     <h2>Affichage étape en cours</h2>
     <button type="button" (click)="kilo()">Kilo</button>
@@ -26,23 +34,26 @@
         <form action="a definir merci :D" method="post">
             <div>
                 <label for="timekilo">Kilo :</label>
-                <input type="time" id="timekilo" name="?">
+                <input type="time" id="timekilo" name="kilo" [(ngModel)]="kiloTime">
             </div>
             <div>
                 <label for="timemega">Mega :</label>
-                <input type="time" id="timemega" name="?">
+                <input type="time" id="timemega" name="mega" [(ngModel)]="megaTime">
             </div>
             <div>
                 <label for="timegiga">Giga :</label>
-                <input type="time" id="timegiga" name="?">
+                <input type="time" id="timegiga" name="giga" [(ngModel)]="gigaTime">
             </div>
             <div>
                 <label for="timetera">Tera :</label>
-                <input type="time" id="timetera" name="?">
+                <input type="time" id="timetera" name="tera" [(ngModel)]="teraTime">
             </div>
             <div>
                 <label for="timepeta">Peta :</label>
-                <input type="time" id="timepeta" name="?">
+                <input type="time" id="timepeta" name="peta" [(ngModel)]="petaTime">
+            </div>
+            <div>
+              <button type="button" (click)="validerChronos()">Valider</button>
             </div>
         </form>
 
@@ -79,7 +90,8 @@
     <input type="checkbox" id="auto" name="auto">
     <label for="auto">Détection automatique</label>
 </div>
-
+<div><app-stopwatch [stopwatchTime]="'30:45'"></app-stopwatch></div>
 <label for="bib">Numero de maillot :</label>
-<input type="number" id="bib" name="bib" size="10" [(ngModel)]="bibValue"/>
+<input type="number" id="bib" name="bib" size="10" (keyup.enter)="validerMaillot()" [(ngModel)]="bibValue"/>
 <button type="button" (click)="validerMaillot()">Go</button>
+

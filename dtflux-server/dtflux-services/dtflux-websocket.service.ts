@@ -17,7 +17,6 @@ export class DTFluxWebSocketService extends WebSocketServer {
   // private _db:DTFluxDbService;
   private _routesWs: Map<string, Subject<any>> = new Map<string, Subject<any>>();
   handleLiveResultRequest: any;
-  private _exporterSubscription: Subscription
 
 
   constructor(db: DTFluxDbService, exporter_s: DTFluxExporterService, liveResult_s: DTFluxLiveResultService) {
@@ -26,13 +25,7 @@ export class DTFluxWebSocketService extends WebSocketServer {
       path = conf.baseUrl + conf.wsPath;
     super({ port: conf.wsPort ? conf.wsPort : 5001, path: path });
     this._exporterService = exporter_s;
-    this._exporterSubscription = this._exporterService.getChanges()
-      .subscribe({
-        next: (stageFinisher: RunnerResult) => {
-          console.log("sending stageFinisher");
-          this.clients.forEach(client => client.send(JSON.stringify(stageFinisher)));
-        }
-      })
+    
     this._liveResultService = liveResult_s;
     // this._liveResultService.getChanges().subscribe((data) => console.log("in WS Service" + data));
 
@@ -44,19 +37,19 @@ export class DTFluxWebSocketService extends WebSocketServer {
       const channels = params.getAll("channel");
       for (let channel of channels) {
         if (channel === "exporter") {
-          this._exporterService.getChanges().subscribe({
-            next: (changes: any) => {
-              // console.log("sending to ws");
-              // console.log(JSON.stringify(changes));
-              // for(let client of this.clients){
-              //   client.send(JSON.stringify(changes));
-              // }
-            }
-          });
+      this._exporterService.getChanges()
+      .subscribe({
+        next: (stageFinisher: any) => {
+          // console.log("sending stageFinisher");
+          // console.log(stageFinisher)
+          ws.send(JSON.stringify(stageFinisher));
+        }
+      })
         }
         if (channel === "live-result") {
           this._liveResultService.getChanges().subscribe({
             next: (changes: any) => {
+              // console.log(changes)
               ws.send(JSON.stringify(changes));
             }
           });

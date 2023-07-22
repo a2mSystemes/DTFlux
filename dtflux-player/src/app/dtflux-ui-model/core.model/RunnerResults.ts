@@ -37,6 +37,13 @@ export class RunnerResults extends FilteredArray<RunnerResult> {
     }
     return new RunnerResult();
   }
+
+  removeByBib(bib: number) {
+    const index = this.findIndex((result: RunnerResult) => result.bib === bib);
+    if (index !== -1) {
+      this.splice(index, 1);
+    }
+  }
 }
 
 

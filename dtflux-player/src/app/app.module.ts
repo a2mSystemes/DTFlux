@@ -11,12 +11,6 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { InfoEtapeComponent } from './displays/info-etape/info-etape.component';
 import { StartComponent } from './displays/start/start.component';
 import { ArchFinish1Component } from './displays/arch-finish1/arch-finish1.component';
-import { ArchFinish2Component } from './displays/arch-finish2/arch-finish2.component';
-import { ArchFinish3Component } from './displays/arch-finish3/arch-finish3.component';
-import { ArchFinish4Component } from './displays/arch-finish4/arch-finish4.component';
-import { ArchSpotter4Component } from './displays/arch-spotter4/arch-spotter4.component';
-import { ArchSpotter3Component } from './displays/arch-spotter3/arch-spotter3.component';
-import { ArchSpotter2Component } from './displays/arch-spotter2/arch-spotter2.component';
 import { ArchSpotter1Component } from './displays/arch-spotter1/arch-spotter1.component';
 import { StreamComponent } from './displays/stream/stream.component';
 import { MockingService } from './services/mocking.service';
@@ -26,6 +20,11 @@ import { ColumnWinnerComponent } from './displays/column-winner/column-winner.co
 import { PodiumComponent } from './displays/podium/podium.component';
 import { PrivateComponent } from './components/private/private.component';
 import { FormsModule } from '@angular/forms';
+import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
+import { ColumnHComponent } from './displays/column-h/column-h.component';
+import { ColumnArcheComponent } from './displays/column-arche/column-arche.component';
+import { ColumnArcheFComponent } from './displays/column-arche-f/column-arche-f.component';
+import { ColumnArcheHComponent } from './displays/column-arche-h/column-arche-h.component';
 
 @NgModule({
   declarations: [
@@ -37,19 +36,18 @@ import { FormsModule } from '@angular/forms';
     InfoEtapeComponent,
     StartComponent,
     ArchFinish1Component,
-    ArchFinish2Component,
-    ArchFinish3Component,
-    ArchFinish4Component,
-    ArchSpotter4Component,
-    ArchSpotter3Component,
-    ArchSpotter2Component,
     ArchSpotter1Component,
     StreamComponent,
     StreamFullComponent,
     ColumnFComponent,
     ColumnWinnerComponent,
     PodiumComponent,
-    PrivateComponent
+    PrivateComponent,
+    StopwatchComponent,
+    ColumnHComponent,
+    ColumnArcheComponent,
+    ColumnArcheFComponent,
+    ColumnArcheHComponent,
   ],
   imports: [
     BrowserModule,

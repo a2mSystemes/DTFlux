@@ -45,7 +45,7 @@ export class DTFluxExporterService {
 
 
   dispatch(data: any) {
-    console.log(RunnerResult.fromExporter(data));
+    // console.log(RunnerResult.fromExporter(data));
     this._changeSubject.next(RunnerResult.fromExporter(data));
 
   }

@@ -1,43 +1,43 @@
-<div class="image-fond"
-    [ngClass]="{'image-winner' : data.status === 'winner-solo'|| data.status === 'winner-relai',
-                'image-1chrono' : (data.contest === 1 || data.contest === 3) && data.status !== 'winner-solo' && data.status !== 'winner-relai',
-                'image-2chronos' : data.contest === 2}">
+<div *ngIf="contestId" class="image-fond"
+    [ngClass]="{'image-winner' : dataStatus === 'winner-solo'|| dataStatus === 'winner-relai',
+                'image-1chrono' : (contestId === 1 || contestId === 3) && dataStatus !== 'winner-solo' && dataStatus !== 'winner-relai',
+                'image-2chronos' : contestId === 2}">
 
-    <div [ngClass]="{'box-nom' : data.status !== 'winner-solo' && data.status !== 'winner-relai',
-                    'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
-        <img [src]="getDynamicImageLink()" alt="Image">
+    <div [ngClass]="{'box-nom' : dataStatus !== 'winner-solo' && dataStatus !== 'winner-relai',
+                    'hidden' : dataStatus === 'winner-solo' || dataStatus === 'winner-relai'}">
+        <img [src]="imageLink" alt="Image">
     </div>
-    
-    <div class="chrono"
-    [ngClass]="{'chronoseul' : data.contest === 1 || data.contest === 3,
-                'chronoH' : data.contest === 2,
-                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai'}">
-    {{data.decompteH}}</div>
 
     <div class="chrono"
-    [ngClass]="{'chronoF' : data.contest === 2 && data.status !== 'winner-solo' && data.status !== 'winner-relai',
-                'hidden' : data.status === 'winner-solo' || data.status === 'winner-relai' || data.contest === 1 || data.contest === 3}">
-    {{data.decompteF}}</div>
-    
-    <div 
-        [ngClass]="data.status === 'winner-solo' ? 'nom-gagnant' : 'hidden'">
-        {{data.lastName1}} <em>{{data.firstName1}}</em>
+    [ngClass]="{'chronoseul' : contestId === 1 || contestId === 3,
+                'chronoH' : contestId === 2,
+                'hidden' : dataStatus === 'winner-solo' || dataStatus === 'winner-relai'}">
+    </div>
+
+    <div class="chrono"
+    [ngClass]="{'chronoF' : contestId === 2 && dataStatus !== 'winner-solo' && dataStatus !== 'winner-relai',
+                'hidden' : dataStatus === 'winner-solo' || dataStatus === 'winner-relai' || contestId === 1 || contestId === 3}">
+    </div>
+<!--
+    <div
+        [ngClass]="dataStatus === 'winner-solo' ? 'nom-gagnant' : 'hidden'">
+        {{lastName}} <em>{{firstName}}</em>
     </div>
 
     <div
-        [ngClass]="data.status === 'winner-relai' ? 'nom-gagnantR1' : 'hidden'">
-        {{data.lastName1}} <em>{{data.firstName1}}</em>
-    </div>
-    
-    <div
-        [ngClass]="data.status === 'winner-relai' ? 'nom-gagnantR2' : 'hidden'">
-        {{data.lastName2}} <em>{{data.firstName2}}</em>
+        [ngClass]="dataStatus === 'winner-relai' ? 'nom-gagnantR1' : 'hidden'">
+        {{lastName}} <em>{{firstName}}</em>
     </div>
 
-    <div 
-        [ngClass]="data.status === 'winner-solo' || data.status === 'winner-relai' ? 'chronofinish' : 'hidden'">
-        {{data.FinishTime}}
+    <div
+        [ngClass]="dataStatus === 'winner-relai' ? 'nom-gagnantR2' : 'hidden'">
+        {{lastName2}} <em>{{firstName2}}</em>
     </div>
+
+    <div
+        [ngClass]="dataStatus === 'winner-solo' || dataStatus === 'winner-relai' ? 'chronofinish' : 'hidden'">
+        {{finishTime}}
+    </div> -->
 
 </div>
 

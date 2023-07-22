@@ -13,6 +13,8 @@ udpPort.on('ready', () => {
     console.log('Port d\'écoute UDP ouvert et prêt à recevoir des données OSC.');
 });
 
+
+
 // Événement déclenché lorsqu'un message OSC est reçu
 udpPort.on('message', (oscMessage) => {
     console.log('Message reçu :', oscMessage);

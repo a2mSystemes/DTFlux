@@ -39,8 +39,7 @@ export class StreamComponent implements OnInit {
 
     this.subRunnerResult = this._liveResultService.subscribeWsLiveResult().subscribe({
       next: (runners: any) => {
-        console.log(runners[0].lastName)
-        console.log(runners[0].bib)
+        console.log(runners)
         this._runnerResults = new RunnerResults(runners);
         if (this.selectedRunner) {
           this.runnerActuel = this.getActualRunner(this.selectedRunner);

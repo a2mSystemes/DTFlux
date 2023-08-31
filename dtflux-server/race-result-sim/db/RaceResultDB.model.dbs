@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Sqlite" id="Project-bf2" database="Sqlite" >
+	<schema name="Default" >
+		<table name="Categories" spec="" >
+			<column name="CategoryID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Category" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<index name="pk_Categories" unique="PRIMARY_KEY" >
+				<column name="CategoryID" />
+			</index>
+			<fk name="FK_Categories Participants" to_schema="Default" to_table="Participants" options="" >
+				<fk_column name="CategoryID" pk="CategoryID" />
+			</fk>
+		</table>
+		<table name="Clubs" spec="" >
+			<column name="ClubID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ClubName" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<index name="pk_Clubs" unique="PRIMARY_KEY" >
+				<column name="ClubID" />
+			</index>
+			<fk name="FK_Clubs Participants" to_schema="Default" to_table="Participants" options="" >
+				<fk_column name="ClubID" pk="ClubID" />
+			</fk>
+		</table>
+		<table name="ContestStages" spec="" >
+			<column name="ContestStageID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="EventContestID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="StageID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="StartTime" type="DATETIME" jt="93" mandatory="y" />
+			<column name="TimeLimit" type="INTEGER" jt="4" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="pk_ContestStages" unique="PRIMARY_KEY" >
+				<column name="ContestStageID" />
+			</index>
+			<index name="unq_ContestStages_EventContestID" unique="UNIQUE_KEY" >
+				<column name="EventContestID" />
+			</index>
+			<index name="unq_ContestStages_StageID" unique="UNIQUE_KEY" >
+				<column name="StageID" />
+			</index>
+			<fk name="FK_ContestStages RunnerSplitResult" to_schema="Default" to_table="RunnerSplitResults" options="" >
+				<fk_column name="ContestStageID" pk="ContestStageID" />
+			</fk>
+			<fk name="FK_ContestStages RunnerStageFinalResult" to_schema="Default" to_table="RunnerStageFinalResults" options="" >
+				<fk_column name="ContestStageID" pk="StageID" />
+			</fk>
+		</table>
+		<table name="Contests" spec="" >
+			<column name="ContestID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ContestName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Contests" unique="PRIMARY_KEY" >
+				<column name="ContestID" />
+			</index>
+			<fk name="FK_Contests EventContests" to_schema="Default" to_table="EventContests" options="" >
+				<fk_column name="ContestID" pk="ContestID" />
+			</fk>
+			<fk name="FK_Contests RunnerContestFinalResult" to_schema="Default" to_table="RunnerContestFinalResults" options="" >
+				<fk_column name="ContestID" pk="ContestID" />
+			</fk>
+		</table>
+		<table name="EventContests" spec="" >
+			<column name="EventContestID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="EventID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ContestID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="StartTime" type="DATETIME" jt="93" mandatory="y" />
+			<index name="pk_EventContests" unique="PRIMARY_KEY" >
+				<column name="EventContestID" />
+			</index>
+			<index name="unq_EventContests_EventID" unique="UNIQUE_KEY" >
+				<column name="EventID" />
+			</index>
+			<index name="unq_EventContests_ContestID" unique="UNIQUE_KEY" >
+				<column name="ContestID" />
+			</index>
+			<fk name="FK_EventContests ContestStages" to_schema="Default" to_table="ContestStages" options="" >
+				<fk_column name="EventContestID" pk="EventContestID" />
+			</fk>
+		</table>
+		<table name="Events" spec="" >
+			<column name="EventID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="EventName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Events" unique="PRIMARY_KEY" >
+				<column name="EventID" />
+			</index>
+			<fk name="FK_Events EventContests" to_schema="Default" to_table="EventContests" options="" >
+				<fk_column name="EventID" pk="EventID" />
+			</fk>
+		</table>
+		<table name="Participants" spec="" >
+			<column name="ParticipantID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="PersonID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ClubID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="CategoryID" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Participants" unique="PRIMARY_KEY" >
+				<column name="ParticipantID" />
+			</index>
+			<index name="unq_Participants_PersonID" unique="UNIQUE_KEY" >
+				<column name="PersonID" />
+			</index>
+			<index name="unq_Participants_CategoryID" unique="UNIQUE_KEY" >
+				<column name="CategoryID" />
+			</index>
+			<index name="unq_Participants_ClubID" unique="UNIQUE_KEY" >
+				<column name="ClubID" />
+			</index>
+			<fk name="FK_Participants Teams" to_schema="Default" to_table="Teams" options="" >
+				<fk_column name="ParticipantID" pk="Teamate1ID" />
+			</fk>
+			<fk name="FK_Participants Teams_001" to_schema="Default" to_table="Teams" options="" >
+				<fk_column name="ParticipantID" pk="Teamate2ID" />
+			</fk>
+		</table>
+		<table name="Persons" spec="" >
+			<column name="PersonID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Lastname" type="VARCHAR" length="100" jt="12" />
+			<column name="Firstname" type="VARCHAR" length="100" jt="12" />
+			<column name="Gender" type="CHAR" length="1" jt="1" />
+			<index name="pk_Persons" unique="PRIMARY_KEY" >
+				<column name="PersonID" />
+			</index>
+			<fk name="FK_Persons Participants" to_schema="Default" to_table="Participants" options="" >
+				<fk_column name="PersonID" pk="PersonID" />
+			</fk>
+		</table>
+		<table name="RunnerContestFinalResults" prior="RunnerContestFinalResult" spec="" >
+			<column name="RunnerFinalResultID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TotalTime" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TeamID" type="INTEGER" jt="4" />
+			<column name="ContestID" type="INTEGER" jt="4" />
+			<column name="FinishRank" type="INTEGER" jt="4" mandatory="y" />
+			<column name="FinnishGap" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_RunnerContestFinalResult" unique="PRIMARY_KEY" >
+				<column name="RunnerFinalResultID" />
+			</index>
+			<index name="unq_RunnerContestFinalResult_TeamID" unique="UNIQUE_KEY" >
+				<column name="TeamID" />
+			</index>
+			<index name="unq_RunnerContestFinalResult_ContestID" unique="UNIQUE_KEY" >
+				<column name="ContestID" />
+			</index>
+		</table>
+		<table name="RunnerSplitResults" prior="RunnerSplitResult" spec="" >
+			<column name="RunnerResultID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TeamID" type="INTEGER" jt="4" />
+			<column name="ContestStageID" type="INTEGER" jt="4" />
+			<column name="CurrentSplitID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Rank" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Time" type="DATETIME" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="Gap" type="DATETIME" jt="93" />
+			<index name="pk_RunnerSplitResult" unique="PRIMARY_KEY" >
+				<column name="RunnerResultID" />
+			</index>
+			<index name="unq_RunnerResult_ContestStageID" unique="UNIQUE_KEY" >
+				<column name="ContestStageID" />
+			</index>
+			<index name="unq_RunnerResult_SplitID" unique="UNIQUE_KEY" >
+				<column name="CurrentSplitID" />
+			</index>
+			<index name="unq_RunnerResult_TeamID" unique="UNIQUE_KEY" >
+				<column name="TeamID" />
+			</index>
+		</table>
+		<table name="RunnerStageFinalResults" prior="RunnerStageFinalResult" spec="" >
+			<column name="RunnerFinalResultID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TotalTime" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TeamID" type="INTEGER" jt="4" />
+			<column name="StageID" type="INTEGER" jt="4" />
+			<column name="FinishRank" type="INTEGER" jt="4" mandatory="y" />
+			<column name="FinnishTime" type="DATETIME" jt="93" mandatory="y" />
+			<column name="FinishGap" type="INTEGER" jt="4" />
+			<index name="pk_RunnerStageFinalResult" unique="PRIMARY_KEY" >
+				<column name="RunnerFinalResultID" />
+			</index>
+			<index name="unq_RunnerStageFinalResult_StageID" unique="UNIQUE_KEY" >
+				<column name="StageID" />
+			</index>
+			<index name="unq_RunnerStageFinalResult_TeamID" unique="UNIQUE_KEY" >
+				<column name="TeamID" />
+			</index>
+		</table>
+		<table name="Splits" spec="" >
+			<column name="CurrentSplitID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="SplitName" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<index name="pk_Splits" unique="PRIMARY_KEY" >
+				<column name="CurrentSplitID" />
+			</index>
+			<fk name="FK_Splits RunnerSplitResult" to_schema="Default" to_table="RunnerSplitResults" options="" >
+				<fk_column name="CurrentSplitID" pk="CurrentSplitID" />
+			</fk>
+		</table>
+		<table name="Stages" prior="Stage" spec="" >
+			<column name="StageID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="StageName" type="VARCHAR" length="150" jt="12" />
+			<index name="pk_Stage" unique="PRIMARY_KEY" >
+				<column name="StageID" />
+			</index>
+			<fk name="FK_Stage ContestStages" to_schema="Default" to_table="ContestStages" options="" >
+				<fk_column name="StageID" pk="StageID" />
+			</fk>
+		</table>
+		<table name="Teams" spec="" >
+			<column name="TeamID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TeamName" type="VARCHAR" length="150" jt="12" />
+			<column name="Teamate1ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Teamate2ID" type="INTEGER" jt="4" />
+			<column name="Bib" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Status" type="VARCHAR" length="150" jt="12" mandatory="y" >
+				<defo><![CDATA['']]></defo>
+			</column>
+			<column name="Updated_at" type="DATETIME" jt="93" mandatory="y" />
+			<column name="Created_at" type="DATETIME" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<index name="pk_Teams" unique="PRIMARY_KEY" >
+				<column name="TeamID" />
+			</index>
+			<index name="unq_Teams_Teamate1ID" unique="UNIQUE_KEY" >
+				<column name="Teamate1ID" />
+			</index>
+			<index name="unq_Teams_Teamate2ID" unique="UNIQUE_KEY" >
+				<column name="Teamate2ID" />
+			</index>
+			<index name="unq_Teams_Bib" unique="UNIQUE_KEY" >
+				<column name="Bib" />
+			</index>
+			<fk name="FK_Teams RunnerSplitResult" to_schema="Default" to_table="RunnerSplitResults" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+			<fk name="FK_Teams RunnerStageFinalResult" to_schema="Default" to_table="RunnerStageFinalResults" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+			<fk name="FK_Teams RunnerContestFinalResult" to_schema="Default" to_table="RunnerContestFinalResults" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+		</table>
+		<view name="v_TeamParticipants" >
+			<view_script><![CDATA[CREATE VIEW ${nameWithSchemaName} AS SELECT 
+t.Bib,
+t.TeamName,
+t.Status,
+p1.Firstname,
+p1.Lastname,
+p1.Gender,
+cl1.ClubName,
+cat1.Category,
+p2.Firstname,
+p2.Lastname,
+p2.Gender,
+cl2.ClubName,
+cat2.Category
+FROM Teams t
+LEFT JOIN Participants part1 ON t.teamate1ID = part1.ParticipantID
+LEFT JOIN Participants part2 ON t.teamate2ID = part2.ParticipantID 
+LEFT JOIN Persons p1 ON part1.PersonID = p1.PersonID
+LEFT JOIN Clubs cl1 ON part1.ClubID = cl1.ClubID
+LEFT JOIN Categories cat1 ON part1.CategoryID = cat1.CategoryID
+LEFT JOIN Persons p2 ON part2.PersonID = p2.PersonID
+LEFT JOIN Clubs cl2 ON part2.ClubID = cl2.ClubID
+LEFT JOIN Categories cat2 ON part2.CategoryID = cat2.CategoryID]]></view_script>
+			<column name="Bib" type="INTEGER" />
+			<column name="TeamName" type="VARCHAR" />
+			<column name="Status" type="VARCHAR" />
+			<column name="Firstname" type="VARCHAR" />
+			<column name="Lastname" type="VARCHAR" />
+			<column name="Gender" type="CHAR" />
+			<column name="ClubName" type="VARCHAR" />
+			<column name="Category" type="VARCHAR" />
+			<column name="Firstname:1" type="VARCHAR" />
+			<column name="Lastname:1" type="VARCHAR" />
+			<column name="Gender:1" type="CHAR" />
+			<column name="ClubName:1" type="VARCHAR" />
+			<column name="Category:1" type="VARCHAR" />
+		</view>
+		<view name="view_RunnerSplitResults" >
+			<view_script><![CDATA[CREATE VIEW view_RunnerSplitResults AS
+SELECT 
+    t.TeamName,
+    rs.ContestStageID,
+    csts.ContestName,
+    st.StageName,
+    sp.SplitName,
+    rs.Rank,
+    rs.Time,
+    rs.Gap,
+    p.Firstname,
+    p.Lastname,
+    c.Category
+FROM RunnerSplitResults rs
+LEFT JOIN Teams t ON rs.TeamID = t.TeamID
+LEFT JOIN ContestStages cst ON rs.ContestStageID = cst.ContestStageID
+LEFT JOIN EventContests evcs ON cst.EventContestID = evcs.ContestID
+LEFT JOIN Contests csts ON evcs.ContestID = csts.ContestID
+LEFT JOIN Stages st ON cst.StageID = st.StageID
+LEFT JOIN Splits sp ON rs.CurrentSplitID = sp.CurrentSplitID
+LEFT JOIN Participants pa ON rs.TeamID = pa.ParticipantID
+LEFT JOIN Persons p ON pa.PersonID = p.PersonID
+LEFT JOIN Categories c ON pa.CategoryID = c.CategoryID;]]></view_script>
+			<column name="TeamName" type="VARCHAR" />
+			<column name="ContestStageID" type="INTEGER" />
+			<column name="ContestName" type="VARCHAR" />
+			<column name="StageName" type="VARCHAR" />
+			<column name="SplitName" type="VARCHAR" />
+			<column name="Rank" type="INTEGER" />
+			<column name="Time" type="DATETIME" />
+			<column name="Gap" type="DATETIME" />
+			<column name="Firstname" type="VARCHAR" />
+			<column name="Lastname" type="VARCHAR" />
+			<column name="Category" type="VARCHAR" />
+		</view>
+	</schema>
+	<connector name="Sqlite" database="Sqlite" driver_class="org.sqlite.JDBC" driver_jar="sqlite-jdbc-3.40.0.0.jar" driver_desc="Standard" host="localhost" port="7210" instance="D:/0000WorkTechnique/0002dev/DTFlux/dtflux-server/race-result-sim/db/race-results.db" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-8f7" show_relation="columns" >
+		<comment><![CDATA[Main Layout]]></comment>
+		<entity schema="Default" name="Categories" color="BED3F4" x="1024" y="720" />
+		<entity schema="Default" name="Clubs" color="BED3F4" x="992" y="928" />
+		<entity schema="Default" name="ContestStages" color="F4DDBE" x="720" y="304" />
+		<entity schema="Default" name="Contests" color="C7F4BE" x="80" y="832" />
+		<entity schema="Default" name="EventContests" color="F4DDBE" x="912" y="288" />
+		<entity schema="Default" name="Events" color="F4DDBE" x="1008" y="480" />
+		<entity schema="Default" name="Participants" color="BED3F4" x="832" y="720" />
+		<entity schema="Default" name="Persons" color="BED3F4" x="832" y="912" />
+		<entity schema="Default" name="RunnerContestFinalResults" color="F2BEF4" x="48" y="352" />
+		<entity schema="Default" name="RunnerSplitResults" color="F2BEF4" x="272" y="368" />
+		<entity schema="Default" name="RunnerStageFinalResults" color="F2BEF4" x="448" y="352" />
+		<entity schema="Default" name="Splits" color="C7F4BE" x="240" y="752" />
+		<entity schema="Default" name="Stages" color="F4DDBE" x="784" y="512" />
+		<entity schema="Default" name="Teams" color="C7F4BE" x="416" y="768" />
+		<entity schema="Default" name="v_TeamParticipants" color="3986C1" x="672" y="784" />
+		<entity schema="Default" name="view_RunnerSplitResults" color="3986C1" x="160" y="80" />
+		<group name="Participants" color="ECF0F7" >
+			<entity schema="Default" name="Participants" />
+			<entity schema="Default" name="Categories" />
+			<entity schema="Default" name="Persons" />
+			<entity schema="Default" name="Clubs" />
+			<entity schema="Default" name="v_TeamParticipants" />
+		</group>
+		<group name="ContestStages" color="F7F2EC" >
+			<entity schema="Default" name="ContestStages" />
+			<entity schema="Default" name="EventContests" />
+			<entity schema="Default" name="Events" />
+			<entity schema="Default" name="Stages" />
+		</group>
+		<group name="Teams" color="EEF7EC" >
+			<entity schema="Default" name="Teams" />
+			<entity schema="Default" name="Splits" />
+			<entity schema="Default" name="Contests" />
+		</group>
+		<group name="Results" color="F2BEF4" >
+			<entity schema="Default" name="RunnerContestFinalResults" />
+			<entity schema="Default" name="RunnerSplitResults" />
+			<entity schema="Default" name="view_RunnerSplitResults" />
+			<entity schema="Default" name="RunnerStageFinalResults" />
+		</group>
+		<script name="SQL_Editor_001" id="Editor-1f34" language="SQL" >
+			<string><![CDATA[CREATE TABLE RunnerContestFinalResult ( 
+	RunnerFinalResultID  INTEGER NOT NULL  PRIMARY KEY  ,
+	TotalTime            INTEGER NOT NULL    ,
+	TeamID               INTEGER     ,
+	ContestID            INTEGER     ,
+	FinishRank           INTEGER NOT NULL    ,
+	FinnishGap           INTEGER NOT NULL    ,
+	CONSTRAINT unq_RunnerContestFinalResult_TeamID UNIQUE ( TeamID ),
+	CONSTRAINT unq_RunnerContestFinalResult_ContestID UNIQUE ( ContestID )
+ );
+
+CREATE TABLE RunnerSplitResult ( 
+	RunnerResultID       INTEGER NOT NULL  PRIMARY KEY  ,
+	TeamID               INTEGER     ,
+	ContestStageID       INTEGER     ,
+	CurrentSplitID       INTEGER NOT NULL    ,
+	Rank                 INTEGER NOT NULL    ,
+	Time                 DATETIME  DEFAULT CURRENT_TIMESTAMP   ,
+	Gap                  DATETIME     ,
+	CONSTRAINT unq_RunnerResult_ContestStageID UNIQUE ( ContestStageID ),
+	CONSTRAINT unq_RunnerResult_SplitID UNIQUE ( CurrentSplitID ),
+	CONSTRAINT unq_RunnerResult_TeamID UNIQUE ( TeamID )
+ );
+
+CREATE TABLE RunnerStageFinalResult ( 
+	RunnerFinalResultID  INTEGER NOT NULL  PRIMARY KEY  ,
+	TotalTime            INTEGER NOT NULL    ,
+	TeamID               INTEGER     ,
+	StageID              INTEGER     ,
+	FinishRank           INTEGER NOT NULL    ,
+	FinnishTime          DATETIME NOT NULL    ,
+	FinishGap            INTEGER     ,
+	CONSTRAINT unq_RunnerStageFinalResult_StageID UNIQUE ( StageID ),
+	CONSTRAINT unq_RunnerStageFinalResult_TeamID UNIQUE ( TeamID )
+ );
+
+CREATE TABLE Splits ( 
+	CurrentSplitID       INTEGER NOT NULL  PRIMARY KEY  ,
+	SplitName            VARCHAR(100) NOT NULL    ,
+	FOREIGN KEY ( CurrentSplitID ) REFERENCES RunnerSplitResult( CurrentSplitID )  
+ );
+
+CREATE TABLE Teams ( 
+	TeamID               INTEGER NOT NULL  PRIMARY KEY  ,
+	TeamName             VARCHAR(150)     ,
+	Teamate1ID           INTEGER NOT NULL    ,
+	Teamate2ID           INTEGER     ,
+	Bib                  INTEGER     ,
+	Status               VARCHAR(150) NOT NULL DEFAULT ''   ,
+	Updated_at           DATETIME NOT NULL    ,
+	Created_at           DATETIME  DEFAULT CURRENT_TIMESTAMP   ,
+	CONSTRAINT unq_Teams_Teamate1ID UNIQUE ( Teamate1ID ),
+	CONSTRAINT unq_Teams_Teamate2ID UNIQUE ( Teamate2ID ),
+	FOREIGN KEY ( TeamID ) REFERENCES RunnerSplitResult( TeamID )  ,
+	FOREIGN KEY ( TeamID ) REFERENCES RunnerStageFinalResult( TeamID )  ,
+	FOREIGN KEY ( TeamID ) REFERENCES RunnerContestFinalResult( TeamID )  
+ );
+
+CREATE TABLE ContestStages ( 
+	ContestStageID       INTEGER NOT NULL  PRIMARY KEY  ,
+	EventContestID       INTEGER NOT NULL    ,
+	StageID              INTEGER NOT NULL    ,
+	StartTime            DATETIME NOT NULL    ,
+	TimeLimit            INTEGER NOT NULL DEFAULT 0   ,
+	CONSTRAINT unq_ContestStages_EventContestID UNIQUE ( EventContestID ),
+	CONSTRAINT unq_ContestStages_StageID UNIQUE ( StageID ),
+	FOREIGN KEY ( ContestStageID ) REFERENCES RunnerSplitResult( ContestStageID )  ,
+	FOREIGN KEY ( ContestStageID ) REFERENCES RunnerStageFinalResult( StageID )  
+ );
+
+CREATE TABLE EventContests ( 
+	EventContestID       INTEGER NOT NULL  PRIMARY KEY  ,
+	EventID              INTEGER NOT NULL    ,
+	ContestID            INTEGER NOT NULL    ,
+	StartTime            DATETIME NOT NULL    ,
+	CONSTRAINT unq_EventContests_EventID UNIQUE ( EventID ),
+	CONSTRAINT unq_EventContests_ContestID UNIQUE ( ContestID ),
+	FOREIGN KEY ( EventContestID ) REFERENCES ContestStages( EventContestID )  
+ );
+
+CREATE TABLE Events ( 
+	EventID              INTEGER NOT NULL  PRIMARY KEY  ,
+	EventName            VARCHAR(100)     ,
+	FOREIGN KEY ( EventID ) REFERENCES EventContests( EventID )  
+ );
+
+CREATE TABLE Participants ( 
+	ParticipantID        INTEGER NOT NULL  PRIMARY KEY  ,
+	PersonID             INTEGER NOT NULL    ,
+	ClubID               INTEGER NOT NULL    ,
+	CategoryID           INTEGER NOT NULL    ,
+	CONSTRAINT unq_Participants_PersonID UNIQUE ( PersonID ),
+	CONSTRAINT unq_Participants_CategoryID UNIQUE ( CategoryID ),
+	CONSTRAINT unq_Participants_ClubID UNIQUE ( ClubID ),
+	FOREIGN KEY ( ParticipantID ) REFERENCES Teams( Teamate1ID )  ,
+	FOREIGN KEY ( ParticipantID ) REFERENCES Teams( Teamate2ID )  
+ );
+
+CREATE TABLE Persons ( 
+	PersonID             INTEGER NOT NULL  PRIMARY KEY  ,
+	Lastname             VARCHAR(100)     ,
+	Firstname            VARCHAR(100)     ,
+	Gender               CHAR(1)     ,
+	FOREIGN KEY ( PersonID ) REFERENCES Participants( PersonID )  
+ );
+
+CREATE TABLE Stage ( 
+	StageID              INTEGER NOT NULL  PRIMARY KEY  ,
+	StageName            VARCHAR(150)     ,
+	FOREIGN KEY ( StageID ) REFERENCES ContestStages( StageID )  
+ );
+
+CREATE TABLE Categories ( 
+	CategoryID           INTEGER NOT NULL  PRIMARY KEY  ,
+	Category             VARCHAR(100) NOT NULL    ,
+	FOREIGN KEY ( CategoryID ) REFERENCES Participants( CategoryID )  
+ );
+
+CREATE TABLE Clubs ( 
+	ClubID               INTEGER NOT NULL  PRIMARY KEY  ,
+	ClubName             VARCHAR(100) NOT NULL    ,
+	FOREIGN KEY ( ClubID ) REFERENCES Participants( ClubID )  
+ );
+
+CREATE TABLE Contests ( 
+	ContestID            INTEGER NOT NULL  PRIMARY KEY  ,
+	ContestName          VARCHAR(100)     ,
+	FOREIGN KEY ( ContestID ) REFERENCES EventContests( ContestID )  ,
+	FOREIGN KEY ( ContestID ) REFERENCES RunnerContestFinalResult( ContestID )  
+ );
+]]></string>
+		</script>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-166c" show_column_type="y" show_relation="columns" >
+		<entity schema="Default" name="Categories" color="BED3F4" x="1520" y="624" />
+		<entity schema="Default" name="Clubs" color="BED3F4" x="1520" y="832" />
+		<entity schema="Default" name="ContestStages" color="F4DDBE" x="1232" y="48" />
+		<entity schema="Default" name="Contests" color="C7F4BE" x="336" y="320" />
+		<entity schema="Default" name="EventContests" color="F4DDBE" x="1504" y="48" />
+		<entity schema="Default" name="Events" color="F4DDBE" x="1776" y="48" />
+		<entity schema="Default" name="Participants" color="BED3F4" x="1264" y="624" />
+		<entity schema="Default" name="Persons" color="BED3F4" x="1232" y="832" />
+		<entity schema="Default" name="RunnerContestFinalResults" color="C7F4BE" x="48" y="80" />
+		<entity schema="Default" name="RunnerSplitResults" color="C7F4BE" x="640" y="48" />
+		<entity schema="Default" name="RunnerStageFinalResults" color="C7F4BE" x="640" y="320" />
+		<entity schema="Default" name="Splits" color="C7F4BE" x="912" y="48" />
+		<entity schema="Default" name="Stages" color="F4DDBE" x="1504" y="272" />
+		<entity schema="Default" name="Teams" color="C7F4BE" x="352" y="48" />
+		<script name="SQL Editor" id="Editor-2612" language="SQL" >
+			<string><![CDATA[SELECT
+	ParticipantID, PersonID, ClubID, CategoryID
+FROM
+	Participants s;]]></string>
+		</script>
+		<browser id="Browse-850" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="Default" entity="Participants" x="20" y="20" width="400" height="300" >
+				<browse_table schema="Default" entity="Teams" fk="FK_Participants Teams" x="440" y="20" width="500" height="350" record_view="y" >
+					<browse_table schema="Default" entity="RunnerSplitResults" fk="FK_Teams RunnerSplitResult" x="960" y="20" width="500" height="350" record_view="y" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query-2532" name="Query Builder" >
+			<query_table schema="Default" name="Participants" alias="p" x="48" y="48" >
+				<column name="ParticipantID" />
+				<column name="PersonID" />
+				<column name="ClubID" />
+				<column name="CategoryID" />
+				<query_table schema="Default" name="Teams" alias="t" x="256" y="48" fk="FK_Participants Teams" type="Inner Join" >
+					<column name="TeamID" />
+					<column name="TeamName" />
+					<column name="Teamate1ID" />
+					<column name="Teamate2ID" />
+					<column name="Bib" />
+					<column name="Status" />
+					<column name="Updated_at" />
+					<column name="Created_at" />
+					<query_table schema="Default" name="RunnerSplitResults" alias="r" x="464" y="48" fk="FK_Teams RunnerSplitResult" type="Inner Join" >
+						<column name="RunnerResultID" />
+						<column name="TeamID" />
+						<column name="ContestStageID" />
+						<column name="CurrentSplitID" />
+						<column name="Rank" />
+						<column name="Time" />
+						<column name="Gap" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-141b" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Participants Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="ParticipantID" type="4" />
+						<var name="PersonID" type="4" />
+						<var name="ClubID" type="4" />
+						<var name="CategoryID" type="4" />
+						<script ><![CDATA[SELECT * FROM Participants]]></script>
+					</form_script>
+					<param name="width" value="100%" />
+					<param name="v0" value="CategoryID" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="ParticipantID" type="4" />
+						<var name="PersonID" type="4" />
+						<var name="ClubID" type="4" />
+						<var name="CategoryID" type="4" />
+						<script ><![CDATA[SELECT * FROM Participants]]></script>
+					</form_script>
+					<cell type="label" name="ParticipantID" pos="0,0,0,0,c,c" />
+					<cell type="label" name="PersonID" pos="1,0,1,0,c,c" />
+					<cell type="label" name="ClubID" pos="2,0,2,0,c,c" />
+					<cell type="label" name="CategoryID" pos="3,0,3,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="4,0,4,0,c,c" />
+					<cell type="label" name="${ParticipantID}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${PersonID}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${ClubID}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${CategoryID}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="4,1,4,1,c,c" ref_id="Report-141b" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-141b" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-141b" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-141b" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>

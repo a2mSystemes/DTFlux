@@ -6,7 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-
+# dtflux specific
+*.dsn
+*.bak
 dtflux-player/src/assets/photos-coureurs/*.png
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
